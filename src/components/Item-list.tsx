@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import useAxios from 'axios-hooks';
 
 import './Item-list.css';
@@ -22,11 +22,11 @@ interface ColumItems {
 }
 
 const columns = [
-    {dataField:"pcItemCode"   , text:"No."     ,sort:true, editable:false},
-    {dataField:"assetKindCode", text:"資産種別" ,sort:true, editable:false},
-    {dataField:"itemNumber"   , text:"備品番号" ,sort:true, editable:false},
-    {dataField:"employeeName" , text:"従業員名" ,sort:true, editable:false},
-    {dataField:"departmentName" , text:"部署" ,sort:true, editable:false}
+    {dataField:"pcItemCode"     , text:"No."     ,sort:true, editable:false},
+    {dataField:"assetKindCode"  , text:"資産種別" ,sort:true, editable:false},
+    {dataField:"itemNumber"     , text:"備品番号" ,sort:true, editable:false},
+    {dataField:"employeeName"   , text:"従業員名" ,sort:true, editable:false},
+    {dataField:"departmentName" , text:"部署"     ,sort:true, editable:false}
 ];
 
 const expandRow = {
@@ -39,6 +39,7 @@ const expandRow = {
 };
 
 const ItemList: FC = () => {
+
     const [{data, loading, error}, refetch] = useAxios(
         'http://localhost:5000/pcitems'
         // 'http://192.168.1.80:5003/PCItems'
@@ -46,6 +47,8 @@ const ItemList: FC = () => {
     
     if (loading) return <p>loading...</p>
     if (error) return <p>Error!</p>
+
+
 
     const tableCellStyle = {
         borderWidth: "thin",

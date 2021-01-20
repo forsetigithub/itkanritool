@@ -22,12 +22,12 @@ function App() {
           <div className="col_nav">
             <ReactBootstrap.Nav variant="pills" className="flex-column" id="menu-nav">
               <ReactBootstrap.NavbarBrand id="app-title">IT資産管理台帳</ReactBootstrap.NavbarBrand>
-                <ReactBootstrap.Nav.Item >
+                <ReactBootstrap.Nav.Item>
                   <ReactBootstrap.Nav.Link href="/home"><FontAwesomeIcon icon={faHome} />Home</ReactBootstrap.Nav.Link>
                 </ReactBootstrap.Nav.Item>
 
                 <ReactBootstrap.Nav.Item>
-                  <ReactBootstrap.Nav.Link href="/items"><FontAwesomeIcon icon={faDesktop}/> 機器一覧</ReactBootstrap.Nav.Link>
+                  <ReactBootstrap.Nav.Link href="/items"><FontAwesomeIcon icon={faDesktop}/>機器一覧</ReactBootstrap.Nav.Link>
                 </ReactBootstrap.Nav.Item>
 
                 <ReactBootstrap.Nav.Item>
@@ -35,7 +35,7 @@ function App() {
                 </ReactBootstrap.Nav.Item>
 
                 <ReactBootstrap.Nav.Item>
-                  <ReactBootstrap.Nav.Link href="/master"><FontAwesomeIcon icon={faDatabase}/> マスタ管理</ReactBootstrap.Nav.Link>
+                  <ReactBootstrap.Nav.Link href="/master"><FontAwesomeIcon icon={faDatabase}/>マスタ管理</ReactBootstrap.Nav.Link>
                 </ReactBootstrap.Nav.Item>       
             </ReactBootstrap.Nav>
 

@@ -52,12 +52,10 @@
 
 }
 
-
 .container {
   
 
 }
-
 
 .col_nav {
   width: 200px;
@@ -67,6 +65,11 @@
 .col_nav a {
   color: aliceblue;
 }
+
+.col_nav .nav-link {
+  padding-top: 1em;
+  padding-bottom: 1em;
+} 
 
 .col_nav a:hover {
   background: rgba(255,255,255,0.25);
