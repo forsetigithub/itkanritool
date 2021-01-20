@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  nginx:
+    image: forsetigithub/nginxsv
+    container_name: container-nginx
+    build: 
+      context: ./nginx/
+      dockerfile: Dockerfile
+    ports:
+      - 8081:80
+    volumes: 
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./build:/opt/app/
