@@ -14,27 +14,41 @@ import ItemTab from './item-tab';
 const { SearchBar } = Search;
 
 interface ColumItems {
-    pcItemCode:string,
-    assetKindCode:string,
-    itemNumber:string,
-    employeeName:string,
-    departmentName:string,
+  pcItemCode:string,
+  assetKindCode:string,
+  itemNumber:string,
+  employeeName:string,
+  departmentName:string,
+}
+
+interface DetailItems {
+  makerName:string,
+  pcTypeNumber:string,
+  pcServiceTag:string,
+  assetKind:string,
+  pcMemo:string,
+  monitorNumber1:string,
+  monitorNumber2:string,
+  monitorNumber3:string,
+  mouseMemo:string,
+  mouseNumber:string,
+
 }
 
 const columns = [
-    {dataField:"pcItemCode"     , text:"No."     ,sort:true, editable:false},
-    {dataField:"assetKindCode"  , text:"資産種別" ,sort:true, editable:false},
-    {dataField:"itemNumber"     , text:"備品番号" ,sort:true, editable:false},
-    {dataField:"employeeName"   , text:"従業員名" ,sort:true, editable:false},
-    {dataField:"departmentName" , text:"部署"     ,sort:true, editable:false}
+  {dataField:"pcItemCode"     , text:"No."     ,sort:true, editable:false},
+  {dataField:"assetKindCode"  , text:"資産種別" ,sort:true, editable:false},
+  {dataField:"itemNumber"     , text:"備品番号" ,sort:true, editable:false},
+  {dataField:"employeeName"   , text:"従業員名" ,sort:true, editable:false},
+  {dataField:"departmentName" , text:"部署"     ,sort:true, editable:false}
 ];
 
 const expandRow = {
-    renderer:(row:ColumItems) => (
-        <div>
-            <ItemTab />
-        </div>
-    )
+  renderer:(row:DetailItems) => (
+    <div>
+      <ItemTab data={row}  />
+    </div>
+  )
 
 };
 
@@ -50,14 +64,8 @@ const ItemList: FC = () => {
     if (error) return <p>Error!</p>
 
 
-
-    const tableCellStyle = {
-        borderWidth: "thin",
-        borderStyle: "solid"
-    };
-
     const rowEvents:any = {
-        onClick: (e:any, row:any,rowIndex:number) =>  {
+        onClick: (e:any, row:any, rowIndex:number) =>  {
             console.log(row);
         }
     };
@@ -70,39 +78,31 @@ const ItemList: FC = () => {
         console.log(newResult);
     };
 
-    // const onRowDoubleClickHandler = (index_: Index) => {
-    //     console.log(data[index_.index]);
-    // };
-
-    // const onRowGetterHandler = (index_: Index):any => {
-    //    return data[index_.index]; 
-    // };
 
     return(
-        <div className="item-list-table">
-            <ToolkitProvider
-                keyField="pcItemCode"
-                data={data}
-                columns={columns}
-                search> 
-            {
-                props => (
-                    <div>
-                        <h3>検索</h3>
-                        <SearchBar { ...props.searchProps } />
-                        <hr />
-                        <BootstrapTable 
-                            rowEvents={rowEvents}
-                            pagination={ paginationFactory(pageOptions)}
-                            bootstrap4={true}
-                            bordered={true}
-                            expandRow={expandRow}
-                            { ...props.baseProps }                            
-                        />
-                    </div>    
-                )
-            }
-              
+      <div className="item-list-table">
+        <ToolkitProvider
+          keyField="pcItemCode"
+          data={data}
+          columns={columns}
+          search> 
+          {
+            props => (
+              <div>
+                <h3>検索</h3>
+                <SearchBar { ...props.searchProps } />
+                <hr />
+                <BootstrapTable 
+                  rowEvents={rowEvents}
+                  pagination={ paginationFactory(pageOptions)}
+                  bootstrap4={true}
+                  bordered={true}
+                  expandRow={expandRow}
+                  { ...props.baseProps }                            
+                />
+              </div>    
+              )
+            }  
             </ToolkitProvider>
          </div>
     );

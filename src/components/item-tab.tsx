@@ -5,20 +5,20 @@ import './item-tab.css';
 import  PCTab from './pc-tab';
 
 
-const ItemTab:FC =() =>{
+const ItemTab:FC<any> =(props:any) =>{
     const [key,setKey] = useState('pc');
     
     return(
-        <Tabs activeKey={key}
-              onSelect={(k:any) => setKey(k)}>
+      <Tabs activeKey={key}
+        onSelect={(k:any) => setKey(k)}>
 
-            <Tab eventKey="pc" title="PC">
-                <PCTab />
-            </Tab>
-            <Tab eventKey="account" title="アカウント">
-                Account_Content
-            </Tab>          
-        </Tabs>
+        <Tab eventKey="pc" title="PC">
+          <PCTab data={props.data} />
+        </Tab>
+        <Tab eventKey="account" title="アカウント">
+          Account_Content
+        </Tab>          
+      </Tabs>
 
     );
 
