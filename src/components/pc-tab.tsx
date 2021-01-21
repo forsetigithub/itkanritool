@@ -2,6 +2,8 @@ import React,{FC, useState} from 'react';
 import { Button, Form, Col } from 'react-bootstrap';
 import './pc-tab.css';
 
+
+
 const PCTab:FC<any> = (props:any) => {
     return(
       <div className="tab-border">
@@ -171,7 +173,12 @@ const PCTab:FC<any> = (props:any) => {
               </Form.Group> 
             </Col>
   
-        </Form.Row>                                                                                                                                                    
+          </Form.Row>
+          <Form.Row >
+            <Col className="row-save-btn">
+              <Button type="button" onClick={} size="lg">保存</Button>
+            </Col>
+          </Form.Row>                                                                                                                                                    
         </Form>    
       </div>
     );
