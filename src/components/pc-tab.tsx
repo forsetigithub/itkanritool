@@ -1,23 +1,48 @@
-import React,{FC, useState} from 'react';
+import React,{FC, useState,useEffect} from 'react';
 import { Button, Form, Col } from 'react-bootstrap';
+import useAxios from 'axios-hooks';
 import './pc-tab.css';
-
+import axios from 'axios';
 
 
 const PCTab:FC<any> = (props:any) => {
+
+    const [pcInfo, setPcInfo] = useState<any>(props.data);
+    const [isLoading, setLoading] = useState<boolean>(false);
+    
+    const OnSaveBtnClick = (e:any) => {
+      e.preventDefault();
+      
+      console.log(pcInfo);
+      setLoading(true);
+
+      axios
+      .post('http://localhost:5000/pcitems/PostPCItems',pcInfo,{
+        withCredentials: false
+      })
+      .then(response => {
+        setLoading(false)
+      });
+    };
+
+    const handleFormChange = (e:React.ChangeEvent<any>) => {
+      setPcInfo({...pcInfo, [e.target.name]: e.target.value});
+      console.log(pcInfo);
+    };
+
     return(
       <div className="tab-border">
-        <Form>
+        <Form onSubmit={OnSaveBtnClick} >
           <Form.Row>
             <Col xs="auto">
               <Form.Group controlId="makerName">
                 <Form.Label>メーカー</Form.Label>
-                <Form.Control as="select" custom>
-                  <option selected={props.data.makerName === "DELL"}>DELL</option>
-                  <option selected={props.data.makerName === "Apple"}>Apple</option>
-                  <option selected={props.data.makerName === "HP"}>HP</option>
-                  <option selected={props.data.makerName === "Microsoft"}>Microsoft</option>
-                  <option selected={props.data.makerName === "acer"}>acer</option>
+                <Form.Control as="select" custom onChange={handleFormChange} >
+                  <option selected={pcInfo.makerName === "DELL"}>DELL</option>
+                  <option selected={pcInfo.makerName === "Apple"}>Apple</option>
+                  <option selected={pcInfo.makerName === "HP"}>HP</option>
+                  <option selected={pcInfo.makerName === "Microsoft"}>Microsoft</option>
+                  <option selected={pcInfo.makerName === "acer"}>acer</option>
                 </Form.Control>   
               </Form.Group>
             </Col>
@@ -28,7 +53,9 @@ const PCTab:FC<any> = (props:any) => {
               <Form.Control 
                   type="text"
                   name="pcTypeNumber"
-                  value={props.data.pcTypeNumber}
+                  value={pcInfo.pcTypeNumber}
+                  onChange={handleFormChange} 
+                  
               />   
               </Form.Group>
             </Col>
@@ -39,7 +66,8 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control 
                   type="text"
                   name="pcServiceTag"
-                  value={props.data.pcServiceTag}
+                  value={pcInfo.pcServiceTag}
+                  onChange={handleFormChange} 
                 />   
               </Form.Group>
             </Col>
@@ -52,7 +80,7 @@ const PCTab:FC<any> = (props:any) => {
                   label="デスクトップ"
                   name="assetKind"
                   id="assetKindDesktop"
-                  checked={props.data.assetKind ==="デスクトップ" }
+                  checked={pcInfo.assetKind ==="デスクトップ" }
                 
                 />
                 <Form.Check 
@@ -60,7 +88,8 @@ const PCTab:FC<any> = (props:any) => {
                   label="ノート"
                   name="assetKind"
                   id="assetKindNote" 
-                  checked={props.data.assetKind ==="ノート" }                  
+                  checked={pcInfo.assetKind ==="ノート" }
+                  onChange={handleFormChange}                   
                 />                          
               </Form.Group> 
             </Col>
@@ -74,7 +103,8 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control 
                   type="textarea"
                   name="pcMemo"
-                  value={props.data.pcMemo}
+                  value={pcInfo.pcMemo}
+                  onChange={handleFormChange} 
                   />   
               </Form.Group>            
             </Col>
@@ -88,7 +118,7 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control 
                     type="text"
                     name="monitorNumber1"
-                    value={props.data.monitorNumber1}
+                    value={pcInfo.monitorNumber1}
                 />   
               </Form.Group>            
             </Col>
@@ -99,7 +129,7 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control 
                   type="text"
                   name="monitorNumber2"
-                  value={props.data.monitorNumber2}
+                  value={pcInfo.monitorNumber2}
                 />   
               </Form.Group>
             </Col>
@@ -110,7 +140,7 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control 
                   type="text"
                   name="monitorNumber3"
-                  value={props.data.monitorNumber3}
+                  value={pcInfo.monitorNumber3}
                 />   
               </Form.Group>            
             </Col>
@@ -121,7 +151,7 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control 
                   type="textarea"
                   name="monitorMemo"
-                  value={props.data.monitorMemo}
+                  value={pcInfo.monitorMemo}
                 />   
               </Form.Group>            
             </Col>
@@ -135,7 +165,7 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control 
                   type="text"
                   name="mouseNumber"
-                  value={props.data.mouseNumber}
+                  value={pcInfo.mouseNumber}
                 />   
               </Form.Group>             
             </Col>
@@ -146,7 +176,7 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control 
                   type="textarea"
                   name="mouseMemo"
-                  value={props.data.mouseMemo}
+                  value={pcInfo.mouseMemo}
                 />   
               </Form.Group>            
             </Col>
@@ -157,7 +187,7 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control 
                   type="text"
                   name="keyboardNumber"
-                  value={props.data.keyboardNumber}
+                  value={pcInfo.keyboardNumber}
                 />   
               </Form.Group>            
             </Col>
@@ -168,7 +198,7 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control 
                   type="textarea"
                   name="keyboardMemo"
-                  value={props.data.keyboardMemo}
+                  value={pcInfo.keyboardMemo}
                 />   
               </Form.Group> 
             </Col>
@@ -176,7 +206,7 @@ const PCTab:FC<any> = (props:any) => {
           </Form.Row>
           <Form.Row >
             <Col className="row-save-btn">
-              <Button type="button" onClick={} size="lg">保存</Button>
+              <Button type="submitt" disabled={isLoading} size="lg">{isLoading ? '保存しています...' : '保存'}</Button>
             </Col>
           </Form.Row>                                                                                                                                                    
         </Form>    

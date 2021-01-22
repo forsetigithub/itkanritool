@@ -53,10 +53,9 @@ const expandRow = {
 };
 
 const ItemList: FC = () => {
-    const [dataProp,setDataProp] = useState<any[]>();
 
     const [{data, loading, error}, refetch] = useAxios(
-        'http://localhost:5000/pcitems'
+        'http://localhost:5000/pcitems/GetPCItems'
         // 'http://192.168.1.80:5003/PCItems'
     );
     
