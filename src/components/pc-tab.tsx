@@ -17,7 +17,7 @@ const PCTab:FC<any> = (props:any) => {
       setLoading(true);
 
       axios
-      .post('http://localhost:5000/pcitems/PostPCItems',pcInfo,{
+      .post('http://localhost:5000/ITManagement/PostPCItems',pcInfo,{
         withCredentials: false
       })
       .then(response => {

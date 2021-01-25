@@ -1,7 +1,5 @@
 import React from 'react';
 
-import logo from './logo.svg';
-
 import "bootswatch/dist/darkly/bootstrap.min.css";
 import './App.css';
 import * as ReactBootstrap from 'react-bootstrap';
