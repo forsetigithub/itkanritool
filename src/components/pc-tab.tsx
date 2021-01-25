@@ -1,6 +1,6 @@
-import React,{FC, useState,useEffect} from 'react';
+import React,{FC, useState} from 'react';
 import { Button, Form, Col } from 'react-bootstrap';
-import useAxios from 'axios-hooks';
+// import useAxios from 'axios-hooks';
 import './pc-tab.css';
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ const PCTab:FC<any> = (props:any) => {
       setLoading(true);
 
       axios
-      .post('http://localhost:5000/ITManagement/PostPCItems',pcInfo,{
+        .post('http://localhost:5000/ITManagement/PostPCItems',pcInfo,{
         withCredentials: false
       })
       .then(response => {
@@ -37,12 +37,12 @@ const PCTab:FC<any> = (props:any) => {
             <Col xs="auto">
               <Form.Group controlId="makerName">
                 <Form.Label>メーカー</Form.Label>
-                <Form.Control as="select" custom onChange={handleFormChange} >
-                  <option selected={pcInfo.makerName === "DELL"}>DELL</option>
-                  <option selected={pcInfo.makerName === "Apple"}>Apple</option>
-                  <option selected={pcInfo.makerName === "HP"}>HP</option>
-                  <option selected={pcInfo.makerName === "Microsoft"}>Microsoft</option>
-                  <option selected={pcInfo.makerName === "acer"}>acer</option>
+                <Form.Control as="select" value={props.data.makerName} custom onChange={handleFormChange} >
+                  <option value="DELL">DELL</option>
+                  <option value="Apple">Apple</option>
+                  <option value="HP">HP</option>
+                  <option value="Microsoft">Microsoft</option>
+                  <option value="acer">acer</option>
                 </Form.Control>   
               </Form.Group>
             </Col>

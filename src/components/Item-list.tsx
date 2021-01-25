@@ -1,10 +1,10 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import useAxios from 'axios-hooks';
 
 import './Item-list.css';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import ToolkitProvider, { Search, TableToolkitProps, ToolkitContextType } from 'react-bootstrap-table2-toolkit';
+import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
 import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
@@ -13,13 +13,13 @@ import ItemTab from './item-tab';
 
 const { SearchBar } = Search;
 
-interface ColumItems {
-  pcItemCode:string,
-  assetKindCode:string,
-  itemNumber:string,
-  employeeName:string,
-  departmentName:string,
-}
+// interface ColumItems {
+//   pcItemCode:string,
+//   assetKindCode:string,
+//   itemNumber:string,
+//   employeeName:string,
+//   departmentName:string,
+// }
 
 interface DetailItems {
   makerName:string,
@@ -73,10 +73,9 @@ const ItemList: FC = () => {
         
     };
 
-    const afterSearch:any = (newResult:any) => {
-        console.log(newResult);
-    };
-
+    // const afterSearch:any = (newResult:any) => {
+    //     console.log(newResult);
+    // };
 
     return(
       <div className="item-list-table">

@@ -13,7 +13,7 @@ function App() {
  
   return (
 
-    <body className="body">
+    <div className="body">
       <ReactBootstrap.Container fluid>
         <ReactBootstrap.Row>  
  
@@ -47,7 +47,7 @@ function App() {
 
         </ReactBootstrap.Row>
       </ReactBootstrap.Container>
-    </body>
+    </div>
 
   );
 }
