@@ -7,7 +7,7 @@ import axios from 'axios';
 
 const PCTab:FC<any> = (props:any) => {
 
-    const [pcInfo, setPcInfo] = useState<any>(props.data);
+    const [pcInfo, setPcInfo] = useState(props.data);
     const [isLoading, setLoading] = useState<boolean>(false);
     
     const OnSaveBtnClick = (e:any) => {
@@ -17,7 +17,7 @@ const PCTab:FC<any> = (props:any) => {
       setLoading(true);
 
       axios
-        .post('http://localhost:5000/ITManagement/PostPCItems',pcInfo,{
+        .post('http://localhost:5000/api/itmanagement/postpcitems',pcInfo,{
         withCredentials: false
       })
       .then(response => {
@@ -25,9 +25,12 @@ const PCTab:FC<any> = (props:any) => {
       });
     };
 
-    const handleFormChange = (e:React.ChangeEvent<any>) => {
+    const handleFormChange = (e:any) => {
+
+      console.log(e.target.name + ':' + e.target.value);
       setPcInfo({...pcInfo, [e.target.name]: e.target.value});
-      console.log(pcInfo);
+
+      console.log(pcInfo.makerName);
     };
 
     return(
@@ -35,9 +38,10 @@ const PCTab:FC<any> = (props:any) => {
         <Form onSubmit={OnSaveBtnClick} >
           <Form.Row>
             <Col xs="auto">
-              <Form.Group controlId="makerName">
+              <Form.Group controlId="makerName" >
                 <Form.Label>メーカー</Form.Label>
-                <Form.Control as="select" value={props.data.makerName} custom onChange={handleFormChange} >
+                <Form.Control as="select" name="makerName" 
+                  defaultValue={pcInfo.makerName} onChange={handleFormChange}>
                   <option value="DELL">DELL</option>
                   <option value="Apple">Apple</option>
                   <option value="HP">HP</option>
@@ -73,22 +77,22 @@ const PCTab:FC<any> = (props:any) => {
             </Col>
 
             <Col xs="auto">
-              <Form.Group controlId="assetKind">
+              <Form.Group>
                 <Form.Label>種別</Form.Label>
                 <Form.Check 
                   type="radio"
                   label="デスクトップ"
                   name="assetKind"
                   id="assetKindDesktop"
-                  checked={pcInfo.assetKind ==="デスクトップ" }
-                
+                  checked={pcInfo.assetKind ==="デスクトップ" ? true: false }
+                  onChange={handleFormChange} 
                 />
                 <Form.Check 
                   type="radio"
                   label="ノート"
                   name="assetKind"
                   id="assetKindNote" 
-                  checked={pcInfo.assetKind ==="ノート" }
+                  checked={pcInfo.assetKind ==="ノート" ? true: false }
                   onChange={handleFormChange}                   
                 />                          
               </Form.Group> 
@@ -119,6 +123,7 @@ const PCTab:FC<any> = (props:any) => {
                     type="text"
                     name="monitorNumber1"
                     value={pcInfo.monitorNumber1}
+                    onChange={handleFormChange}
                 />   
               </Form.Group>            
             </Col>
@@ -130,6 +135,7 @@ const PCTab:FC<any> = (props:any) => {
                   type="text"
                   name="monitorNumber2"
                   value={pcInfo.monitorNumber2}
+                  onChange={handleFormChange}
                 />   
               </Form.Group>
             </Col>
@@ -141,6 +147,7 @@ const PCTab:FC<any> = (props:any) => {
                   type="text"
                   name="monitorNumber3"
                   value={pcInfo.monitorNumber3}
+                  onChange={handleFormChange}
                 />   
               </Form.Group>            
             </Col>
@@ -152,6 +159,7 @@ const PCTab:FC<any> = (props:any) => {
                   type="textarea"
                   name="monitorMemo"
                   value={pcInfo.monitorMemo}
+                  onChange={handleFormChange}
                 />   
               </Form.Group>            
             </Col>
@@ -166,6 +174,7 @@ const PCTab:FC<any> = (props:any) => {
                   type="text"
                   name="mouseNumber"
                   value={pcInfo.mouseNumber}
+                  onChange={handleFormChange}
                 />   
               </Form.Group>             
             </Col>
@@ -177,6 +186,7 @@ const PCTab:FC<any> = (props:any) => {
                   type="textarea"
                   name="mouseMemo"
                   value={pcInfo.mouseMemo}
+                  onChange={handleFormChange}
                 />   
               </Form.Group>            
             </Col>
@@ -188,6 +198,7 @@ const PCTab:FC<any> = (props:any) => {
                   type="text"
                   name="keyboardNumber"
                   value={pcInfo.keyboardNumber}
+                  onChange={handleFormChange}
                 />   
               </Form.Group>            
             </Col>
@@ -199,6 +210,7 @@ const PCTab:FC<any> = (props:any) => {
                   type="textarea"
                   name="keyboardMemo"
                   value={pcInfo.keyboardMemo}
+                  onChange={handleFormChange}
                 />   
               </Form.Group> 
             </Col>

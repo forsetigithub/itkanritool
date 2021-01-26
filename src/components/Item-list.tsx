@@ -55,7 +55,7 @@ const expandRow = {
 const ItemList: FC = () => {
 
     const [{data, loading, error}, refetch] = useAxios(
-        'http://localhost:5000/ITManagement/GetPCItems'
+        'http://localhost:5000/api/itmanagement/getpcitems'
         // 'http://192.168.1.80:5003/PCItems'
     );
     
