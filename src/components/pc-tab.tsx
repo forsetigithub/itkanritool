@@ -10,6 +10,19 @@ const PCTab:FC<any> = (props:any) => {
     const [pcInfo, setPcInfo] = useState(props.data);
     const [isLoading, setLoading] = useState<boolean>(false);
     
+    const makerNameConboBox = [
+      "DELL",
+      "Apple",
+      "HP",
+      "Microsoft",
+      "acer"
+    ];
+
+    const assetKindRadioButton = [
+      {name:"デスクトップ",value:"デスクトップ" },
+      {name:"ノート",value:"ノート"}
+    ];
+
     const OnSaveBtnClick = (e:any) => {
       e.preventDefault();
       
@@ -30,7 +43,7 @@ const PCTab:FC<any> = (props:any) => {
       console.log(e.target.name + ':' + e.target.value);
       setPcInfo({...pcInfo, [e.target.name]: e.target.value});
 
-      console.log(pcInfo.makerName);
+      // console.log('assetkind:' + pcInfo.assetKind);
     };
 
     return(
@@ -40,13 +53,12 @@ const PCTab:FC<any> = (props:any) => {
             <Col xs="auto">
               <Form.Group controlId="makerName" >
                 <Form.Label>メーカー</Form.Label>
+
                 <Form.Control as="select" name="makerName" 
                   defaultValue={pcInfo.makerName} onChange={handleFormChange}>
-                  <option value="DELL">DELL</option>
-                  <option value="Apple">Apple</option>
-                  <option value="HP">HP</option>
-                  <option value="Microsoft">Microsoft</option>
-                  <option value="acer">acer</option>
+                  {makerNameConboBox.map((value,index) => (
+                    <option value={value}>{value}</option>
+                  ))}  
                 </Form.Control>   
               </Form.Group>
             </Col>
@@ -79,22 +91,17 @@ const PCTab:FC<any> = (props:any) => {
             <Col xs="auto">
               <Form.Group>
                 <Form.Label>種別</Form.Label>
-                <Form.Check 
-                  type="radio"
-                  label="デスクトップ"
-                  name="assetKind"
-                  id="assetKindDesktop"
-                  checked={pcInfo.assetKind ==="デスクトップ" ? true: false }
-                  onChange={handleFormChange} 
-                />
-                <Form.Check 
-                  type="radio"
-                  label="ノート"
-                  name="assetKind"
-                  id="assetKindNote" 
-                  checked={pcInfo.assetKind ==="ノート" ? true: false }
-                  onChange={handleFormChange}                   
-                />                          
+                {assetKindRadioButton.map((radio,index) => (
+                  <Form.Check
+                    type="radio"
+                    label={radio.value}
+                    name="assetKind"
+                    value={radio.value}
+                    checked={pcInfo.assetKind === radio.value ? true: false}
+                    onChange={handleFormChange}
+                  />
+                ))}
+                         
               </Form.Group> 
             </Col>
                    
