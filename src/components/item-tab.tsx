@@ -2,8 +2,8 @@ import React,{FC, useState} from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './item-tab.css';
-import  PCTab from './pc-tab';
-
+import PCTab from './pc-tab';
+import AccountTab from './account-tab'; 
 
 const ItemTab:FC<any> =(props:any) =>{
     const [key,setKey] = useState('pc');
@@ -16,7 +16,7 @@ const ItemTab:FC<any> =(props:any) =>{
           <PCTab data={props.data} />
         </Tab>
         <Tab eventKey="account" title="アカウント">
-          Account_Content
+          <AccountTab data={props.data} />
         </Tab>          
       </Tabs>
 
