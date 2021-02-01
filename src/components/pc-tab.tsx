@@ -1,5 +1,5 @@
 import React,{FC, useState} from 'react';
-import { Button, Form, Col } from 'react-bootstrap';
+import { Button, Form, Col,InputGroup } from 'react-bootstrap';
 // import useAxios from 'axios-hooks';
 import './pc-tab.css';
 import axios from 'axios';
@@ -124,6 +124,27 @@ const PCTab:FC<any> = (props:any) => {
 
           <Form.Row>
             <Col>
+              <label htmlFor="monitor">モニター</label>
+              <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                  <InputGroup.Text id="basic-addon1">1</InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control name="monitorNumber1" value={pcInfo.monitorNumber1} onChange={handleFormChange} aria-describedby="basic-addon1" />
+              </InputGroup>
+              <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                  <InputGroup.Text id="basic-addon2">2</InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control name="monitorNumber2" value={pcInfo.monitorNumber2} onChange={handleFormChange} aria-describedby="basic-addon2" />
+              </InputGroup>
+              <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                  <InputGroup.Text id="basic-addon3">3</InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control name="monitorNumber3" value={pcInfo.monitorNumber3} onChange={handleFormChange} aria-describedby="basic-addon3" />
+              </InputGroup>
+
+{/* 
               <Form.Group controlId="monitorNumber1">
                 <Form.Label>モニター1</Form.Label>
                 <Form.Control 
@@ -156,10 +177,10 @@ const PCTab:FC<any> = (props:any) => {
                   value={pcInfo.monitorNumber3}
                   onChange={handleFormChange}
                 />   
-              </Form.Group>            
+              </Form.Group>             */}
             </Col>
 
-            <Col xs={7}>
+            <Col xs={10}>
               <Form.Group controlId="monitorMemo">
                 <Form.Label>モニター備考</Form.Label>
                 <Form.Control 
