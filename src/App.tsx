@@ -27,27 +27,27 @@ import StorageIcon from '@material-ui/icons/Storage';
 import ItemList from './components/Item-list';
 
 import SideNav from './components/sidenav';
+import { CssBaseline, Drawer } from '@material-ui/core';
 
-const useStyles = makeStyles({
-  root: {
-    '& *':{
-      // backgroundColor:'black',
-      // color:'white'
-
+const useStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    root: {
+  
+      // '& *':{
+      //   // backgroundColor:'black',
+      //   // color:'white'
+  
+      // },
+      display:'flex',
     },
-
-  },
-  nav: {
-    // backgroundColor:'red',
-
-  },
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-});
+    list: {
+      width: 240,
+    },
+    content: {
+      // padding: theme.spacing(1)
+    }
+  }) 
+);
 
 
 interface Menu {
@@ -55,7 +55,7 @@ interface Menu {
   title:string;
   icon:any;
   path:string;
-  main: ()=> any;
+  main: () => any;
 };
 
 interface ListItemLinkProps {
@@ -64,11 +64,9 @@ interface ListItemLinkProps {
   to: string;
 }
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
-
 const MenuItems1:Menu[] = [
   {
-    key:'home',title:'Home',icon:<HomeIcon />,path:"/home",main:()=> (<ItemList />)
+    key:'home',title:'Home',icon:<HomeIcon />,path:"/home",main:() => (<ItemList />)
   },
   {
     key:'assets',title:'機器一覧',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<ItemList />)
@@ -106,46 +104,47 @@ function ListItemLink(props: ListItemLinkProps) {
 function App() {
   const classes = useStyles();
 
-  const navlist = (anchor: Anchor) => (
-    <div
-      
-      // className={clsx(classes.list, {
-      //   [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-      // })}
-      role="presentation"
-    >
-    <List>
-      {MenuItems1.map((item, index) => (
-        <ListItemLink 
-          icon={item.icon}
-          primary={item.title}
-          to={item.path}
-        />
-      ))}
-    </List>
-    </div>
+  const navlist = () => (
+    <Drawer
+      className={classes.list}
+      variant="permanent"
+      anchor="left"
+      classes= {{
+        paper:classes.list
+      }}>
+      <Divider />
+      <List>
+        {MenuItems1.map((item, index) => (
+          <ListItemLink 
+            icon={item.icon}
+            primary={item.title}
+            to={item.path}
+          />
+        ))}
+      </List>
+    </Drawer>
   );
 
 
   return (
     <Router>
-      <Grid container className={classes.root}>
-        <Grid xs={2}>
-          {navlist('left')}
-        </Grid>
-        <Grid xs={10}>    
-          <Switch>
-            {MenuItems1.map((route,index) => (
-            
-              <Route 
-                key={index}
-                path={route.path}
-                children={<route.main />}
-              />
-            ))}
-          </Switch>
-        </Grid>
-      </Grid>
+      <div className={classes.root}>
+        {navlist()}
+
+        <main>
+          <div className={classes.content}>
+            <Switch>
+              {MenuItems1.map((route,index) => (            
+                <Route 
+                  key={index}
+                  path={route.path}
+                  children={<route.main />}
+                />
+              ))}
+            </Switch>
+          </div>
+        </main>
+      </div>            
     </Router>
   );
 }

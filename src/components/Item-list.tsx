@@ -51,7 +51,7 @@ const useStyle = makeStyles({
     '& *': {
       "background": '#252525',
       "color": 'whitesmoke',
-      "font-size": 'calc(10px + 1vmin)'
+      "font-size": 'calc(20px + 1vmin)'
     }
   },
   detailButton: {
