@@ -29,9 +29,17 @@ import ItemList from './components/Item-list';
 import SideNav from './components/sidenav';
 
 const useStyles = makeStyles({
+  root: {
+    '& *':{
+      // backgroundColor:'black',
+      // color:'white'
+
+    },
+
+  },
   nav: {
     // backgroundColor:'red',
-    height: '100vh'
+
   },
   list: {
     width: 250,
@@ -100,9 +108,10 @@ function App() {
 
   const navlist = (anchor: Anchor) => (
     <div
-      className={clsx(classes.list, {
-        [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-      })}
+      
+      // className={clsx(classes.list, {
+      //   [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+      // })}
       role="presentation"
     >
     <List>
@@ -120,27 +129,23 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <Grid container>
-          <Grid item xs={2} className={classes.nav}>
-            {navlist('left')}
-
-          </Grid>
-          <Grid xs={10}>
-          
-            <Switch>
-              {MenuItems1.map((route,index) => (
-              
-                <Route 
-                  key={index}
-                  path={route.path}
-                  children={<route.main />}
-                />
-              ))}
-            </Switch>
-          </Grid>
+      <Grid container className={classes.root}>
+        <Grid xs={2}>
+          {navlist('left')}
         </Grid>
-      </div>
+        <Grid xs={10}>    
+          <Switch>
+            {MenuItems1.map((route,index) => (
+            
+              <Route 
+                key={index}
+                path={route.path}
+                children={<route.main />}
+              />
+            ))}
+          </Switch>
+        </Grid>
+      </Grid>
     </Router>
   );
 }
