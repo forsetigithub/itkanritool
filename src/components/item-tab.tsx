@@ -1,7 +1,7 @@
 import React,{FC, useState} from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './item-tab.css';
+// import './item-tab.css';
 import PCTab from './pc-tab';
 import AccountTab from './account-tab'; 
 

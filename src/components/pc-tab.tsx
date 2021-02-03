@@ -1,9 +1,8 @@
 import React,{FC, useState} from 'react';
 import { Button, Form, Col,InputGroup } from 'react-bootstrap';
 // import useAxios from 'axios-hooks';
-import './pc-tab.css';
+// import './pc-tab.css';
 import axios from 'axios';
-
 
 const PCTab:FC<any> = (props:any) => {
 
@@ -144,40 +143,6 @@ const PCTab:FC<any> = (props:any) => {
                 <Form.Control name="monitorNumber3" value={pcInfo.monitorNumber3} onChange={handleFormChange} aria-describedby="basic-addon3" />
               </InputGroup>
 
-{/* 
-              <Form.Group controlId="monitorNumber1">
-                <Form.Label>モニター1</Form.Label>
-                <Form.Control 
-                    type="text"
-                    name="monitorNumber1"
-                    value={pcInfo.monitorNumber1}
-                    onChange={handleFormChange}
-                />   
-              </Form.Group>            
-            </Col>
-
-            <Col>
-              <Form.Group controlId="monitorNumber2">
-                <Form.Label>モニター2</Form.Label>
-                <Form.Control 
-                  type="text"
-                  name="monitorNumber2"
-                  value={pcInfo.monitorNumber2}
-                  onChange={handleFormChange}
-                />   
-              </Form.Group>
-            </Col>
-
-            <Col>
-              <Form.Group controlId="monitorNumber3">
-                <Form.Label>モニター3</Form.Label>
-                <Form.Control 
-                  type="text"
-                  name="monitorNumber3"
-                  value={pcInfo.monitorNumber3}
-                  onChange={handleFormChange}
-                />   
-              </Form.Group>             */}
             </Col>
 
             <Col xs={10}>

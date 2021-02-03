@@ -1,17 +1,28 @@
-import React, {FC} from 'react';
+import React, {FC,forwardRef} from 'react';
 import useAxios from 'axios-hooks';
 
-import './Item-list.css';
-import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit';
-import 'react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import AddBox from '@material-ui/icons/AddBox';
+import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import Check from '@material-ui/icons/Check';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
+import ChevronRight from '@material-ui/icons/ChevronRight';
+import Clear from '@material-ui/icons/Clear';
+import DeleteOutline from '@material-ui/icons/DeleteOutline';
+import Edit from '@material-ui/icons/Edit';
+import FilterList from '@material-ui/icons/FilterList';
+import FirstPage from '@material-ui/icons/FirstPage';
+import LastPage from '@material-ui/icons/LastPage';
+import Remove from '@material-ui/icons/Remove';
+import SaveAlt from '@material-ui/icons/SaveAlt';
+import Search from '@material-ui/icons/Search';
+import ViewColumn from '@material-ui/icons/ViewColumn';
+
+import MaterialTable, { Icons } from 'material-table';
+
+// import './Item-list.css';
 
 import ItemTab from './item-tab';
-
-const { SearchBar } = Search;
+import { colors, makeStyles } from '@material-ui/core';
 
 // interface ColumItems {
 //   pcItemCode:string,
@@ -35,76 +46,92 @@ interface DetailItems {
 
 }
 
+const useStyle = makeStyles({
+  root : {
+    '& *': {
+      "background": '#252525',
+      "color": 'whitesmoke',
+      "font-size": 'calc(10px + 1vmin)'
+    }
+  },
+  detailButton: {
+    '& *:active':{
+      'outline': 'none'
+    }
+  }
+});
+
 const columns = [
-  {dataField:"pcItemCode"     , text:"No."     ,sort:true, editable:false},
-  {dataField:"assetKindCode"  , text:"資産種別" ,sort:true, editable:false},
-  {dataField:"itemNumber"     , text:"備品番号" ,sort:true, editable:false},
-  {dataField:"employeeName"   , text:"従業員名" ,sort:true, editable:false},
-  {dataField:"departmentName" , text:"部署"     ,sort:true, editable:false}
+  {field:"pcItemCode"     , title:"No."},
+  {field:"assetKindCode"  , title:"資産種別"},
+  {field:"itemNumber"     , title:"備品番号"},
+  {field:"employeeName"   , title:"従業員名"},
+  {field:"departmentName" , title:"部署"}
 ];
 
-const expandRow = {
-  renderer:(row:DetailItems) => (
-    <div>
-      <ItemTab data={row}  />
-    </div>
-  )
-
-};
 
 const ItemList: FC = () => {
+  const classes = useStyle();
 
-    const [{data, loading, error}, refetch] = useAxios(
-        'http://localhost:5000/api/itmanagement/getpcitems'
-        // 'http://192.168.1.80:5003/PCItems'
-    );
-    
-    if (loading) return <p>loading...</p>
-    if (error) return <p>Error!</p>
+  const tableIcons:Icons = {
+    Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
+    Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
+    Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+    DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} className={classes.detailButton}  />),
+    Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+    Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
+    Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
+    FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
+    LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
+    NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+    PreviousPage: forwardRef((props, ref) => <ChevronLeft {...props} ref={ref} />),
+    ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
+    Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
+    SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+    ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
+    ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
+  }; 
 
+  // useEffect(async ()=> {
+  //   const result = await axios('http://localhost:5000/api/itmanagement/getpcitems');
 
-    const rowEvents:any = {
-        onClick: (e:any, row:any, rowIndex:number) =>  {
-            console.log(row);
+  //   setData(result.data);
+  // },[]);
+
+  const [{data, loading, error}] = useAxios(
+      'http://localhost:5000/api/itmanagement/getpcitems'
+      // 'http://192.168.1.80:5003/PCItems'
+  );
+  
+  if (loading) return <p>loading...</p>
+  if (error) return <p>Error!</p>
+
+  return(
+    <div >
+      <MaterialTable 
+        title=""
+        columns={columns}
+        data={data}
+        icons={tableIcons}
+        editable={{
+
+        }}
+        options={{
+          filtering:true,
+          pageSize:10
+        }}
+        detailPanel={rowData => {
+          return(
+            <div>
+              <p>AAAA</p>   
+            </div>  
+            )
+          }
         }
-    };
-
-    const pageOptions:any = {
-        
-    };
-
-    // const afterSearch:any = (newResult:any) => {
-    //     console.log(newResult);
-    // };
-
-    return(
-      <div className="item-list-table">
-        <ToolkitProvider
-          keyField="pcItemCode"
-          data={data}
-          columns={columns}
-          search> 
-          {
-            props => (
-              <div>
-                <h3>検索</h3>
-                <SearchBar { ...props.searchProps } />
-                <hr />
-                <BootstrapTable 
-                  rowEvents={rowEvents}
-                  pagination={ paginationFactory(pageOptions)}
-                  bootstrap4={true}
-                  bordered={true}
-                  expandRow={expandRow}
-                  { ...props.baseProps }                            
-                />
-              </div>    
-              )
-            }  
-            </ToolkitProvider>
-         </div>
-    );
-
+      />
+    </div>
+  );
 }
 
 export default ItemList;

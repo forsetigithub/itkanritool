@@ -44,25 +44,21 @@
 }
 
 .body {
-  margin: 0;
+  /* margin: 0;
   font-size: calc(10px + 1vmin); 
   color:whitesmoke;
   background:#252525;
-  height: 100vh;
+  height: 100vh; */
 
 }
 
-.container {
-  
 
-}
 
 .col_nav {
   width: 200px;
-
 }
 
-.col_nav a {
+/* .col_nav a {
   color: aliceblue;
 }
 
@@ -74,10 +70,10 @@
 .col_nav a:hover {
   background: rgba(255,255,255,0.25);
   color: whitesmoke;
-}
+} */
 
 .col_main {
-  background: rgb(43, 43, 43); 
+  background: rgb(43, 43, 43) !important; 
 
 
 }  
