@@ -6,7 +6,7 @@ import {
   Route,
   Link as RouterLink, LinkProps as RouterLinkProps
 } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles,Theme } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
@@ -24,14 +24,13 @@ import StorageIcon from '@material-ui/icons/Storage';
 // import MailIcon from '@material-ui/icons/Mail';
 import ItemList from './Item-list';
 
-const useStyles = makeStyles({
-  list: {
-    width: 240,
-  },
-  // fullList: {
-  //   width: 'auto',
-  // },
-});
+const useStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    list: {
+      width: 240,
+      paddingTop: theme.spacing(4),
+    }
+}));
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -76,10 +75,10 @@ const SideNav:FC<{menu:Menu[]}> = (props:{menu:Menu[]}) => {
 
   const list = (anchor: Anchor) => (
     <div
+      className={classes.list}
       // className={clsx(classes.list, {
       //   [classes.fullList]: anchor === 'top' || anchor === 'bottom',
       // })}
-      role="presentation"
     >
       <List>
         {props.menu.map((item, index) => (

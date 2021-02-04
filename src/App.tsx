@@ -29,7 +29,7 @@ import {Menu} from './Interface';
 import ItemList from './components/Item-list';
 
 import SideNav from './components/sidenav';
-import { AppBar, CssBaseline, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, CssBaseline, Drawer, Toolbar, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -42,11 +42,18 @@ const useStyles = makeStyles((theme: Theme) =>
       // },
       display:'flex',
     },
+    appBar: {
+      zIndex:theme.zIndex.drawer + 1
+    },
+    main: {
+      paddingTop:theme.spacing(4),
+    },
     title: {
       flexGrow:1,
     },
     list: {
       width: 240,
+     
     },
     content: {
       padding: theme.spacing(1)
@@ -75,29 +82,29 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>IT資産管理台帳</Typography>
-        </Toolbar>
-        <Router>
-          <div>
-              <SideNav menu={MenuItems} />
-            <main>
-              <div className={classes.content}>
-                <Switch>
-                  {MenuItems.map((route,index) => (            
-                    <Route 
-                      key={index}
-                      path={route.path}
-                      children={<route.main />}
+      <Router>
+        <div className={classes.root}>
+          <SideNav menu={MenuItems}  />
+          <main className={classes.main}>
+            <div>
+              <Switch>
+                {MenuItems.map((route,index) => (            
+                  <Route 
+                    key={index}
+                    path={route.path}
+                    children={<route.main />}
+                  />
+                ))}
+              </Switch>
+            </div>
+          </main>
+        </div>  
+      </Router>
 
-                    />
-                  ))}
-                </Switch>
-              </div>
-            </main>
-          </div>  
-        </Router>
+      <AppBar position="fixed" className={classes.appBar}>
+      <Toolbar variant="dense">
+        <Typography variant="h6" className={classes.title}>IT資産管理台帳</Typography>
+      </Toolbar>
       </AppBar>
     </div>
 
