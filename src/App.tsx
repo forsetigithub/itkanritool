@@ -23,11 +23,13 @@ import HomeIcon from '@material-ui/icons/Home';
 import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import StorageIcon from '@material-ui/icons/Storage';
+
+import {Menu} from './Interface';
 // import './App.css';
 import ItemList from './components/Item-list';
 
 import SideNav from './components/sidenav';
-import { CssBaseline, Drawer } from '@material-ui/core';
+import { AppBar, CssBaseline, Toolbar, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -40,112 +42,65 @@ const useStyles = makeStyles((theme: Theme) =>
       // },
       display:'flex',
     },
+    title: {
+      flexGrow:1,
+    },
     list: {
       width: 240,
     },
     content: {
-      // padding: theme.spacing(1)
+      padding: theme.spacing(1)
     }
   }) 
 );
 
-
-interface Menu {
-  key:string;
-  title:string;
-  icon:any;
-  path:string;
-  main: () => any;
-};
-
-interface ListItemLinkProps {
-  icon?: React.ReactElement;
-  primary: string;
-  to: string;
-}
-
-const MenuItems1:Menu[] = [
+const MenuItems:Menu[] = [
   {
     key:'home',title:'Home',icon:<HomeIcon />,path:"/home",main:() => (<ItemList />)
   },
   {
-    key:'assets',title:'機器一覧',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<ItemList />)
+    key:'assets',title:'機器一覧',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<h1>機器一覧</h1>)
   },
   {
-    key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:"/employee",main:()=> (<ItemList />)
+    key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:"/employee",main:()=> (<h1>従業員一覧</h1>)
   },
   {
-    key:'master',title:'マスタ管理',icon:<StorageIcon />,path:"/master",main:()=> (<ItemList />)
+    key:'master',title:'マスタ管理',icon:<StorageIcon />,path:"/master",main:()=> (<h1>マスタ管理</h1>)
   }
 ];
 
 
-function ListItemLink(props: ListItemLinkProps) {
-  const { icon, primary, to } = props;
-
-  const renderLink = React.useMemo(
-    () =>
-      React.forwardRef<any, Omit<RouterLinkProps, 'to'>>((itemProps, ref) => (
-        <RouterLink to={to} ref={ref} {...itemProps} />
-      )),
-    [to],
-  );
-
-  return (
-    <li>
-      <ListItem button component={renderLink}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
-        <ListItemText primary={primary} />
-      </ListItem>
-    </li>
-  );
-}
-
 function App() {
   const classes = useStyles();
 
-  const navlist = () => (
-    <Drawer
-      className={classes.list}
-      variant="permanent"
-      anchor="left"
-      classes= {{
-        paper:classes.list
-      }}>
-      <Divider />
-      <List>
-        {MenuItems1.map((item, index) => (
-          <ListItemLink 
-            icon={item.icon}
-            primary={item.title}
-            to={item.path}
-          />
-        ))}
-      </List>
-    </Drawer>
-  );
-
-
   return (
-    <Router>
-      <div className={classes.root}>
-        {navlist()}
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>IT資産管理台帳</Typography>
+        </Toolbar>
+        <Router>
+          <div>
+              <SideNav menu={MenuItems} />
+            <main>
+              <div className={classes.content}>
+                <Switch>
+                  {MenuItems.map((route,index) => (            
+                    <Route 
+                      key={index}
+                      path={route.path}
+                      children={<route.main />}
 
-        <main>
-          <div className={classes.content}>
-            <Switch>
-              {MenuItems1.map((route,index) => (            
-                <Route 
-                  key={index}
-                  path={route.path}
-                  children={<route.main />}
-                />
-              ))}
-            </Switch>
-          </div>
-        </main>
-      </div>            
-    </Router>
+                    />
+                  ))}
+                </Switch>
+              </div>
+            </main>
+          </div>  
+        </Router>
+      </AppBar>
+    </div>
+
   );
 }
 
