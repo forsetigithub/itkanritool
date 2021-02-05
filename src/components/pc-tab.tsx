@@ -1,7 +1,7 @@
 import React,{FC, useState} from 'react';
 import { Button, Form, Col,InputGroup } from 'react-bootstrap';
 // import useAxios from 'axios-hooks';
-// import './pc-tab.css';
+
 import axios from 'axios';
 
 const PCTab:FC<any> = (props:any) => {
