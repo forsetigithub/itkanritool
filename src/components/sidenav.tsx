@@ -7,22 +7,12 @@ import {
   Link as RouterLink, LinkProps as RouterLinkProps
 } from "react-router-dom";
 import { createStyles, makeStyles,Theme } from '@material-ui/core/styles';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
-import HomeIcon from '@material-ui/icons/Home';
-import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import StorageIcon from '@material-ui/icons/Storage';
-// import InboxIcon from '@material-ui/icons/MoveToInbox';
-// import MailIcon from '@material-ui/icons/Mail';
-import ItemList from './Item-list';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({

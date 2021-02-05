@@ -1,4 +1,4 @@
-import React, {FC,forwardRef} from 'react';
+import React, {FC,forwardRef,useState,useEffect} from 'react';
 import useAxios from 'axios-hooks';
 
 import AddBox from '@material-ui/icons/AddBox';
@@ -23,6 +23,7 @@ import MaterialTable, { Icons } from 'material-table';
 
 import ItemTab from './item-tab';
 import { colors, makeStyles } from '@material-ui/core';
+import axios from 'axios';
 
 // interface ColumItems {
 //   pcItemCode:string,
@@ -72,6 +73,7 @@ const columns = [
 
 const ItemList: FC = () => {
   const classes = useStyle();
+  const [data,setData] = useState<any>([]);
 
   const tableIcons:Icons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -93,19 +95,21 @@ const ItemList: FC = () => {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   }; 
 
-  // useEffect(async ()=> {
-  //   const result = await axios('http://localhost:5000/api/itmanagement/getpcitems');
+  useEffect(()=> {
+    axios.get('http://localhost:5000/api/itmanagement/getpcitems')
+    .then((result) => {
+      setData(result.data);
+    });
 
-  //   setData(result.data);
-  // },[]);
+  },[]);
 
-  const [{data, loading, error}] = useAxios(
-      'http://localhost:5000/api/itmanagement/getpcitems'
-      // 'http://192.168.1.80:5003/PCItems'
-  );
+  // const [{data, loading, error}] = useAxios(
+  //     'http://localhost:5000/api/itmanagement/getpcitems'
+  //     // 'http://192.168.1.80:5003/PCItems'
+  // );
   
-  if (loading) return <p>loading...</p>
-  if (error) return <p>Error!</p>
+  // if (loading) return <p>loading...</p>
+  // if (error) return <p>Error!</p>
 
   return(
     <div >
@@ -115,7 +119,16 @@ const ItemList: FC = () => {
         data={data}
         icons={tableIcons}
         editable={{
-
+          onRowUpdate:(newData:any,oldData:any) => 
+            new Promise((resolve:any,reject:any) => {
+              setTimeout(() => {
+                const dataUpdate = [...data];
+                const index = oldData.tableData.id;
+                dataUpdate[index] = newData;
+                setData([...dataUpdate]);
+                resolve();
+              },1000)  
+            })  
         }}
         options={{
           filtering:true,
