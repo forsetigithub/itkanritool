@@ -19,8 +19,6 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 
 import MaterialTable, { Icons } from 'material-table';
 
-// import './Item-list.css';
-
 import ItemTab from './item-tab';
 import { colors, makeStyles } from '@material-ui/core';
 import axios from 'axios';
@@ -136,12 +134,9 @@ const ItemList: FC = () => {
         }}
         detailPanel={rowData => {
           return(
-            <div>
-              <p>AAAA</p>   
-            </div>  
-            )
-          }
-        }
+            <ItemTab />
+          )
+        }}
       />
     </div>
   );
