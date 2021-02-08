@@ -1,4 +1,4 @@
-import React,{FC, ReactNode, useState} from 'react';
+import React,{FC, ReactNode, useEffect, useState} from 'react';
 import { makeStyles,Theme} from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -6,8 +6,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 
 import PCTab from './pc-tab';
+
 import AccountTab from './account-tab'; 
 import { Typography } from '@material-ui/core';
+import { ContactSupportOutlined } from '@material-ui/icons';
 
 interface TabPanelProps {
   children?: ReactNode;
@@ -27,12 +29,10 @@ const TabPanel = (props: TabPanelProps) => {
       {...other}
       >
         {value === index && (
-          <Box p={3}>
-            <Typography>{children}</Typography>
-          </Box>
-
+           <Box p={2}>    
+            {children}    
+           </Box>
         )}
-
     </div>
   );
 };
@@ -63,6 +63,11 @@ const ItemTab:FC<any> =(props:any) =>{
     setValue(newValue);
   }
 
+  useEffect(() => {
+    // console.log('data:');
+    // console.log(props.data); 
+  });
+
   return(
     <div className={classes.root}>
       <AppBar position="static" className={classes.AppBar}>
@@ -71,11 +76,14 @@ const ItemTab:FC<any> =(props:any) =>{
           <Tab label="アカウント" {...allyProps(0)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        PC
+      <TabPanel value={value} index={0}> 
+        <div>
+          <PCTab data={props.data} />
+        </div>
+
       </TabPanel>
       <TabPanel value={value} index={1}>
-        アカウント
+        {/* <AccountTab data={props.data} /> */}
       </TabPanel>
     </div>
 
