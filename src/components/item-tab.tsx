@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 
 import PCTab from './pc-tab';
 
-import AccountTab from './account-tab'; 
+import AccountTab,{AccountItem} from './account-tab'; 
 import { Typography } from '@material-ui/core';
 import { ContactSupportOutlined } from '@material-ui/icons';
 
@@ -55,25 +55,38 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 
-const ItemTab:FC<any> =(props:any) =>{
+const ItemTab:FC<any> =(props:{data:any}) =>{
   const classes = useStyles();
+
   const [value, setValue] = useState(0);
+
+  const [mailData,setmailData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.mailAddress,pw:props.data.mailPassword});
+  const [cwData,setCwData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.chatwork_ID,pw:props.data.chatwork_PW});
+  const [cybouzuData,setCybouzuData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.cybouzu_ID,pw:props.data.cybouzu_PW});
+
+  const datakind = [
+    {data_kindname:'pc',title:'PC'},
+    {data_kindname:'mail',title:'メール'},
+    {data_kindname:'chatwork',title:'チャットワーク'},
+    {data_kindname:'cybouzu',title:'サイボウズ'},
+  ];
   
+  useEffect(() => {
+    console.log(props.data.mailAddress);
+  });
+
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   }
-
-  useEffect(() => {
-    // console.log('data:');
-    // console.log(props.data); 
-  });
 
   return(
     <div className={classes.root}>
       <AppBar position="static" className={classes.AppBar}>
         <Tabs value={value} onChange={handleChange} aria-label="simpla tabs example" >
-          <Tab label="PC" {...allyProps(0)} />
-          <Tab label="アカウント" {...allyProps(0)} />
+          <Tab label={datakind[0].title} {...allyProps(0)} />
+          <Tab label={datakind[1].title} {...allyProps(0)} />
+          <Tab label={datakind[2].title} {...allyProps(0)} />
+          <Tab label={datakind[3].title} {...allyProps(0)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}> 
@@ -83,7 +96,13 @@ const ItemTab:FC<any> =(props:any) =>{
 
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {/* <AccountTab data={props.data} /> */}
+        <AccountTab data_kindname={datakind[1].data_kindname} data={mailData} id_title="メールアドレス" />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <AccountTab data_kindname={datakind[2].data_kindname} data={cwData} id_title="ID" />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <AccountTab data_kindname={datakind[3].data_kindname} data={cybouzuData} id_title="ID" />
       </TabPanel>
     </div>
 

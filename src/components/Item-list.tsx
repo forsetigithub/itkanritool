@@ -1,9 +1,10 @@
 import React, {FC,forwardRef,useState,useEffect} from 'react';
 import useAxios from 'axios-hooks';
 import MaterialTable from 'material-table';
+import {tableIcons} from './tableIcons';
 
 import ItemTab from './item-tab';
-import {tableIcons} from './tableIcons';
+
 import { colors, makeStyles } from '@material-ui/core';
 import axios from 'axios';
 
@@ -65,14 +66,6 @@ const ItemList: FC = () => {
 
   },[]);
 
-
-  // const [{data, loading, error}] = useAxios(
-  //     'http://localhost:5000/api/itmanagement/getpcitems'
-  //     // 'http://192.168.1.80:5003/PCItems'
-  // );
-  
-  // if (loading) return <p>loading...</p>
-  // if (error) return <p>Error!</p>
 
   return(
     <div >
