@@ -33,6 +33,11 @@ const AccountTab: FC<any> = (props:{data_kindname:string,data:AccountItem,id_tit
     <MaterialTable 
       title=""
       columns={columns}
+      localization={{
+        header:{
+          actions:''
+        }
+      }}
       data={[...accountInfo]}
       icons={tableIcons}
       editable={{

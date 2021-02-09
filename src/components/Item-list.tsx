@@ -6,6 +6,8 @@ import {tableIcons} from './tableIcons';
 import ItemTab from './item-tab';
 
 import { colors, makeStyles } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import axios from 'axios';
 
 // interface ColumItems {
@@ -32,11 +34,14 @@ interface DetailItems {
 
 const useStyle = makeStyles({
   root : {
-    '& *': {
-      "background": '#252525',
-      "color": 'whitesmoke',
-      "font-size": 'calc(20px + 1vmin)'
-    }
+    //svgタグ以外を反映
+    '& *:not(svg)': {
+      // "background": '#252525',
+      // "color": 'whitesmoke',
+       "font-size": 'calc(9px + 1vmin)'
+      
+      
+    },
   },
   detailButton: {
     '& *:active':{
@@ -46,7 +51,13 @@ const useStyle = makeStyles({
 });
 
 const columns = [
-  {field:"pcItemCode"     , title:"No."},
+  {field:"pcItemCode"     , title:"No.", 
+    cellStyle: {
+      width:20,
+      maxWidth:30
+    },
+
+  }, 
   {field:"assetKindCode"  , title:"資産種別"},
   {field:"itemNumber"     , title:"備品番号"},
   {field:"employeeName"   , title:"従業員名"},
@@ -68,11 +79,23 @@ const ItemList: FC = () => {
 
 
   return(
-    <div >
-      <MaterialTable 
+    <div className={classes.root}>
+      <MaterialTable         
         title=""
         columns={columns}
         data={data}
+        components={{
+          OverlayLoading: props => (<CircularProgress />)
+        }}
+        localization={{
+          header:{
+            actions:'',
+          },
+          toolbar:{
+            searchPlaceholder:'検索'
+          },
+          
+        }}
         icons={tableIcons}
         editable={{
           onRowUpdate:(newData:any,oldData:any) => 
@@ -88,7 +111,8 @@ const ItemList: FC = () => {
         }}
         options={{
           filtering:true,
-          pageSize:10
+          pageSize:10,
+
         }}
         detailPanel={(rowData:any) => {
           return(
