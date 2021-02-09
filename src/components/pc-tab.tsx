@@ -18,7 +18,23 @@ const PCTab:FC<{data:any}> = (props:{data:any}) => {
     },
     { 
       title: '型番', field:'pcTypeNumber'
-    }
+    },
+    // { 
+    //   title: 'サービスタグ', field:'pcServiceTag'
+    // },
+    // { 
+    //   title: '種別', field:'assetKind',lookup: {'デスクトップ':'デスクトップ','ノート':'ノート'}
+    // },
+    // {
+    //   title: '保証期間', field:'warrantyPeriod'
+    // },
+    // {
+    //   title: '保証', field:'warranty'
+    // },
+    // { 
+    //   title: '備考', field:'pcMemo'
+    // },
+
   ]);
 
   const [pcInfo,setPcInfo] = useState<PCItem[]>([]);
@@ -34,6 +50,16 @@ const PCTab:FC<{data:any}> = (props:{data:any}) => {
       columns={columns}
       data={[...pcInfo]}
       icons={tableIcons}
+      editable={{
+        onRowUpdate:(newData:any,oldData:any) => 
+          new Promise((resolve:any,reject:any) => {
+            const dataUpdate = [...pcInfo];
+            const index = oldData.tableData.id;
+            dataUpdate[index] = newData;
+            setPcInfo([...dataUpdate]);
+            resolve();
+          })
+      }}
       options={{
         filtering:false,
         search:false,

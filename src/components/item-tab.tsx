@@ -6,6 +6,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
 
 import PCTab from './pc-tab';
+import OtherEquipment from './otherEquipment-tab';
 
 import AccountTab,{AccountItem} from './account-tab'; 
 import { Typography } from '@material-ui/core';
@@ -65,7 +66,8 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
   const [cybouzuData,setCybouzuData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.cybouzu_ID,pw:props.data.cybouzu_PW});
 
   const datakind = [
-    {data_kindname:'pc',title:'PC'},
+    {data_kindname:'pc',title:'PC本体'},
+    {data_kindname:'pc_other',title:'PC備品'},
     {data_kindname:'mail',title:'メール'},
     {data_kindname:'chatwork',title:'チャットワーク'},
     {data_kindname:'cybouzu',title:'サイボウズ'},
@@ -87,22 +89,23 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
           <Tab label={datakind[1].title} {...allyProps(0)} />
           <Tab label={datakind[2].title} {...allyProps(0)} />
           <Tab label={datakind[3].title} {...allyProps(0)} />
+          <Tab label={datakind[4].title} {...allyProps(0)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}> 
-        <div>
-          <PCTab data={props.data} />
-        </div>
-
+        <PCTab data={props.data} />
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <AccountTab data_kindname={datakind[1].data_kindname} data={mailData} id_title="メールアドレス" />
+      <TabPanel value={value} index={1}> 
+        <OtherEquipment data={props.data} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <AccountTab data_kindname={datakind[2].data_kindname} data={cwData} id_title="ID" />
+        <AccountTab data_kindname={datakind[2].data_kindname} data={mailData} id_title="メールアドレス" />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <AccountTab data_kindname={datakind[3].data_kindname} data={cybouzuData} id_title="ID" />
+        <AccountTab data_kindname={datakind[3].data_kindname} data={cwData} id_title="ID" />
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+        <AccountTab data_kindname={datakind[4].data_kindname} data={cybouzuData} id_title="ID" />
       </TabPanel>
     </div>
 

@@ -35,6 +35,16 @@ const AccountTab: FC<any> = (props:{data_kindname:string,data:AccountItem,id_tit
       columns={columns}
       data={[...accountInfo]}
       icons={tableIcons}
+      editable={{
+        onRowUpdate:(newData:any,oldData:any) => 
+          new Promise((resolve:any,reject:any) => {
+            const dataUpdate = [...accountInfo];
+            const index = oldData.tableData.id;
+            dataUpdate[index] = newData;
+            setAccountInfo([...dataUpdate]);
+            resolve();
+          })
+      }}
       options={{
         filtering:false,
         search:false,

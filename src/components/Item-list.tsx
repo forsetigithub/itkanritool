@@ -81,6 +81,7 @@ const ItemList: FC = () => {
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
               setData([...dataUpdate]);
+
               resolve();              
 
             })  
