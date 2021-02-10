@@ -1,6 +1,6 @@
 {
   "name": "itmanagement",
-  "version": "0.5.10",
+  "version": "0.5.11",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -21,6 +21,7 @@
     "axios-hooks": "^2.2.0",
     "bootstrap": "^4.6.0",
     "bootswatch": "^4.5.3",
+    "date-fns": "^2.17.0",
     "material-table": "^1.69.2",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",

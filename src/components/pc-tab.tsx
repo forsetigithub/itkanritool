@@ -2,6 +2,7 @@ import React,{FC, useEffect, useState} from 'react';
 import MaterialTable from 'material-table';
 import {tableIcons} from './tableIcons';
 import Moment from 'react-moment';
+import ja from 'date-fns/locale/ja';
 
 import axios from 'axios';
 
@@ -32,7 +33,8 @@ const PCTab:FC<{data:any}> = (props:{data:any}) => {
       title: '種別', field:'assetKind',lookup: {'デスクトップ':'デスクトップ','ノート':'ノート'}
     },
     {
-      title: '保証期間', field:'warrantyPeriod',type:'date',render: (rowData:any) => (<Moment format="YYYY年MM月DD日">{rowData.warrantyPeriod}</Moment>)
+      title: '保証期間', field:'warrantyPeriod',type:'date',
+        render: (rowData:any) => (<Moment format="YYYY-MM-DD">{rowData.warrantyPeriod}</Moment> )
     },
     {
       title: '保証', field:'warranty'
@@ -61,7 +63,9 @@ const PCTab:FC<{data:any}> = (props:{data:any}) => {
         header:{
           actions:''
         },
-        
+        body: {
+          dateTimePickerLocalization:ja
+        }
       }}
       columns={columns}
       data={[...pcInfo]}
@@ -80,6 +84,7 @@ const PCTab:FC<{data:any}> = (props:{data:any}) => {
         filtering:false,
         search:false,
       }}
+    
     /> 
   );
 }
