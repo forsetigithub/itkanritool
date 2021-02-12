@@ -27,6 +27,7 @@ import StorageIcon from '@material-ui/icons/Storage';
 import {Menu} from './Interface';
 // import './App.css';
 import ItemList from './components/Item-list';
+import PCAssetList from './components/pcasset-list';
 
 import SideNav from './components/sidenav';
 import { AppBar, CssBaseline, Drawer, Toolbar, Typography } from '@material-ui/core';
@@ -66,7 +67,7 @@ const MenuItems:Menu[] = [
     key:'home',title:'Home',icon:<HomeIcon />,path:"/home",main:() => (<ItemList />)
   },
   {
-    key:'assets',title:'機器一覧',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<h1>機器一覧</h1>)
+    key:'assets',title:'機器一覧',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<PCAssetList />)
   },
   {
     key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:"/employee",main:()=> (<h1>従業員一覧</h1>)

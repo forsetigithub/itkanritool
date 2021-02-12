@@ -64,6 +64,7 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
   const [mailData,setmailData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.mailAddress,pw:props.data.mailPassword});
   const [cwData,setCwData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.chatwork_ID,pw:props.data.chatwork_PW});
   const [cybouzuData,setCybouzuData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.cybouzu_ID,pw:props.data.cybouzu_PW});
+  // const [nasData,setNasData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data});
 
   const datakind = [
     {data_kindname:'pc',title:'PC本体'},
@@ -71,6 +72,7 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
     {data_kindname:'mail',title:'メール'},
     {data_kindname:'chatwork',title:'チャットワーク'},
     {data_kindname:'cybouzu',title:'サイボウズ'},
+    {data_kindname:'nas',title:'ファイルサーバ'}
   ];
   
   useEffect(() => {
@@ -85,11 +87,9 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
     <div className={classes.root}>
       <AppBar position="static" className={classes.AppBar}>
         <Tabs value={value} onChange={handleChange} aria-label="simpla tabs example" >
-          <Tab label={datakind[0].title} {...allyProps(0)} />
-          <Tab label={datakind[1].title} {...allyProps(0)} />
-          <Tab label={datakind[2].title} {...allyProps(0)} />
-          <Tab label={datakind[3].title} {...allyProps(0)} />
-          <Tab label={datakind[4].title} {...allyProps(0)} />
+          {datakind.map((value,index) => (
+             <Tab label={value.title} {...allyProps(index)} />
+          ))}
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}> 
@@ -105,6 +105,9 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
         <AccountTab data_kindname={datakind[3].data_kindname} data={cwData} id_title="ID" />
       </TabPanel>
       <TabPanel value={value} index={4}>
+        <AccountTab data_kindname={datakind[4].data_kindname} data={cybouzuData} id_title="ID" />
+      </TabPanel>
+      <TabPanel value={value} index={5}>
         <AccountTab data_kindname={datakind[4].data_kindname} data={cybouzuData} id_title="ID" />
       </TabPanel>
     </div>
