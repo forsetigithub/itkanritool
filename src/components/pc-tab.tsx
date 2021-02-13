@@ -4,7 +4,6 @@ import {tableIcons} from './tableIcons';
 import Moment from 'react-moment';
 import ja from 'date-fns/locale/ja';
 
-import axios from 'axios';
 
 interface PCItem {
   makerName:string;
@@ -18,7 +17,7 @@ interface PCItem {
 
 const PCTab:FC<{data:any}> = (props:{data:any}) => {
 
-  const [columns, setColumns] = useState<any>([
+  const columns:any = [
     {
       title: 'メーカー',field:'makerName',lookup: 
       {'DELL':'DELL','Apple':'Apple','HP':'HP','Microsoft':'Microsoft','acer':'acer'}
@@ -42,8 +41,7 @@ const PCTab:FC<{data:any}> = (props:{data:any}) => {
     { 
       title: '備考', field:'pcMemo'
     },
-
-  ]);
+  ];
 
   const [pcInfo,setPcInfo] = useState<PCItem[]>([]);
   

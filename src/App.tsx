@@ -28,6 +28,8 @@ import {Menu} from './Interface';
 // import './App.css';
 import ItemList from './components/Item-list';
 import PCAssetList from './components/pcasset-list';
+import EmployeeList from './components/employee-list';
+
 
 import SideNav from './components/sidenav';
 import { AppBar, CssBaseline, Drawer, Toolbar, Typography } from '@material-ui/core';
@@ -67,10 +69,10 @@ const MenuItems:Menu[] = [
     key:'home',title:'Home',icon:<HomeIcon />,path:"/home",main:() => (<ItemList />)
   },
   {
-    key:'assets',title:'機器一覧',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<PCAssetList />)
+    key:'assets',title:'機器一覧',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<PCAssetList title="機器一覧" />)
   },
   {
-    key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:"/employee",main:()=> (<h1>従業員一覧</h1>)
+    key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:"/employee",main:()=> (<EmployeeList />)
   },
   {
     key:'master',title:'マスタ管理',icon:<StorageIcon />,path:"/master",main:()=> (<h1>マスタ管理</h1>)

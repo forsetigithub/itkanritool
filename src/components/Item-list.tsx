@@ -46,11 +46,6 @@ const useStyle = makeStyles((theme: Theme) =>
   backdrop: {
     zIndex: theme.zIndex.drawer + 1, 
   },
-  detailButton: {
-    '& *:active':{
-      'outline': 'none'
-    }
-  }
 }));
 
 const columns = [
@@ -82,16 +77,13 @@ const ItemList: FC = () => {
   const [data,setData] = useState<any>([]);
 
   useEffect(()=> {
-    console.log('call useEffect')
     setLoading(true);
     axios.get('http://localhost:5000/api/itmanagement/getvpcitems')
     .then((result) => {
       setData(result.data);
       setLoading(false);
     });
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 3000);
+
   },[]);
 
 
@@ -136,7 +128,6 @@ const ItemList: FC = () => {
           detailPanel={(rowData:any) => {
             return(
               <ItemTab data={rowData} />
-              // <h2>{rowData.employeeName}</h2>
             )
           }}
         />

@@ -9,7 +9,6 @@ import {
 import { createStyles, makeStyles,Theme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -37,10 +36,13 @@ interface ListItemLinkProps {
   icon?: React.ReactElement;
   primary: string;
   to: string;
+  index:number;
+  selected:boolean;
+  onClick:(event:any) => any;
 }
 
 function ListItemLink(props: ListItemLinkProps) {
-  const { icon, primary, to } = props;
+  const { icon, primary, to, selected, onClick} = props;
 
   const renderLink = React.useMemo(
     () =>
@@ -49,10 +51,12 @@ function ListItemLink(props: ListItemLinkProps) {
       )),
     [to],
   );
-
+  
   return (
     <li>
-      <ListItem button component={renderLink}>
+      <ListItem button component={renderLink} 
+        selected={selected}
+        onClick={onClick}>
         {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
       </ListItem>
@@ -62,6 +66,13 @@ function ListItemLink(props: ListItemLinkProps) {
 
 const SideNav:FC<{menu:Menu[]}> = (props:{menu:Menu[]}) => {
   const classes = useStyles();
+
+  const [selectedIndex,setSelectedIndex] = useState(0);
+  const handleListItemClick = (
+    event: React.MouseEvent<HTMLDivElement,MouseEvent>,
+    index: number,) => {
+      setSelectedIndex(index);
+    };
 
   const list = (anchor: Anchor) => (
     <div
@@ -75,7 +86,10 @@ const SideNav:FC<{menu:Menu[]}> = (props:{menu:Menu[]}) => {
           <ListItemLink 
             icon={item.icon}
             primary={item.title}
-            to={item.path}      
+            to={item.path}
+            index={index}
+            selected={selectedIndex === index}
+            onClick={(event) => handleListItemClick(event,index)}
           />
         ))}
       </List>
