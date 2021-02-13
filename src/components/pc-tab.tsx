@@ -46,13 +46,13 @@ const PCTab:FC<{data:any}> = (props:{data:any}) => {
   const [pcInfo,setPcInfo] = useState<PCItem[]>([]);
   
   useEffect(() => {
-    const newPcInfo = [...pcInfo,{makerName: props.data.makerName,
+    const newPcInfo = [{makerName: props.data.makerName,
       pcTypeNumber: props.data.pcTypeNumber,pcServiceTag: props.data.pcServiceTag,
       assetKind:props.data.assetKind,warrantyPeriod: props.data.warrantyPeriod,
       warranty:props.data.warranty,pcMemo:props.data.pcMemo
     }];
     setPcInfo(newPcInfo);
-  },[]);
+  },[props]);
 
   return(
     <MaterialTable 

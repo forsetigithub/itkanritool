@@ -2,7 +2,6 @@ import React,{FC, useEffect, useState} from 'react';
 import MaterialTable from 'material-table';
 import {tableIcons} from './tableIcons';
 
-
 export interface AccountItem {
   employeecode:number;
   id:string;
@@ -13,49 +12,48 @@ const AccountTab: FC<any> = (props:{data_kindname:string,data:AccountItem,id_tit
 
   const [accountInfo, setAccountInfo] = useState<AccountItem[]>([]);
 
-  const [columns, setColumns] = useState<any>([
+  const columns:any = [
     {
       title: props.id_title,field:'id'
     },
     { 
       title: 'パスワード', field:'pw'
     }
-  ]);
+  ];
 
   useEffect(() => {
-    console.log(props.id_title);
-    setAccountInfo([...accountInfo,{employeecode:props.data.employeecode,
+    setAccountInfo([{employeecode:props.data.employeecode,
       id:props.data.id,pw:props.data.pw}]);
-  },[]);
+  },[props]);
 
   return(
-    <div>
-    <MaterialTable 
-      title=""
-      columns={columns}
-      localization={{
-        header:{
-          actions:''
-        }
-      }}
-      data={[...accountInfo]}
-      icons={tableIcons}
-      editable={{
-        onRowUpdate:(newData:any,oldData:any) => 
-          new Promise((resolve:any,reject:any) => {
-            const dataUpdate = [...accountInfo];
-            const index = oldData.tableData.id;
-            dataUpdate[index] = newData;
-            setAccountInfo([...dataUpdate]);
-            resolve();
-          })
-      }}
-      options={{
-        filtering:false,
-        search:false,
-      }}
-    />
-    </div>
+    <React.Fragment>
+      <MaterialTable 
+        columns={columns}
+        localization={{
+          header:{
+            actions:''
+          }
+        }}
+        data={[...accountInfo]}
+        icons={tableIcons}
+        editable={{
+          onRowUpdate:(newData:any,oldData:any) => 
+            new Promise((resolve:any,reject:any) => {
+              const dataUpdate = [...accountInfo];
+              const index = oldData.tableData.id;
+              dataUpdate[index] = newData;
+              setAccountInfo([...dataUpdate]);
+              resolve();
+            })
+        }}
+        options={{
+          filtering:false,
+          search:false,
+          showTitle:false,
+        }}
+      />
+    </React.Fragment>
   );
 }
 

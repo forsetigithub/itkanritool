@@ -9,8 +9,7 @@ import PCTab from './pc-tab';
 import OtherEquipment from './otherEquipment-tab';
 
 import AccountTab,{AccountItem} from './account-tab'; 
-import { Typography } from '@material-ui/core';
-import { ContactSupportOutlined } from '@material-ui/icons';
+
 
 interface TabPanelProps {
   children?: ReactNode;

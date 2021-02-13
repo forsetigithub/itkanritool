@@ -2,7 +2,6 @@ import React,{FC, useEffect, useState} from 'react';
 import MaterialTable from 'material-table';
 import {tableIcons} from './tableIcons';
 
-import axios from 'axios';
 
 interface EquipmentItem {
   monitorNumber1:string;
@@ -47,7 +46,7 @@ const OtherEquipment:FC<{data:any}> = (props:{data:any}) => {
   const [pcInfo,setPcInfo] = useState<EquipmentItem[]>([]);
   
   useEffect(() => {
-    const newPcInfo = [...pcInfo,
+    const newPcInfo = [
       {monitorNumber1: props.data.monitorNumber1,
        monitorNumber2: props.data.monitorNumber2,
        monitorNumber3: props.data.monitorNumber3,
@@ -59,7 +58,7 @@ const OtherEquipment:FC<{data:any}> = (props:{data:any}) => {
       }
       ];
     setPcInfo(newPcInfo);
-  },[]);
+  },[props]);
 
   return(
     <MaterialTable 

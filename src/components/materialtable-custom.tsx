@@ -44,7 +44,7 @@ const MeterialTableCustom:FC<any> = (props:Props) => {
       setLoading(false);
     });
 
-  },[]);
+  },[props]);
 
 
   return(

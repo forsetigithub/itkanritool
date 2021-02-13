@@ -1,9 +1,5 @@
 import React,{FC, useState} from 'react';
-import clsx from 'clsx';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link as RouterLink, LinkProps as RouterLinkProps
 } from "react-router-dom";
 import { createStyles, makeStyles,Theme } from '@material-ui/core/styles';
@@ -33,10 +29,10 @@ export interface Menu {
 };
 
 interface ListItemLinkProps {
+  key:number;
   icon?: React.ReactElement;
   primary: string;
   to: string;
-  index:number;
   selected:boolean;
   onClick:(event:any) => any;
 }
@@ -84,10 +80,10 @@ const SideNav:FC<{menu:Menu[]}> = (props:{menu:Menu[]}) => {
       <List>
         {props.menu.map((item, index) => (
           <ListItemLink 
+            key={index}
             icon={item.icon}
             primary={item.title}
             to={item.path}
-            index={index}
             selected={selectedIndex === index}
             onClick={(event) => handleListItemClick(event,index)}
           />

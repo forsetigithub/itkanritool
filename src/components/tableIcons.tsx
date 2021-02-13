@@ -1,5 +1,4 @@
 import React,{forwardRef} from 'react';
-import AddBox from '@material-ui/icons/AddBox';
 import AddCircle from '@material-ui/icons/AddCircle';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -16,7 +15,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import  { Icons } from 'material-table';
-import * as colors from '@material-ui/core/colors';
+// import * as colors from '@material-ui/core/colors';
 
 
 export const tableIcons:Icons = {

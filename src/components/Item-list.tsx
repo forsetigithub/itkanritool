@@ -1,11 +1,11 @@
-import React, {FC,forwardRef,useState,useEffect} from 'react';
-import useAxios from 'axios-hooks';
+import React, {FC,useState,useEffect} from 'react';
+
 import MaterialTable from 'material-table';
 import {tableIcons} from './tableIcons';
 
 import ItemTab from './item-tab';
 
-import { colors, createStyles, makeStyles,Theme } from '@material-ui/core';
+import { createStyles, makeStyles,Theme } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -19,19 +19,19 @@ import axios from 'axios';
 //   departmentName:string,
 // }
 
-interface DetailItems {
-  makerName:string,
-  pcTypeNumber:string,
-  pcServiceTag:string,
-  assetKind:string,
-  pcMemo:string,
-  monitorNumber1:string,
-  monitorNumber2:string,
-  monitorNumber3:string,
-  mouseMemo:string,
-  mouseNumber:string,
+// interface DetailItems {
+//   makerName:string,
+//   pcTypeNumber:string,
+//   pcServiceTag:string,
+//   assetKind:string,
+//   pcMemo:string,
+//   monitorNumber1:string,
+//   monitorNumber2:string,
+//   monitorNumber3:string,
+//   mouseMemo:string,
+//   mouseNumber:string,
 
-}
+// }
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -50,6 +50,7 @@ const useStyle = makeStyles((theme: Theme) =>
 
 const columns = [
   {field:"pcItemCode", title:"No.", 
+    filtering:false,
     cellStyle: {
       width:20,
       mixWidth:30
@@ -68,7 +69,6 @@ const columns = [
   {field:"employeeName"   , title:"従業員名"},
   {field:"departmentName" , title:"部署"}
 ];
-
 
 const ItemList: FC = () => {
   const classes = useStyle();

@@ -1,8 +1,6 @@
-import React, {FC,useState,useEffect} from 'react';
-import axios from 'axios';
+import React, {FC} from 'react';
 import Moment from 'react-moment';
 import MaterialTableCustom from './materialtable-custom';
-
 
 const columns:any = [
   {
