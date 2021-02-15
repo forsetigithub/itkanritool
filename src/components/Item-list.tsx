@@ -90,14 +90,13 @@ const ItemList: FC = () => {
       maxWidth:20
     }},
     {field:"employeeName", title:"従業員名",
-      filtering: false,
       editComponent:(props:any) => (
         <Autocomplete 
           options={employeelist}
           getOptionLabel={(option:any)=> option.employeeName}
           autoComplete
           autoSelect
-          renderInput={(params:any) => <TextField {...params} label='Name' variant="outlined" margin="normal" />}
+          renderInput={(params:any) => <TextField {...params} label='従業員名' placeholder={props.value}  variant="outlined" margin="normal" />}
           onChange={(e:any) => props.onChange(e.target.innerText)}
         />
       )
