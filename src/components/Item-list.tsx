@@ -8,16 +8,19 @@ import ItemTab from './item-tab';
 import { createStyles, makeStyles,Theme } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import {SingleSelect} from 'react-select-material-ui';
 
 import axios from 'axios';
 
-// interface ColumItems {
-//   pcItemCode:string,
-//   assetKindCode:string,
-//   itemNumber:string,
-//   employeeName:string,
-//   departmentName:string,
-// }
+interface ColumItems {
+  pcItemCode:string,
+  assetKindCode:string,
+  itemNumber:string,
+  employeeName:string,
+  departmentName:string,
+}
 
 // interface DetailItems {
 //   makerName:string,
@@ -48,33 +51,14 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
-const columns = [
-  {field:"pcItemCode", title:"No.", 
-    filtering:false,
-    cellStyle: {
-      width:20,
-      mixWidth:30
-    },
-    headerStyle: {
-      width:20,
-      mixWidth:30
-    }
-
-  }, 
-  {field:"assetKindCode"  , title:"資産種別"},
-  {field:"itemNumber"     , title:"備品番号",    
-    cellStyle:{
-    maxWidth:20
-  }},
-  {field:"employeeName"   , title:"従業員名"},
-  {field:"departmentName" , title:"部署"}
-];
 
 const ItemList: FC = () => {
+
   const classes = useStyle();
   
   const [isLoading,setLoading] = useState<boolean>(false);
   const [data,setData] = useState<any>([]);
+  const [employeelist,setEmployeelist] = useState<any>([]);
 
   useEffect(()=> {
     setLoading(true);
@@ -82,10 +66,44 @@ const ItemList: FC = () => {
     .then((result) => {
       setData(result.data);
       setLoading(false);
+      setEmployeelist(result.data);
     });
 
   },[]);
 
+  const columns = [
+    {field:"pcItemCode", title:"No.", 
+      filtering:false,
+      cellStyle: {
+        width:20,
+        mixWidth:30
+      },
+      headerStyle: {
+        width:20,
+        mixWidth:30
+      }
+  
+    }, 
+    {field:"assetKindCode"  , title:"資産種別"},
+    {field:"itemNumber"     , title:"備品番号",    
+      cellStyle:{
+      maxWidth:20
+    }},
+    {field:"employeeName", title:"従業員名",
+      filtering: false,
+      editComponent:(props:any) => (
+        <Autocomplete 
+          options={employeelist}
+          getOptionLabel={(option:any)=> option.employeeName}
+          autoComplete
+          autoSelect
+          renderInput={(params:any) => <TextField {...params} label='Name' variant="outlined" margin="normal" />}
+          onChange={(e:any) => props.onChange(e.target.innerText)}
+        />
+      )
+    },
+    {field:"departmentName" , title:"部署"}
+  ];
 
   return(
     <React.Fragment>
@@ -115,9 +133,7 @@ const ItemList: FC = () => {
                 const index = oldData.tableData.id;
                 dataUpdate[index] = newData;
                 setData([...dataUpdate]);
-
                 resolve();              
-
               })  
           }}
           options={{
