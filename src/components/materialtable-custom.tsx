@@ -38,6 +38,7 @@ const MeterialTableCustom:FC<any> = (props:Props) => {
 
   useEffect(()=> {
     setLoading(true);
+    console.log(props.getParam);
     axios.get('http://localhost:5000/api/itmanagement/' + props.getParam)
     .then((result) => {
       setData(result.data);

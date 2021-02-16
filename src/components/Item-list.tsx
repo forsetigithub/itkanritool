@@ -72,6 +72,7 @@ const ItemList: FC = () => {
 
   const columns = [
     {field:"pcItemCode", title:"No.", 
+      hidden:true,
       filtering:false,
       cellStyle: {
         width:20,
