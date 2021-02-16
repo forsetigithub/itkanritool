@@ -50,7 +50,7 @@ const columns:any = [
     cellStyle:{
       minWidth:80,
     },
-      render: (rowData:any) => (<Moment format="YYYY-MM-DD">{rowData.warrantyPeriod}</Moment> )
+    // render: (rowData:any) => (<Moment format="YYYY-MM-DD">{rowData.warrantyPeriod}</Moment> )
   },
   {
     title: '保証', field:'warranty'
