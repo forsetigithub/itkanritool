@@ -10,7 +10,6 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import {SingleSelect} from 'react-select-material-ui';
 
 import axios from 'axios';
 
