@@ -59,21 +59,40 @@ const ItemList: FC = () => {
   const [data,setData] = useState<any>([]);
   const [employeelist,setEmployeelist] = useState<any>([]);
 
-  useEffect(()=> {
+  const GetVPCitems = async () => {
+    console.log('GetVPCitems');
     setLoading(true);
-    axios.get('http://localhost:5000/api/itmanagement/getvpcitems')
+    await axios.get('http://localhost:5000/api/itmanagement/getvpcitems')
     .then((result) => {
       setData(result.data);
       setLoading(false);
-      setEmployeelist(result.data);
-    });
 
+    });
+  };
+
+  useEffect(()=> {
+    GetVPCitems();
   },[]);
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get('http://localhost:5000/api/itmanagement/GetEmployees')
+    .then((result) => {
+      setEmployeelist(result.data);
+      setLoading(false);
+    });
+  },[]);
+
+  const PostItems = (postitem:any) => {
+    axios.post('http://localhost:5000/api/itmanagement/PostVPCItems',postitem)
+    .then((result) =>{
+      GetVPCitems();
+    });
+  }
 
   const columns = [
     {field:"pcItemCode", title:"No.", 
-      hidden:true,
-      filtering:false,
+      hidden:true,filtering:false,
       cellStyle: {
         width:20,
         mixWidth:30
@@ -81,8 +100,7 @@ const ItemList: FC = () => {
       headerStyle: {
         width:20,
         mixWidth:30
-      }
-  
+      }  
     }, 
     {field:"assetKindCode"  , title:"資産種別"},
     {field:"itemNumber"     , title:"備品番号",    
@@ -93,7 +111,7 @@ const ItemList: FC = () => {
       editComponent:(props:any) => (
         <Autocomplete 
           options={employeelist}
-          getOptionLabel={(option:any)=> option.employeeName}
+          getOptionLabel={(option:any) => (option.lastName + ' ' + option.firstName)}
           autoComplete
           autoSelect
           renderInput={(params:any) => <TextField {...params} label='従業員名' placeholder={props.value}  variant="outlined" margin="normal" />}
@@ -112,7 +130,6 @@ const ItemList: FC = () => {
 
       <div className={classes.root}>
         <MaterialTable         
-          title=""
           columns={columns}
           data={data}
           localization={{
@@ -132,15 +149,20 @@ const ItemList: FC = () => {
                 const index = oldData.tableData.id;
                 dataUpdate[index] = newData;
                 setData([...dataUpdate]);
-                resolve();              
-              })  
+                PostItems(newData);
+                resolve(newData);              
+              }).then((value:any) => {
+ 
+              }) 
           }}
           options={{
             filtering:true,
             pageSize:10,
+            showTitle:false,
 
           }}
           detailPanel={(rowData:any) => {
+            // console.log(rowData);
             return(
               <ItemTab data={rowData} />
             )

@@ -66,7 +66,7 @@ const SideNav:FC<{menu:Menu[]}> = (props:{menu:Menu[]}) => {
   const [selectedIndex,setSelectedIndex] = useState(0);
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement,MouseEvent>,
-    index: number,) => {
+    index: number) => {
       setSelectedIndex(index);
     };
 
@@ -86,7 +86,7 @@ const SideNav:FC<{menu:Menu[]}> = (props:{menu:Menu[]}) => {
             to={item.path}
             selected={selectedIndex === index}
             onClick={(event) => handleListItemClick(event,index)}
-            
+
           />
         ))}
       </List>
@@ -102,8 +102,7 @@ const SideNav:FC<{menu:Menu[]}> = (props:{menu:Menu[]}) => {
         variant="permanent"
         classes= {{
           paper:classes.list
-        }}
-      >
+        }}>
         {list('left')}
       </Drawer>
     </React.Fragment>

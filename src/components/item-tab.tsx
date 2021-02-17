@@ -7,8 +7,9 @@ import Box from '@material-ui/core/Box';
 
 import PCTab from './pc-tab';
 import OtherEquipment from './otherEquipment-tab';
-
 import AccountTab,{AccountItem} from './account-tab'; 
+
+import axios from 'axios';
 
 
 interface TabPanelProps {
@@ -65,6 +66,10 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
   const [cybouzuData,setCybouzuData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.cybouzu_ID,pw:props.data.cybouzu_PW});
   // const [nasData,setNasData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data});
 
+  // const mailData:AccountItem = {employeecode:props.data.temporaryEmployeeCode,id:props.data.mailAddress,pw:props.data.mailPassword};
+  // const cwData:AccountItem = {employeecode:props.data.temporaryEmployeeCode,id:props.data.chatwork_ID,pw:props.data.chatwork_PW};
+  // const cybouzuData:AccountItem = {employeecode:props.data.temporaryEmployeeCode,id:props.data.cybouzu_ID,pw:props.data.cybouzu_PW};
+
   const datakind = [
     {data_kindname:'pc',title:'PC本体'},
     {data_kindname:'pc_other',title:'PC備品'},
@@ -75,8 +80,14 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
   ];
   
   useEffect(() => {
-    console.log(props.data.mailAddress);
-  });
+    // axios.get('http://localhost:5000/api/itmanagement/GetAccountInfoById/' +
+    //    props.data.companyCode + '/' + props.data.temporaryEmployeeCode)
+    //   .then((result) => {
+    //     setmailData({employeecode:result.data.temporaryEmployeeCode,id:result.data.mailAddress,pw:result.data.mailPassword});
+    //     setCwData({employeecode:result.data.temporaryEmployeeCode,id:result.data.chatwork_ID,pw:result.data.chatwork_PW});
+    //     setCybouzuData({employeecode:props.data.temporaryEmployeeCode,id:props.data.cybouzu_ID,pw:props.data.cybouzu_PW});
+    //   });
+  },[props]);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
