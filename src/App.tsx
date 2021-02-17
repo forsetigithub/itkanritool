@@ -10,8 +10,11 @@ import {makeStyles, createStyles, Theme}  from '@material-ui/core/styles';
 
 import HomeIcon from '@material-ui/icons/Home';
 import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
+import KeyboardIcon from '@material-ui/icons/Keyboard';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import StorageIcon from '@material-ui/icons/Storage';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import {Menu} from './Interface';
 // import './App.css';
@@ -59,10 +62,10 @@ const MenuItems:Menu[] = [
     key:'home',title:'Home',icon:<HomeIcon />,path:"/home",main:() => (<ItemList />)
   },
   {
-    key:'assets',title:'機器一覧_PC',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<PCAssetList />)
+    key:'assets',title:'機器一覧(PC)',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<PCAssetList />)
   },
   {
-    key:'otherassets',title:'機器一覧_PC以外',icon:<DesktopWindowsIcon />,path:"/otherassets",main:()=> (<OtherAssetList />)
+    key:'otherassets',title:'機器一覧(PC以外)',icon:<KeyboardIcon />,path:"/otherassets",main:()=> (<OtherAssetList />)
   },
   {
     key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:"/employee",main:()=> (<EmployeeList />)

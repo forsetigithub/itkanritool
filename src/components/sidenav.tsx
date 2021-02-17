@@ -37,7 +37,7 @@ interface ListItemLinkProps {
   onClick:(event:any) => any;
 }
 
-function ListItemLink(props: ListItemLinkProps) {
+const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
   const { icon, primary, to, selected, onClick} = props;
 
   const renderLink = React.useMemo(
@@ -86,6 +86,7 @@ const SideNav:FC<{menu:Menu[]}> = (props:{menu:Menu[]}) => {
             to={item.path}
             selected={selectedIndex === index}
             onClick={(event) => handleListItemClick(event,index)}
+            
           />
         ))}
       </List>

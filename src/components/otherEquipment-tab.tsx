@@ -66,6 +66,21 @@ const OtherEquipment:FC<{data:any}> = (props:{data:any}) => {
       columns={columns}
       data={[...pcInfo]}
       icons={tableIcons}
+      editable={{
+        onRowUpdate:(newData:any,oldData:any) => 
+          new Promise((resolve:any,reject:any) => {
+            const dataUpdate = [...pcInfo];
+            const index = oldData.tableData.id;
+            dataUpdate[index] = newData;
+            setPcInfo([...dataUpdate]);
+            resolve();
+          })
+      }}
+      localization={{
+        header:{
+          actions:'',
+        },
+      }}
       options={{
         filtering:false,
         search:false,
