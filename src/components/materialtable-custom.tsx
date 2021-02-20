@@ -7,13 +7,14 @@ import ja from 'date-fns/locale/ja';
 import { createStyles, makeStyles,Theme } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {EmployeeItem} from './employee-list';
 
 
 type Props = {
   title?: string;
   columns: any;
-  getParam:string;
-  postParam:string;
+  getParam?:string;
+  postParam?:string;
 }
 
 const useStyle = makeStyles((theme: Theme) =>
@@ -29,7 +30,7 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
-const MeterialTableCustom:FC<any> = (props:Props) => {
+const MeterialTableCustom = <T extends {}>({title,columns,getParam,postParam}:Props) => {
 
   const classes = useStyle();
   
@@ -38,22 +39,23 @@ const MeterialTableCustom:FC<any> = (props:Props) => {
 
   useEffect(()=> {
     setLoading(true);
-    console.log(props.getParam);
-    axios.get('http://localhost:5000/api/itmanagement/' + props.getParam)
+    console.log(getParam);
+    axios.get('http://localhost:5000/api/itmanagement/' + getParam)
     .then((result) => {
       setData(result.data);
       setLoading(false);
     });
 
-  },[props]);
+  },[getParam]);
 
-  const PostItem = (item:any) => {
-    console.log('Postietem');
-    console.log(item);
-    axios.post('http://localhost:5000/api/itmanagement/' + props.postParam,item)
+  const PostItem = (item: any) => {
+
+// console.log('Postietem');
+// console.log(item);
+    axios.post('http://localhost:5000/api/itmanagement/' + postParam,item)
       .then((result) => {
-        console.log(result.config); 
-        axios.get('http://localhost:5000/api/itmanagement/' + props.getParam)
+// console.log(result.config); 
+        axios.get('http://localhost:5000/api/itmanagement/' + getParam)
       });
   };
 
@@ -65,8 +67,8 @@ const MeterialTableCustom:FC<any> = (props:Props) => {
 
       <div className={classes.root}>
         <MaterialTable         
-          title={props.title === undefined ? '' : props.title}
-          columns={props.columns}
+          title={title === undefined ? '' : title}
+          columns={columns}
           data={data}
           localization={{
             header:{
@@ -91,10 +93,18 @@ const MeterialTableCustom:FC<any> = (props:Props) => {
                 resolve();              
 
               }),
-            onRowAdd: (newData:any) => 
+            onRowAdd: (newData: EmployeeItem) => 
               new Promise((resolve:any,reject:any) => {
-                setData([newData,...data]);
-                PostItem(newData);
+                const dataAdd = {companyCode:newData.companyCode,temporaryEmployeeCode: newData.temporaryEmployeeCode,
+                  formalEmployeeCode:newData.formalEmployeeCode,lastName:newData.lastName,firstName:newData.firstName,
+                  employmentCode: parseInt(newData.employmentCode.toString()),departmentCode: parseInt(newData.departmentCode.toString()),
+                  firstNameKana:'',lastNameKana:'',pCLoginPW:'',emailAddress:'',
+                  joinedDate:undefined,retiermentDate:undefined,existsFlag:true };
+
+                setData([dataAdd, ...data]);
+                console.log('onRowAdd:');
+                console.log(dataAdd);
+                PostItem(dataAdd);
                 resolve();
               }),
             onRowDelete: (oldData:any) =>

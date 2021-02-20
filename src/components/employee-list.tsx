@@ -14,19 +14,19 @@ export type EmployeeItem = {
   departmentCode:number;
   pCLoginPW:string;
   emailAddress:string;
-  joinedDate:Date;
-  retiermentDate:Date;
+  joinedDate?:Date;
+  retiermentDate?:Date;
   existsFlag:boolean;
 };
 
 const EmployeeList:FC<any> = () => {
   const columns:any = [
     {
-      title: 'companyCode',field: 'companyCode',
+      title: 'companyCode',field: 'companyCode', type:'numeric'
       // hidden:true, 
     },
     {
-      title: 'temporaryEmployeeCode',field: 'temporaryEmployeeCode',
+      title: 'temporaryEmployeeCode',field: 'temporaryEmployeeCode',type:'numeric'
       // hidden:true, 
     },
     {
@@ -49,7 +49,7 @@ const EmployeeList:FC<any> = () => {
       title: '名', field:'firstName'
     },
     { 
-      title: '雇用区分', field:'employmentCode',lookup: {1:'直雇用',2:'派遣'},
+      title: '雇用区分', field:'employmentCode',type:'numeric',lookup: {1:'直雇用',2:'派遣'},
       headerStyle:{
         width:120,
       },
@@ -58,12 +58,12 @@ const EmployeeList:FC<any> = () => {
       },
     },
     { 
-      title: '所属部署', field:'departmentCode',
-      lookup: {1:'Dreambox ', 2:'MO大橋 ',3:'アライアンス ',
-               4:'コール大橋 ',5:'プランツ ',6:'プランニング ',
-               7:'マキコミ ',8:'メディア支援 ',9:'わくわく ',
-              10:'経理財務室 ',11:'広告PR ',12:'事業推進 ',
-              13:'社長室 ',14:'情報システム管理室 ',15:'制作 ',
+      title: '所属部署', field:'departmentCode',type:'numeric',
+      lookup: {1:'Dreambox', 2:'MO大橋',3:'アライアンス',
+               4:'コール大橋',5:'プランツ',6:'プランニング',
+               7:'マキコミ',8:'メディア支援 ',9:'わくわく',
+              10:'経理財務室',11:'広告PR ',12:'事業推進',
+              13:'社長室',14:'情報システム管理室',15:'制作',
               16:'コール久留米',17:'マキコミ',18:'KIZUNA大分'},
       headerStyle:{
         width:120,
@@ -72,10 +72,35 @@ const EmployeeList:FC<any> = () => {
         minWidth:120,
       },
     },
+    {
+      title: 'pCLoginPW', field: 'pCLoginPW',hidden: true
+    },
+    {
+      title: 'emailAddress', field: 'emailAddress',hidden: true
+    },
+    {
+      title: 'joinedDate', field: 'joinedDate', type:'date', hidden: true
+    },
+    {
+      title: 'retiermentDate', field: 'retiermentDate', type:'date', hidden: true
+    },
+    {
+      title: 'existsFlag', field: 'existsFlag',hidden: true
+    },
+    {
+      title: 'lastNameKana', field: 'lastNameKana',hidden: true
+    },
+    {
+      title: 'firstNameKana', field: 'firstNameKana',hidden: true
+    },
+    {
+      title: 'existsFlag', field: 'pCLogiexistsFlagnPW',hidden: true
+    },
+
 ];
 
   return(
-    <MaterialTableCustom  columns={columns} getParam="GetEmployees" postParam="PostEmployee" />
+    <MaterialTableCustom<EmployeeItem>  columns={columns} getParam="GetEmployees" postParam="PostEmployee" />
   );
 }
 

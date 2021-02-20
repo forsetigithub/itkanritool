@@ -46,7 +46,7 @@ const OtherAssetList:FC<any> = () => {
 ];
 
   return(
-    <MaterialTableCustom columns={columns} getParam="GetOtherAssetItem" />
+    <MaterialTableCustom<any> columns={columns} getParam="GetOtherAssetItem" postParam="" />
   );
 }
 

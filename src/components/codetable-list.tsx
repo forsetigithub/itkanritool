@@ -40,7 +40,7 @@ const CodeTableList:FC<any> = () => {
 ];
 
   return(
-    <MaterialTableCustom columns={columns} getParam="GetMstCodeTable" />
+    <MaterialTableCustom<any> columns={columns} getParam="GetMstCodeTable" postParam="" />
   );
 }
 
