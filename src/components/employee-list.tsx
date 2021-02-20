@@ -2,11 +2,32 @@ import React,{FC} from 'react';
 //import Moment from 'react-moment';
 import MaterialTableCustom from './materialtable-custom';
 
+export type EmployeeItem = {
+  companyCode:number;
+  temporaryEmployeeCode:number;
+  formalEmployeeCode:string;
+  lastName:string;
+  firstName:string;
+  lastNameKana:string;
+  firstNameKana:string;
+  employmentCode:number;
+  departmentCode:number;
+  pCLoginPW:string;
+  emailAddress:string;
+  joinedDate:Date;
+  retiermentDate:Date;
+  existsFlag:boolean;
+};
+
 const EmployeeList:FC<any> = () => {
   const columns:any = [
     {
-      title: 'No',field: 'pcItemCode',
-      hidden:true, 
+      title: 'companyCode',field: 'companyCode',
+      // hidden:true, 
+    },
+    {
+      title: 'temporaryEmployeeCode',field: 'temporaryEmployeeCode',
+      // hidden:true, 
     },
     {
       title: '従業員番号',field: 'formalEmployeeCode',
@@ -54,7 +75,7 @@ const EmployeeList:FC<any> = () => {
 ];
 
   return(
-    <MaterialTableCustom columns={columns} getParam="GetEmployees" />
+    <MaterialTableCustom  columns={columns} getParam="GetEmployees" postParam="PostEmployee" />
   );
 }
 

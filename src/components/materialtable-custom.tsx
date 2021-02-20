@@ -47,6 +47,15 @@ const MeterialTableCustom:FC<any> = (props:Props) => {
 
   },[props]);
 
+  const PostItem = (item:any) => {
+    console.log('Postietem');
+    console.log(item);
+    axios.post('http://localhost:5000/api/itmanagement/' + props.postParam,item)
+      .then((result) => {
+        console.log(result.config); 
+        axios.get('http://localhost:5000/api/itmanagement/' + props.getParam)
+      });
+  };
 
   return(
     <React.Fragment>
@@ -78,16 +87,17 @@ const MeterialTableCustom:FC<any> = (props:Props) => {
                 const index = oldData.tableData.id;
                 dataUpdate[index] = newData;
                 setData([...dataUpdate]);
-
+                PostItem(newData);
                 resolve();              
 
               }),
-            onRowAdd: newData => 
+            onRowAdd: (newData:any) => 
               new Promise((resolve:any,reject:any) => {
                 setData([newData,...data]);
+                PostItem(newData);
                 resolve();
               }),
-            onRowDelete: oldData =>
+            onRowDelete: (oldData:any) =>
               new Promise((resolve:any,reject:any) =>{
                 const dataDelete = [...data];
                 const index = oldData.tableData.id;

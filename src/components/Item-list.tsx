@@ -119,6 +119,7 @@ const ItemList: FC = () => {
         />
       )
     },
+    {field:"pcLoginPW",title:"PCログインPW"},
     {field:"departmentName" , title:"部署"}
   ];
 
@@ -162,7 +163,6 @@ const ItemList: FC = () => {
 
           }}
           detailPanel={(rowData:any) => {
-            // console.log(rowData);
             return(
               <ItemTab data={rowData} />
             )
