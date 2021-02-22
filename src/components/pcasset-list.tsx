@@ -58,9 +58,18 @@ const PCAssetList:FC<any> = () => {
     { 
       title: '備考', field:'pcMemo'
     }];
+
+  const updateDataHandler = (item: any) => {
+
+  };
+
+  const deleteDataHandler = (item: any) => {
+
+  };
   
   return(
-    <MaterialTableCustom columns={columns} getParam="getpcitems" />
+    <MaterialTableCustom<any> columns={columns} getParam="getpcitems" 
+      updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} />
 
   );
 };

@@ -7,14 +7,14 @@ import ja from 'date-fns/locale/ja';
 import { createStyles, makeStyles,Theme } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {EmployeeItem} from './employee-list';
 
 
-type Props = {
+type Props<T> = {
   title?: string;
   columns: any;
   getParam?:string;
-  postParam?:string;
+  updateDataHandler: (item: T) => void;
+  deleteDataHandler: (item: T) => void;
 }
 
 const useStyle = makeStyles((theme: Theme) =>
@@ -30,7 +30,7 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
-const MeterialTableCustom = <T extends {}>({title,columns,getParam,postParam}:Props) => {
+const MeterialTableCustom = <T extends object>({title,columns,getParam,updateDataHandler,deleteDataHandler}:Props<T>) => {
 
   const classes = useStyle();
   
@@ -48,16 +48,6 @@ const MeterialTableCustom = <T extends {}>({title,columns,getParam,postParam}:Pr
 
   },[getParam]);
 
-  const PostItem = (item: any) => {
-
-// console.log('Postietem');
-// console.log(item);
-    axios.post('http://localhost:5000/api/itmanagement/' + postParam,item)
-      .then((result) => {
-// console.log(result.config); 
-        axios.get('http://localhost:5000/api/itmanagement/' + getParam)
-      });
-  };
 
   return(
     <React.Fragment>
@@ -83,28 +73,20 @@ const MeterialTableCustom = <T extends {}>({title,columns,getParam,postParam}:Pr
           }}
           icons={tableIcons}
           editable={{
-            onRowUpdate:(newData:any,oldData:any) => 
+            onRowUpdate:(newData:T,oldData:any) => 
               new Promise((resolve:any,reject:any) => {
                 const dataUpdate = [...data];
                 const index = oldData.tableData.id;
                 dataUpdate[index] = newData;
                 setData([...dataUpdate]);
-                PostItem(newData);
+                updateDataHandler(newData);
                 resolve();              
 
               }),
-            onRowAdd: (newData: EmployeeItem) => 
+            onRowAdd: (newData: T) => 
               new Promise((resolve:any,reject:any) => {
-                const dataAdd = {companyCode:newData.companyCode,temporaryEmployeeCode: newData.temporaryEmployeeCode,
-                  formalEmployeeCode:newData.formalEmployeeCode,lastName:newData.lastName,firstName:newData.firstName,
-                  employmentCode: parseInt(newData.employmentCode.toString()),departmentCode: parseInt(newData.departmentCode.toString()),
-                  firstNameKana:'',lastNameKana:'',pCLoginPW:'',emailAddress:'',
-                  joinedDate:undefined,retiermentDate:undefined,existsFlag:true };
-
-                setData([dataAdd, ...data]);
-                console.log('onRowAdd:');
-                console.log(dataAdd);
-                PostItem(dataAdd);
+                setData([newData, ...data]);
+                updateDataHandler(newData);
                 resolve();
               }),
             onRowDelete: (oldData:any) =>
@@ -113,6 +95,7 @@ const MeterialTableCustom = <T extends {}>({title,columns,getParam,postParam}:Pr
                 const index = oldData.tableData.id;
                 dataDelete.splice(index,1);
                 setData([...dataDelete]);
+                deleteDataHandler(oldData);
                 resolve();
               })
           }}

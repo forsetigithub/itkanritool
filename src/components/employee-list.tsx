@@ -1,5 +1,6 @@
 import React,{FC} from 'react';
 //import Moment from 'react-moment';
+import axios from 'axios';
 import MaterialTableCustom from './materialtable-custom';
 
 export type EmployeeItem = {
@@ -22,12 +23,12 @@ export type EmployeeItem = {
 const EmployeeList:FC<any> = () => {
   const columns:any = [
     {
-      title: 'companyCode',field: 'companyCode', type:'numeric'
-      // hidden:true, 
+      title: 'companyCode',field: 'companyCode', type:'numeric',
+      hidden:true, 
     },
     {
-      title: 'temporaryEmployeeCode',field: 'temporaryEmployeeCode',type:'numeric'
-      // hidden:true, 
+      title: 'temporaryEmployeeCode',field: 'temporaryEmployeeCode',type:'numeric',
+      hidden:true, 
     },
     {
       title: '従業員番号',field: 'formalEmployeeCode',
@@ -99,8 +100,35 @@ const EmployeeList:FC<any> = () => {
 
 ];
 
+  const PostItem = (item: EmployeeItem) => {
+    const postData = {companyCode:item.companyCode,temporaryEmployeeCode: item.temporaryEmployeeCode,
+                    formalEmployeeCode:item.formalEmployeeCode,lastName:item.lastName,firstName:item.firstName,
+                    employmentCode: parseInt(item.employmentCode.toString()),departmentCode: parseInt(item.departmentCode.toString()),
+                    firstNameKana:'',lastNameKana:'',pCLoginPW:'',emailAddress:'',
+                    joinedDate:undefined,retiermentDate:undefined,existsFlag:true };
+
+    axios.post('http://localhost:5000/api/itmanagement/PostEmployee',postData)
+      .then((result) => {
+        axios.get('http://localhost:5000/api/itmanagement/GetEmployees');
+      });
+    
+  }
+
+  const updateDataHandler = (item: EmployeeItem) => {
+    PostItem(item);
+  };
+
+  const deleteDataHandler = (item: EmployeeItem) => {
+    axios.post('http://localhost:5000/api/itmanagement/DeleteEmployee' ,item)
+      .then((result) => {
+        axios.get('http://localhost:5000/api/itmanagement/GetEmployees')
+      })
+  }
+
+
   return(
-    <MaterialTableCustom<EmployeeItem>  columns={columns} getParam="GetEmployees" postParam="PostEmployee" />
+    <MaterialTableCustom<EmployeeItem>  columns={columns} getParam="GetEmployees" 
+      updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler}  />
   );
 }
 

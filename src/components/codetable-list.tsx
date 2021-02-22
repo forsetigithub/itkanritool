@@ -1,6 +1,15 @@
 import React,{FC} from 'react';
 import MaterialTableCustom from './materialtable-custom';
 
+export type CodeItem = {
+  codeKindID: number;
+  codeKindName: string;
+  codeID: number;
+  codeName: string;
+  orderNumber?: number;
+};
+
+
 const CodeTableList:FC<any> = () => {
   const columns:any = [
     {
@@ -39,8 +48,17 @@ const CodeTableList:FC<any> = () => {
     },    
 ];
 
+  const updateDataHandler = (item: CodeItem) => {
+
+  };
+
+  const deleteDataHandler = (item :CodeItem) => {
+
+  };
+
   return(
-    <MaterialTableCustom<any> columns={columns} getParam="GetMstCodeTable" postParam="" />
+    <MaterialTableCustom<CodeItem> columns={columns} getParam="GetMstCodeTable" 
+      updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler}  />
   );
 }
 

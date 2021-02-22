@@ -45,8 +45,17 @@ const OtherAssetList:FC<any> = () => {
 
 ];
 
+  const updateDataHandler = (item: any) => {
+
+  };
+
+  const deleteDataHandler = (item :any) => {
+
+  };
+
   return(
-    <MaterialTableCustom<any> columns={columns} getParam="GetOtherAssetItem" postParam="" />
+    <MaterialTableCustom<any> columns={columns} getParam="GetOtherAssetItem" 
+      updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} />
   );
 }
 
