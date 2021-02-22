@@ -62,7 +62,7 @@ const ItemList: FC = () => {
   const GetVPCitems = async () => {
     console.log('GetVPCitems');
     setLoading(true);
-    await axios.get('http://localhost:5000/api/itmanagement/getvpcitems')
+    await axios.get('http://192.168.1.80:5002/api/itmanagement/getvpcitems')
     .then((result) => {
       setData(result.data);
       setLoading(false);
@@ -76,7 +76,7 @@ const ItemList: FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get('http://localhost:5000/api/itmanagement/GetEmployees')
+    axios.get('http://192.168.1.80:5002/api/itmanagement/GetEmployees')
     .then((result) => {
       setEmployeelist(result.data);
       setLoading(false);
@@ -84,7 +84,7 @@ const ItemList: FC = () => {
   },[]);
 
   const PostItems = (postitem:any) => {
-    axios.post('http://localhost:5000/api/itmanagement/PostVPCItems',postitem)
+    axios.post('http://192.168.1.80:5002/api/itmanagement/PostVPCItems',postitem)
     .then((result) =>{
       GetVPCitems();
     });
