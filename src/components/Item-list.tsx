@@ -50,19 +50,19 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
+const BASE_URL = 'http://localhost:5000';
+// const BASE_URL = 'http://192.168.1.80:5002/';
 
 const ItemList: FC = () => {
-
   const classes = useStyle();
   
   const [isLoading,setLoading] = useState<boolean>(false);
   const [data,setData] = useState<any>([]);
-  const [employeelist,setEmployeelist] = useState<any>([]);
 
   const GetVPCitems = async () => {
     console.log('GetVPCitems');
     setLoading(true);
-    await axios.get('http://192.168.1.80:5002/api/itmanagement/getvpcitems')
+    await axios.get(BASE_URL + '/api/itmanagement/getvpcitems')
     .then((result) => {
       setData(result.data);
       setLoading(false);
@@ -74,17 +74,9 @@ const ItemList: FC = () => {
     GetVPCitems();
   },[]);
 
-  useEffect(() => {
-    setLoading(true);
-    axios.get('http://192.168.1.80:5002/api/itmanagement/GetEmployees')
-    .then((result) => {
-      setEmployeelist(result.data);
-      setLoading(false);
-    });
-  },[]);
 
   const PostItems = (postitem:any) => {
-    axios.post('http://192.168.1.80:5002/api/itmanagement/PostVPCItems',postitem)
+    axios.post(BASE_URL + '/api/itmanagement/PostVPCItems',postitem)
     .then((result) =>{
       GetVPCitems();
     });
@@ -110,12 +102,16 @@ const ItemList: FC = () => {
     {field:"employeeName", title:"従業員名",
       editComponent:(props:any) => (
         <Autocomplete 
-          options={employeelist}
-          getOptionLabel={(option:any) => (option.lastName + ' ' + option.firstName)}
+          options={data}
+          getOptionLabel={(option:any) => (option.employeeName)}
+          defaultValue={{employeeName: props.value,pcItemCode:0,
+            assetKindCode:'',itemNumber:'',pcLoginPW:'',departmentName:''}}
+          getOptionSelected={(option,value) => option.employeeName === value.employeeName}
           autoComplete
           autoSelect
-          renderInput={(params:any) => <TextField {...params} label='従業員名' placeholder={props.value}  variant="outlined" margin="normal" />}
-          onChange={(e:any) => props.onChange(e.target.innerText)}
+          autoHighlight
+          renderInput={(params:any) => <TextField {...params} label='従業員名' variant="outlined" margin="normal" />}
+                      onChange={(e:any) => props.onChange(e.target.innerText)}
         />
       )
     },
