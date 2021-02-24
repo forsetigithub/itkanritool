@@ -3,8 +3,6 @@ import React, {FC,useState,useEffect} from 'react';
 import MaterialTable from 'material-table';
 import {tableIcons} from './tableIcons';
 
-import ItemTab from './item-tab';
-
 import { createStyles, makeStyles,Theme } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -12,6 +10,9 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import axios from 'axios';
+
+import ItemTab from './item-tab';
+import * as PROPS from '../App.properties';
 
 interface ColumItems {
   pcItemCode:string,
@@ -50,8 +51,7 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
-const BASE_URL = 'http://localhost:5000';
-// const BASE_URL = 'http://192.168.1.80:5002/';
+
 
 const ItemList: FC = () => {
   const classes = useStyle();
@@ -62,7 +62,7 @@ const ItemList: FC = () => {
   const GetVPCitems = async () => {
     console.log('GetVPCitems');
     setLoading(true);
-    await axios.get(BASE_URL + '/api/itmanagement/getvpcitems')
+    await axios.get(PROPS.BASE_URL + '/api/itmanagement/getvpcitems')
     .then((result) => {
       setData(result.data);
       setLoading(false);
@@ -76,7 +76,7 @@ const ItemList: FC = () => {
 
 
   const PostItems = (postitem:any) => {
-    axios.post(BASE_URL + '/api/itmanagement/PostVPCItems',postitem)
+    axios.post(PROPS.BASE_URL + '/api/itmanagement/PostVPCItems',postitem)
     .then((result) =>{
       GetVPCitems();
     });

@@ -2,6 +2,7 @@ import React,{FC} from 'react';
 //import Moment from 'react-moment';
 import axios from 'axios';
 import MaterialTableCustom from './materialtable-custom';
+import * as PROPS from '../App.properties';
 
 export type EmployeeItem = {
   companyCode:number;
@@ -107,9 +108,9 @@ const EmployeeList:FC<any> = () => {
                     firstNameKana:'',lastNameKana:'',pCLoginPW:'',emailAddress:'',
                     joinedDate:undefined,retiermentDate:undefined,existsFlag:true };
 
-    axios.post('http://localhost:5000/api/itmanagement/PostEmployee',postData)
+    axios.post(PROPS.BASE_URL +'/api/itmanagement/PostEmployee',postData)
       .then((result) => {
-        axios.get('http://localhost:5000/api/itmanagement/GetEmployees');
+        axios.get(PROPS.BASE_URL + '/api/itmanagement/GetEmployees');
       });
     
   }
@@ -119,9 +120,9 @@ const EmployeeList:FC<any> = () => {
   };
 
   const deleteDataHandler = (item: EmployeeItem) => {
-    axios.post('http://localhost:5000/api/itmanagement/DeleteEmployee' ,item)
+    axios.post(PROPS.BASE_URL + '/api/itmanagement/DeleteEmployee' ,item)
       .then((result) => {
-        axios.get('http://localhost:5000/api/itmanagement/GetEmployees')
+        axios.get(PROPS.BASE_URL + '/api/itmanagement/GetEmployees')
       })
   }
 

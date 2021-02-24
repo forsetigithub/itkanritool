@@ -8,6 +8,7 @@ import { createStyles, makeStyles,Theme } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import * as PROPS from '../App.properties';
 
 type Props<T> = {
   title?: string;
@@ -40,7 +41,7 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,updateDat
   useEffect(()=> {
     setLoading(true);
     console.log(getParam);
-    axios.get('http://localhost:5000/api/itmanagement/' + getParam)
+    axios.get(PROPS.BASE_URL + '/api/itmanagement/' + getParam)
     .then((result) => {
       setData(result.data);
       setLoading(false);
