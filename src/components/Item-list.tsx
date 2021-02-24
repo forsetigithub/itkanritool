@@ -58,6 +58,7 @@ const ItemList: FC = () => {
   
   const [isLoading,setLoading] = useState<boolean>(false);
   const [data,setData] = useState<any>([]);
+  const [employeelist,setEmployeelist] = useState<any>([]);
 
   const GetVPCitems = async () => {
     console.log('GetVPCitems');
@@ -74,6 +75,14 @@ const ItemList: FC = () => {
     GetVPCitems();
   },[]);
 
+  useEffect(() => {
+    setLoading(true);
+    axios.get(PROPS.BASE_URL + '/api/itmanagement/GetEmployeeNameList')
+    .then((result) => {
+      setEmployeelist(result.data);
+      setLoading(false);
+    });
+  },[]);
 
   const PostItems = (postitem:any) => {
     axios.post(PROPS.BASE_URL + '/api/itmanagement/PostVPCItems',postitem)
@@ -102,7 +111,7 @@ const ItemList: FC = () => {
     {field:"employeeName", title:"従業員名",
       editComponent:(props:any) => (
         <Autocomplete 
-          options={data}
+          options={employeelist}
           getOptionLabel={(option:any) => (option.employeeName)}
           defaultValue={{employeeName: props.value,pcItemCode:0,
             assetKindCode:'',itemNumber:'',pcLoginPW:'',departmentName:''}}
@@ -110,6 +119,7 @@ const ItemList: FC = () => {
           autoComplete
           autoSelect
           autoHighlight
+          
           renderInput={(params:any) => <TextField {...params} label='従業員名' variant="outlined" margin="normal" />}
                       onChange={(e:any) => props.onChange(e.target.innerText)}
         />
