@@ -8,6 +8,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -31,14 +32,16 @@ export interface Menu {
 interface ListItemLinkProps {
   key:number;
   icon?: React.ReactElement;
+  iconColor?: React.CSSProperties;
   primary: string;
   to: string;
   selected:boolean;
+  style?:React.CSSProperties;
   onClick:(event:any) => any;
 }
 
 const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
-  const { icon, primary, to, selected, onClick} = props;
+  const { icon,iconColor, primary, to, selected,style, onClick} = props;
 
   const renderLink = React.useMemo(
     () =>
@@ -51,9 +54,10 @@ const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
   return (
     <li>
       <ListItem button component={renderLink} 
-        selected={selected}
-        onClick={onClick}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        selected={selected} 
+        onClick={onClick}
+        style={style}>
+        {icon ? <ListItemIcon style={iconColor} >{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
       </ListItem>
     </li>
@@ -82,9 +86,11 @@ const SideNav:FC<{menu:Menu[]}> = (props:{menu:Menu[]}) => {
           <ListItemLink 
             key={index}
             icon={item.icon}
+            iconColor={selectedIndex === index ? {color: blue[500]} : undefined}
             primary={item.title}
             to={item.path}
             selected={selectedIndex === index}
+            style={selectedIndex === index ? {backgroundColor: blue[50],color: blue[500]} : undefined}
             onClick={(event) => handleListItemClick(event,index)}
 
           />
