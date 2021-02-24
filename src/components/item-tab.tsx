@@ -9,9 +9,6 @@ import PCTab from './pc-tab';
 import OtherEquipment from './otherEquipment-tab';
 import AccountTab,{AccountItem} from './account-tab'; 
 
-import axios from 'axios';
-
-
 interface TabPanelProps {
   children?: ReactNode;
   index: any;
