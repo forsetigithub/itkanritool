@@ -20,7 +20,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        KIZUNA.inc
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -69,7 +69,7 @@ export default function SignIn({setToken}:any) {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          IT資産管理台帳
         </Typography>
         <form className={classes.form} onSubmit={onSubmitHandler} noValidate>
           <TextField
@@ -94,10 +94,10 @@ export default function SignIn({setToken}:any) {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
@@ -106,17 +106,17 @@ export default function SignIn({setToken}:any) {
             className={classes.submit}
             onClick={onSubmitHandler}
           >
-            Sign In
+            ログイン
           </Button>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
-                Forgot password?
+                {/* Forgot password? */}
               </Link>
             </Grid>
             <Grid item>
               <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+                {/* {"Don't have an account? Sign Up"} */}
               </Link>
             </Grid>
           </Grid>
