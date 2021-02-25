@@ -15,7 +15,6 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import  { Icons } from 'material-table';
-// import * as colors from '@material-ui/core/colors';
 
 
 export const tableIcons:Icons = {

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect, FC} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,7 +19,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="#">
         KIZUNA.inc
       </Link>{' '}
       {new Date().getFullYear()}
@@ -49,10 +49,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // eslint-disable-next-line no-empty-pattern
-export default function SignIn({setToken}:any) {
+const SignIn:FC<any> = ({setToken}:any) => {
   const classes = useStyles();
-  const [username,setUserName] = useState();
-  const [password, setPassword] = useState();
+  const [username,setUserName] = useState<string>();
+  const [password, setPassword] = useState<string>();
 
   const onSubmitHandler = (event: React.FormEvent<HTMLButtonElement | HTMLFormElement>) => {
     console.log('onSubmitHandler');
@@ -60,6 +60,11 @@ export default function SignIn({setToken}:any) {
     const token = () => { return({username:username,password:password})};
     setToken(token);
   };
+
+  useEffect(() => {
+    setUserName('kimura');
+    setPassword('');
+  },[]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -129,6 +134,7 @@ export default function SignIn({setToken}:any) {
   );
 }
 
+export default SignIn;
 // SignIn.protoTypes = {
 //   setToken: PropTypes.func.isRequired
 // }
