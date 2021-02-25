@@ -6,7 +6,9 @@ function App() {
   const [token,setToken] = useState();
 
   if(!token) {
-    return (<SignIn setToken={setToken} />);
+    return (
+      <SignIn setToken={setToken} />
+    );
   }
 
   return (

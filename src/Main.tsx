@@ -34,12 +34,14 @@ const useStyles = makeStyles((theme: Theme) =>
   
       // },
       display:'flex',
+      marginTop:theme.spacing(4),
     },
     appBar: {
-      zIndex:theme.zIndex.drawer + 1
+      zIndex:theme.zIndex.drawer + 1,
+      marginBottom:theme.spacing(4),
     },
     main: {
-      paddingTop:theme.spacing(4),
+      marginTop:theme.spacing(4),
     },
     title: {
       flexGrow:1,
@@ -77,7 +79,7 @@ const Main:FC = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <React.Fragment>
       <Router>
         <div className={classes.root}>
           <SideNav menu={MenuItems}  />
@@ -98,11 +100,11 @@ const Main:FC = () => {
       </Router>
 
       <AppBar position="fixed" className={classes.appBar}>
-      <Toolbar variant="dense">
-        <Typography variant="h6" className={classes.title}>IT資産管理台帳</Typography>
-      </Toolbar>
+        <Toolbar variant="regular">
+          <Typography variant="h6" className={classes.title}>IT資産管理台帳</Typography>
+        </Toolbar>
       </AppBar>
-    </div>
+    </React.Fragment>
 
   );
 }
