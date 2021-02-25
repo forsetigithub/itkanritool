@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import Moment from 'react-moment';
+// import Moment from 'react-moment';
 import MaterialTableCustom from './materialtable-custom';
 
 const PCAssetList:FC<any> = () => {

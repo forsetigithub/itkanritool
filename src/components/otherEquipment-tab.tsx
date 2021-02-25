@@ -16,7 +16,7 @@ interface EquipmentItem {
 
 const OtherEquipment:FC<{data:any}> = (props:{data:any}) => {
 
-  const [columns, setColumns] = useState<any>([
+  const columns = [
     { 
       title: 'モニター1', field:'monitorNumber1'
     },
@@ -41,7 +41,7 @@ const OtherEquipment:FC<{data:any}> = (props:{data:any}) => {
     { 
       title: 'キーボード備考', field:'keyboardMemo'
     },
-  ]);
+  ];
 
   const [pcInfo,setPcInfo] = useState<EquipmentItem[]>([]);
   

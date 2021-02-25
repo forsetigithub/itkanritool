@@ -14,13 +14,13 @@ import axios from 'axios';
 import ItemTab from './item-tab';
 import * as PROPS from '../App.properties';
 
-interface ColumItems {
-  pcItemCode:string,
-  assetKindCode:string,
-  itemNumber:string,
-  employeeName:string,
-  departmentName:string,
-}
+// interface ColumItems {
+//   pcItemCode:string,
+//   assetKindCode:string,
+//   itemNumber:string,
+//   employeeName:string,
+//   departmentName:string,
+// }
 
 // interface DetailItems {
 //   makerName:string,

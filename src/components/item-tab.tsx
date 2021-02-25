@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 
 import PCTab from './pc-tab';
 import OtherEquipment from './otherEquipment-tab';
-import AccountTab,{AccountItem} from './account-tab'; 
+import AccountTab from './account-tab'; 
 
 interface TabPanelProps {
   children?: ReactNode;
@@ -58,9 +58,9 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
 
   const [value, setValue] = useState(0);
 
-  const [mailData,setmailData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.mailAddress,pw:props.data.mailPassword});
-  const [cwData,setCwData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.chatwork_ID,pw:props.data.chatwork_PW});
-  const [cybouzuData,setCybouzuData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data.cybouzu_ID,pw:props.data.cybouzu_PW});
+  const mailData = {employeecode:props.data.temporaryEmployeeCode,id:props.data.mailAddress,pw:props.data.mailPassword};
+  const cwData = {employeecode:props.data.temporaryEmployeeCode,id:props.data.chatwork_ID,pw:props.data.chatwork_PW};
+  const cybouzuData = {employeecode:props.data.temporaryEmployeeCode,id:props.data.cybouzu_ID,pw:props.data.cybouzu_PW};
   // const [nasData,setNasData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data});
 
   // const mailData:AccountItem = {employeecode:props.data.temporaryEmployeeCode,id:props.data.mailAddress,pw:props.data.mailPassword};

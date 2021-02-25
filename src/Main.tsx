@@ -13,8 +13,6 @@ import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
 import KeyboardIcon from '@material-ui/icons/Keyboard';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import StorageIcon from '@material-ui/icons/Storage';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import {Menu} from './Interface';
 import ItemList from './components/Item-list';
