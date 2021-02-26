@@ -12,8 +12,18 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { red } from '@material-ui/core/colors';
+
+import axios from 'axios';
+
+import * as PROPS from '../App.properties';
 
 // import PropTypes from 'prop-types';
+
+type Credentials = {
+  mailAddress?:string;
+  pw?:string;
+};
 
 function Copyright() {
   return (
@@ -46,23 +56,46 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  error: {
+    color:red[500],
+  }
 }));
+
+
+
 
 // eslint-disable-next-line no-empty-pattern
 const SignIn:FC<any> = ({setToken}:any) => {
   const classes = useStyles();
-  const [username,setUserName] = useState<string>();
-  const [password, setPassword] = useState<string>();
 
-  const onSubmitHandler = (event: React.FormEvent<HTMLButtonElement | HTMLFormElement>) => {
-    console.log('onSubmitHandler');
+  const [username,setUserName] = useState<string>();
+  const [password,setPassword] = useState<string>();
+  const [errormsg,setErrorMsg] = useState<string>('');
+
+  const  GetLoginUser = async (credentials:Credentials) => {
+    await axios.get(PROPS.BASE_URL + '/api/itmanagement/GetLoginUser/' + credentials.mailAddress + '/' + credentials.pw)
+      .then((result) => {
+        setToken(result.data);               
+      })
+      .catch((error) => {
+        if(error.response) {
+          setErrorMsg('メールアドレスまたはパスワードが違います')
+        }
+      });
+    
+  };
+
+  const onSubmitHandler = async (event: React.FormEvent<HTMLButtonElement | HTMLFormElement>) => {
+
     event.preventDefault();
-    const token = () => { return({username:username,password:password})};
-    setToken(token);
+
+    const credentials:Credentials = {mailAddress:username, pw:password};
+    await GetLoginUser(credentials);
+
   };
 
   useEffect(() => {
-    setUserName('kimura');
+    setUserName('');
     setPassword('');
   },[]);
 
@@ -87,6 +120,7 @@ const SignIn:FC<any> = ({setToken}:any) => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={(e:any) => setUserName(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -98,6 +132,7 @@ const SignIn:FC<any> = ({setToken}:any) => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={(e:any) => setPassword(e.target.value)}
           />
           {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -115,6 +150,8 @@ const SignIn:FC<any> = ({setToken}:any) => {
           </Button>
           <Grid container>
             <Grid item xs>
+            <Typography className={classes.error} >{errormsg}</Typography>
+            
               {/* <Link href="#" variant="body2">
                 Forgot password?
               </Link> */}
