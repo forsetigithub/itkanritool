@@ -8,7 +8,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { blue,red,indigo } from '@material-ui/core/colors';
+import { blue,red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
