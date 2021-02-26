@@ -6,6 +6,7 @@ function App() {
   const [token,setToken] = useState();
 
   if(!token) {
+    console.log('********* Back to SignIn *********');
     return (
       <SignIn setToken={setToken} />
     );

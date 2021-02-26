@@ -2,8 +2,10 @@ import React,{FC} from 'react';
 
 import {
   BrowserRouter as Router,
+  // HashRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 
 import {makeStyles, createStyles, Theme}  from '@material-ui/core/styles';
@@ -86,8 +88,18 @@ const Main:FC = () => {
           <main className={classes.main}>
             <div>
               <Switch>
+                <Route 
+                  exact
+                  path="/"
+                  render={()=> {
+                    return(
+                      <Redirect to="/home" />
+                    )
+                  }}
+                />
                 {MenuItems.map((route,index) => (            
                   <Route 
+                    exact
                     key={index}
                     path={route.path}
                     children={<route.main />}
