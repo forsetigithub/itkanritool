@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+  app:
+    image: forsetigithub/itmanagement
+    container_name: itmanagement
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+     - "8080:80"
+    stdin_open: true
+    tty: true
+
+  itmanagementwebapi:
+    image: forsetigithub/itmanagementwebapi
+    container_name: webapi
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+      
+  db:
+    image: forsetigithub/mssqldb
+    container_name: sqlsv1
+    hostname: localhost
+    volumes:
+      - C:\Dockerfile\SQLServer\DB:/MSSQL
+    ports:
+      - 1433:1433 

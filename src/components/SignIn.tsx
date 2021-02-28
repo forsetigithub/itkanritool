@@ -75,6 +75,7 @@ const SignIn:FC<any> = ({setToken}:any) => {
   const  GetLoginUser = async (credentials:Credentials) => {
     await axios.get(PROPS.BASE_URL + '/api/itmanagement/GetLoginUser/' + credentials.mailAddress + '/' + credentials.pw)
       .then((result) => {
+        sessionStorage.setItem(PROPS.LOGIN_TOKEN,result.data);
         setToken(result.data);               
       })
       .catch((error) => {

@@ -14,27 +14,40 @@ import axios from 'axios';
 import ItemTab from './item-tab';
 import * as PROPS from '../App.properties';
 
-// interface ColumItems {
-//   pcItemCode:string,
-//   assetKindCode:string,
-//   itemNumber:string,
-//   employeeName:string,
-//   departmentName:string,
-// }
-
-// interface DetailItems {
-//   makerName:string,
-//   pcTypeNumber:string,
-//   pcServiceTag:string,
-//   assetKind:string,
-//   pcMemo:string,
-//   monitorNumber1:string,
-//   monitorNumber2:string,
-//   monitorNumber3:string,
-//   mouseMemo:string,
-//   mouseNumber:string,
-
-// }
+type VPCitem = {
+  pcItemCode: number;
+  assetKindCode: string;
+  itemNumber: string;
+  companyCode: number;
+  temporaryEmployeeCode: number;
+  formalEmployeeCode: string;
+  employeeName: string;
+  departmentName: string;
+  makerName: string;
+  pcTypeNumber: string;
+  pcServiceTag: string;
+  assetKind: string;
+  pcMemo: string; 
+  monitorNumber1: string;
+  monitorNumber2: string; 
+  monitorNumber3: string;
+  monitorMemo: string;
+  mouseNumber: string;
+  mouseMemo: string;
+  keyboardNumber: string;
+  keyboardMemo: string;
+  warrantyPeriod: Date;
+  warranty: string;
+  vpnSetting: string;
+  mailAddress: string;
+  mailPassword: string;
+  chatwork_ID: string;
+  chatwork_PW: string;
+  office365_ID: string;
+  cybouzu_ID: string;
+  cybouzu_PW: string;
+  pcLoginPW: string;
+}
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -51,13 +64,11 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
-
-
 const ItemList: FC = () => {
   const classes = useStyle();
   
   const [isLoading,setLoading] = useState<boolean>(false);
-  const [data,setData] = useState<any>([]);
+  const [data,setData] = useState<VPCitem[]>([]);
   const [employeelist,setEmployeelist] = useState<any>([]);
 
   const GetVPCitems = async () => {
@@ -84,7 +95,9 @@ const ItemList: FC = () => {
     });
   },[]);
 
-  const PostItems = (postitem:any) => {
+  const PostItems = (postitem:VPCitem) => {
+    console.log('PostItem');
+    console.log(postitem)
     axios.post(PROPS.BASE_URL + '/api/itmanagement/PostVPCItems',postitem)
     .then((result) =>{
       GetVPCitems();
@@ -150,7 +163,7 @@ const ItemList: FC = () => {
           }}
           icons={tableIcons}
           editable={{
-            onRowUpdate:(newData:any,oldData:any) => 
+            onRowUpdate:(newData:VPCitem,oldData:any) => 
               new Promise((resolve:any,reject:any) => {
                 const dataUpdate = [...data];
                 const index = oldData.tableData.id;
