@@ -1,12 +1,25 @@
 import React,{FC, useEffect, useState} from 'react';
 import MaterialTable from 'material-table';
 import {tableIcons} from './tableIcons';
+import * as PROPS from '../App.properties';
+
+import axios from 'axios';
 
 export interface AccountItem {
   employeecode:number;
   id:string;
   pw:string;
 }
+
+
+type AccountInfo = {
+  companyCode:number;
+  temporaryEmployeeCode:number;
+  systemCode:number;
+  seqNo:number;
+  iDNumber:string;
+  passWord:string;
+};
 
 const AccountTab: FC<any> = (props:{data_kindname:string,data:AccountItem,id_title:string}) => {
 
@@ -26,6 +39,11 @@ const AccountTab: FC<any> = (props:{data_kindname:string,data:AccountItem,id_tit
       id:props.data.id,pw:props.data.pw}]);
   },[props]);
 
+  const PostItem = (item:any) => {
+    // axios.post(`${PROPS.BASE_URL}/`);
+    console.log(item);
+  };
+
   return(
     <React.Fragment>
       <MaterialTable 
@@ -44,6 +62,7 @@ const AccountTab: FC<any> = (props:{data_kindname:string,data:AccountItem,id_tit
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
               setAccountInfo([...dataUpdate]);
+              PostItem(newData);
               resolve();
             })
         }}

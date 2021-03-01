@@ -13,41 +13,7 @@ import axios from 'axios';
 
 import ItemTab from './item-tab';
 import * as PROPS from '../App.properties';
-
-export type VPCitem = {
-  pcItemCode: number;
-  assetKindCode: string;
-  itemNumber: string;
-  companyCode: number;
-  temporaryEmployeeCode: number;
-  formalEmployeeCode: string;
-  employeeName: string;
-  departmentName: string;
-  makerName: string;
-  pcTypeNumber: string;
-  pcServiceTag: string;
-  assetKind: string;
-  pcMemo: string; 
-  monitorNumber1: string;
-  monitorNumber2: string; 
-  monitorNumber3: string;
-  monitorMemo: string;
-  mouseNumber: string;
-  mouseMemo: string;
-  keyboardNumber: string;
-  keyboardMemo: string;
-  warrantyPeriod: Date;
-  warranty: string;
-  vpnSetting: string;
-  mailAddress: string;
-  mailPassword: string;
-  chatwork_ID: string;
-  chatwork_PW: string;
-  office365_ID: string;
-  cybouzu_ID: string;
-  cybouzu_PW: string;
-  pcLoginPW: string;
-}
+import { VPCitem } from '../Interface';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
@@ -74,11 +40,10 @@ const ItemList: FC = () => {
   const GetVPCitems = async () => {
     console.log('GetVPCitems');
     setLoading(true);
-    await axios.get(PROPS.BASE_URL + '/api/itmanagement/getvpcitems')
+    await axios.get(`${PROPS.BASE_URL}/api/itmanagement/getvpcitems`)
     .then((result) => {
       setData(result.data);
       setLoading(false);
-
     });
   };
 
@@ -96,8 +61,6 @@ const ItemList: FC = () => {
   },[]);
 
   const PostItems = (postitem:VPCitem) => {
-    console.log('PostItem');
-    console.log(postitem)
     axios.post(PROPS.BASE_URL + '/api/itmanagement/PostVPCItems',postitem)
     .then((result) =>{
       GetVPCitems();
