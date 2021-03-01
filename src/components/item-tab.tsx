@@ -38,6 +38,7 @@ const TabPanel = (props: TabPanelProps) => {
 const allyProps = (index: any) => {
   return {
     id: `simple-tab-${index}`,
+    key:`${index}`,
     'aria-controls': `simple-tabpanel-${index}`
   }
 };
@@ -115,7 +116,7 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
         <AccountTab data_kindname={datakind[4].data_kindname} data={cybouzuData} id_title="ID" />
       </TabPanel>
       <TabPanel value={value} index={5}>
-        <AccountTab data_kindname={datakind[4].data_kindname} data={cybouzuData} id_title="ID" />
+        <AccountTab data_kindname={datakind[5].data_kindname} data={cybouzuData} id_title="ID" />
       </TabPanel>
     </div>
 

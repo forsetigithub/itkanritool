@@ -14,7 +14,7 @@ import axios from 'axios';
 import ItemTab from './item-tab';
 import * as PROPS from '../App.properties';
 
-type VPCitem = {
+export type VPCitem = {
   pcItemCode: number;
   assetKindCode: string;
   itemNumber: string;
@@ -104,7 +104,7 @@ const ItemList: FC = () => {
     });
   }
 
-  const columns = [
+  const columns:any = [
     {field:"pcItemCode", title:"No.", 
       hidden:true,filtering:false,
       cellStyle: {
@@ -116,8 +116,8 @@ const ItemList: FC = () => {
         mixWidth:30
       }  
     }, 
-    {field:"assetKindCode"  , title:"資産種別"},
-    {field:"itemNumber"     , title:"備品番号",    
+    { field:"assetKindCode", title:"資産種別",editable:'never' },
+    { field:"itemNumber", title:"備品番号",editable:'never',
       cellStyle:{
       maxWidth:20
     }},
@@ -139,7 +139,7 @@ const ItemList: FC = () => {
       )
     },
     {field:"pcLoginPW",title:"PCログインPW"},
-    {field:"departmentName" , title:"部署"}
+    {field:"departmentName" , title:"部署",editable:'never',}
   ];
 
   return(
@@ -181,7 +181,7 @@ const ItemList: FC = () => {
             showTitle:false,
 
           }}
-          detailPanel={(rowData:any) => {
+          detailPanel={(rowData:VPCitem) => {
             return(
               <ItemTab data={rowData} />
             )

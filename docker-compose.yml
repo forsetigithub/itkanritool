@@ -27,4 +27,4 @@ services:
     volumes:
       - C:\Dockerfile\SQLServer\DB:/MSSQL
     ports:
-      - 1433:1433      
+      - 1533:1433      
