@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { red } from '@material-ui/core/colors';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import axios from 'axios';
 
@@ -56,7 +58,10 @@ const useStyles = makeStyles((theme) => ({
   },
   error: {
     color:red[500],
-  }
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1, 
+  },
 }));
 
 
@@ -66,11 +71,13 @@ const useStyles = makeStyles((theme) => ({
 const SignIn:FC<any> = ({setToken}:any) => {
   const classes = useStyles();
 
+  const [isLoading,setLoading] = useState<boolean>(false);
   const [username,setUserName] = useState<string>();
   const [password,setPassword] = useState<string>();
   const [errormsg,setErrorMsg] = useState<string>('');
 
   const  GetLoginUser = async (credentials:Credentials) => {
+    setLoading(true);
     await axios.get(PROPS.BASE_URL + '/api/itmanagement/GetLoginUser/' + credentials.mailAddress + '/' + credentials.pw)
       .then((result) => {
         sessionStorage.setItem(PROPS.LOGIN_TOKEN,result.data);
@@ -80,6 +87,8 @@ const SignIn:FC<any> = ({setToken}:any) => {
         if(error.response) {
           setErrorMsg('メールアドレスまたはパスワードが違います')
         }
+      }).finally(() => {
+        setLoading(false);
       });
     
   };
@@ -99,74 +108,81 @@ const SignIn:FC<any> = ({setToken}:any) => {
   },[]);
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          IT資産管理台帳
-        </Typography>
-        <form className={classes.form} onSubmit={onSubmitHandler} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={(e:any) => setUserName(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(e:any) => setPassword(e.target.value)}
-          />
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={onSubmitHandler}
-          >
-            ログイン
-          </Button>
-          <Grid container>
-            <Grid item xs>
-            <Typography className={classes.error} >{errormsg}</Typography>
-            
-              {/* <Link href="#" variant="body2">
-                Forgot password?
-              </Link> */}
+    <React.Fragment>
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <CircularProgress color="primary" size={80} />
+      </Backdrop>
+
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            IT資産管理台帳
+          </Typography>
+          <form className={classes.form} onSubmit={onSubmitHandler} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={(e:any) => setUserName(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e:any) => setPassword(e.target.value)}
+            />
+            {/* <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            /> */}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={onSubmitHandler}
+            >
+              ログイン
+            </Button>
+            <Grid container>
+              <Grid item xs>
+              <Typography className={classes.error} >{errormsg}</Typography>
+              
+                {/* <Link href="#" variant="body2">
+                  Forgot password?
+                </Link> */}
+              </Grid>
+              <Grid item>
+                {/* <Link href="#" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link> */}
+              </Grid>
             </Grid>
-            <Grid item>
-              {/* <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link> */}
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    </React.Fragment>
+
   );
 }
 
