@@ -19,6 +19,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 
 import * as PROPS from '../App.properties';
+import { LoginUser } from '../Interface';
 
 type Credentials = {
   mailAddress?:string;
@@ -65,8 +66,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-
 // eslint-disable-next-line no-empty-pattern
 const SignIn:FC<any> = ({setToken}:any) => {
   const classes = useStyles();
@@ -78,9 +77,10 @@ const SignIn:FC<any> = ({setToken}:any) => {
 
   const  GetLoginUser = async (credentials:Credentials) => {
     setLoading(true);
-    await axios.get(PROPS.BASE_URL + '/api/itmanagement/GetLoginUser/' + credentials.mailAddress + '/' + credentials.pw)
+    await axios.get(PROPS.BASE_URL + '/api/itmanagement/GetLoginUser/' + 
+      credentials.mailAddress + '/' + credentials.pw)
       .then((result) => {
-        sessionStorage.setItem(PROPS.LOGIN_TOKEN,result.data);
+        sessionStorage.setItem(PROPS.LOGIN_TOKEN, JSON.stringify(result.data as LoginUser));
         setToken(result.data);               
       })
       .catch((error) => {

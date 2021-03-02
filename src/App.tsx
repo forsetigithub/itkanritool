@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import SignIn from './components/SignIn';
 import Main from './Main';
 import * as PROPS from './App.properties';
+import { CheckShowEditable } from './api';
+
 
 function App() {
   const [token,setToken] = useState();
@@ -14,7 +16,7 @@ function App() {
   }
 
   return (
-    <Main />
+    <Main editable={CheckShowEditable()}  />
   );
 }
 

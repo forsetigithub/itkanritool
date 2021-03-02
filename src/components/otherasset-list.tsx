@@ -2,7 +2,7 @@ import React,{FC} from 'react';
 //import Moment from 'react-moment';
 import MaterialTableCustom from './materialtable-custom';
 
-const OtherAssetList:FC<any> = () => {
+const OtherAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const columns:any = [
 
     { 
@@ -55,6 +55,7 @@ const OtherAssetList:FC<any> = () => {
 
   return(
     <MaterialTableCustom<any> columns={columns} getParam="GetOtherAssetItem" 
+      editable_mode={props.editable}
       updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} />
   );
 }

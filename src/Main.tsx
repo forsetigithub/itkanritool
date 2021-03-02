@@ -58,27 +58,29 @@ const useStyles = makeStyles((theme: Theme) =>
   }) 
 );
 
-const MenuItems:Menu[] = [
-  {
-    key:'home',title:'Home',icon:<HomeIcon />,path:"/home",main:() => (<ItemList />)
-  },
-  {
-    key:'assets',title:'機器一覧(PC)',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<PCAssetList />)
-  },
-  {
-    key:'otherassets',title:'機器一覧(PC以外)',icon:<KeyboardIcon />,path:"/otherassets",main:()=> (<OtherAssetList />)
-  },
-  {
-    key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:"/employee",main:()=> (<EmployeeList />)
-  },
-  {
-    key:'master',title:'マスタ管理',icon:<StorageIcon />,path:"/master",main:()=> (<CodeTableList />)
-  }
-];
 
-
-const Main:FC = () => {
+const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const classes = useStyles();
+
+  const MenuItems:Menu[] = [
+    {
+      key:'home',title:'Home',icon:<HomeIcon />,path:"/home",main:() => (<ItemList editable={props.editable} />)
+    },
+    {
+      key:'assets',title:'機器一覧(PC)',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<PCAssetList editable={props.editable}  />)
+    },
+    {
+      key:'otherassets',title:'機器一覧(PC以外)',icon:<KeyboardIcon />,path:"/otherassets",main:()=> (<OtherAssetList editable={props.editable} />)
+    },
+    {
+      key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:"/employee",main:()=> (<EmployeeList editable={props.editable} />)
+    },
+    {
+      key:'master',title:'マスタ管理',icon:<StorageIcon />,path:"/master",main:()=> (<CodeTableList  editable={props.editable} />)
+    }
+  ];
+
+
 
   return (
     <React.Fragment>

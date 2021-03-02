@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 // import Moment from 'react-moment';
 import MaterialTableCustom from './materialtable-custom';
 
-const PCAssetList:FC<any> = () => {
+const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const columns:any = [
     {
       title: 'No',field: 'pcItemCode',
@@ -68,7 +68,8 @@ const PCAssetList:FC<any> = () => {
   };
   
   return(
-    <MaterialTableCustom<any> columns={columns} getParam="getpcitems" 
+    <MaterialTableCustom<any> columns={columns} getParam="getpcitems"
+      editable_mode={props.editable} 
       updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} />
 
   );

@@ -15,6 +15,8 @@ import ItemTab from './item-tab';
 import * as PROPS from '../App.properties';
 import { VPCitem } from '../Interface';
 
+import { CheckShowEditable } from '../api';
+
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
   root : {
@@ -30,7 +32,7 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
-const ItemList: FC = () => {
+const ItemList: FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const classes = useStyle();
   
   const [isLoading,setLoading] = useState<boolean>(false);
@@ -53,7 +55,7 @@ const ItemList: FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(PROPS.BASE_URL + '/api/itmanagement/GetEmployeeNameList')
+    axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetEmployeeNameList`)
     .then((result) => {
       setEmployeelist(result.data);
       setLoading(false);
@@ -61,7 +63,7 @@ const ItemList: FC = () => {
   },[]);
 
   const PostItems = (postitem:VPCitem) => {
-    axios.post(PROPS.BASE_URL + '/api/itmanagement/PostVPCItems',postitem)
+    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostVPCItems`,postitem)
     .then((result) =>{
       GetVPCitems();
     });
@@ -101,7 +103,7 @@ const ItemList: FC = () => {
         />
       )
     },
-    {field:"pcLoginPW",title:"PCログインPW"},
+    {field:"pcLoginPW",title:"PCログインPW",},
     {field:"departmentName" , title:"部署",editable:'never',}
   ];
 
@@ -126,7 +128,7 @@ const ItemList: FC = () => {
           }}
           icons={tableIcons}
           editable={{
-            onRowUpdate:(newData:VPCitem,oldData:any) => 
+            onRowUpdate: props.editable ? (newData:VPCitem,oldData:any) => 
               new Promise((resolve:any,reject:any) => {
                 const dataUpdate = [...data];
                 const index = oldData.tableData.id;
@@ -136,17 +138,18 @@ const ItemList: FC = () => {
                 resolve(newData);              
               }).then((value:any) => {
  
-              }) 
+              }) : undefined 
           }}
           options={{
             filtering:true,
             pageSize:10,
             showTitle:false,
+            
 
           }}
           detailPanel={(rowData:VPCitem) => {
             return(
-              <ItemTab data={rowData} />
+              <ItemTab data={rowData} editable={props.editable} />
             )
           }}
         />

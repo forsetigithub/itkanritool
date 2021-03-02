@@ -14,8 +14,10 @@ type Props<T> = {
   title?: string;
   columns: any;
   getParam?:string;
+  editable_mode:boolean;
   updateDataHandler: (item: T) => void;
   deleteDataHandler: (item: T) => void;
+
 }
 
 const useStyle = makeStyles((theme: Theme) =>
@@ -31,7 +33,7 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
-const MeterialTableCustom = <T extends object>({title,columns,getParam,updateDataHandler,deleteDataHandler}:Props<T>) => {
+const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_mode,updateDataHandler,deleteDataHandler}:Props<T>) => {
 
   const classes = useStyle();
   
@@ -74,7 +76,7 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,updateDat
           }}
           icons={tableIcons}
           editable={{
-            onRowUpdate:(newData:T,oldData:any) => 
+            onRowUpdate:editable_mode ? (newData:T,oldData:any) => 
               new Promise((resolve:any,reject:any) => {
                 const dataUpdate = [...data];
                 const index = oldData.tableData.id;
@@ -83,14 +85,14 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,updateDat
                 updateDataHandler(newData);
                 resolve();              
 
-              }),
-            onRowAdd: (newData: T) => 
+              }) : undefined,
+            onRowAdd: editable_mode ? (newData: T) => 
               new Promise((resolve:any,reject:any) => {
                 setData([newData, ...data]);
                 updateDataHandler(newData);
                 resolve();
-              }),
-            onRowDelete: (oldData:any) =>
+              }) : undefined,
+            onRowDelete: editable_mode ? (oldData:any) =>
               new Promise((resolve:any,reject:any) =>{
                 const dataDelete = [...data];
                 const index = oldData.tableData.id;
@@ -98,7 +100,7 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,updateDat
                 setData([...dataDelete]);
                 deleteDataHandler(oldData);
                 resolve();
-              })
+              }) : undefined
           }}
           options={{
             filtering:true,

@@ -1,9 +1,10 @@
 import React,{FC, useEffect, useState} from 'react';
 import MaterialTable from 'material-table';
 import {tableIcons} from './tableIcons';
-import * as PROPS from '../App.properties';
 
-import axios from 'axios';
+// import * as PROPS from '../App.properties';
+
+// import axios from 'axios';
 
 export interface AccountItem {
   employeecode:number;
@@ -12,16 +13,18 @@ export interface AccountItem {
 }
 
 
-type AccountInfo = {
-  companyCode:number;
-  temporaryEmployeeCode:number;
-  systemCode:number;
-  seqNo:number;
-  iDNumber:string;
-  passWord:string;
-};
+// type AccountInfo = {
+//   companyCode:number;
+//   temporaryEmployeeCode:number;
+//   systemCode:number;
+//   seqNo:number;
+//   iDNumber:string;
+//   passWord:string;
+// };
 
-const AccountTab: FC<any> = (props:{data_kindname:string,data:AccountItem,id_title:string}) => {
+const AccountTab: FC<{data_kindname:string,data:AccountItem,
+  id_title:string,editable:boolean}> = (props:{data_kindname:string,data:AccountItem,
+  id_title:string,editable:boolean}) => {
 
   const [accountInfo, setAccountInfo] = useState<AccountItem[]>([]);
 
@@ -56,7 +59,7 @@ const AccountTab: FC<any> = (props:{data_kindname:string,data:AccountItem,id_tit
         data={[...accountInfo]}
         icons={tableIcons}
         editable={{
-          onRowUpdate:(newData:any,oldData:any) => 
+          onRowUpdate: props.editable ? (newData:any,oldData:any) => 
             new Promise((resolve:any,reject:any) => {
               const dataUpdate = [...accountInfo];
               const index = oldData.tableData.id;
@@ -64,7 +67,7 @@ const AccountTab: FC<any> = (props:{data_kindname:string,data:AccountItem,id_tit
               setAccountInfo([...dataUpdate]);
               PostItem(newData);
               resolve();
-            })
+            }) : undefined
         }}
         options={{
           filtering:false,

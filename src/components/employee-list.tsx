@@ -21,7 +21,7 @@ export type EmployeeItem = {
   existsFlag:boolean;
 };
 
-const EmployeeList:FC<any> = () => {
+const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const columns:any = [
     {
       title: 'companyCode',field: 'companyCode', type:'numeric',
@@ -129,6 +129,7 @@ const EmployeeList:FC<any> = () => {
 
   return(
     <MaterialTableCustom<EmployeeItem>  columns={columns} getParam="GetEmployees" 
+      editable_mode={props.editable}
       updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler}  />
   );
 }

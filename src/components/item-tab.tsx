@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 
-const ItemTab:FC<any> =(props:{data:any}) =>{
+const ItemTab:FC<any> =(props:{data:any, editable:boolean}) =>{
   const classes = useStyles();
 
   const [value, setValue] = useState(0);
@@ -101,22 +101,22 @@ const ItemTab:FC<any> =(props:{data:any}) =>{
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}> 
-        <PCTab data={props.data} />
+        <PCTab data={props.data} editable={props.editable} />
       </TabPanel>
       <TabPanel value={value} index={1}> 
-        <OtherEquipment data={props.data} />
+        <OtherEquipment data={props.data} editable={props.editable} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <AccountTab data_kindname={datakind[2].data_kindname} data={mailData} id_title="メールアドレス" />
+        <AccountTab data_kindname={datakind[2].data_kindname} data={mailData} id_title="メールアドレス"  editable={props.editable}  />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <AccountTab data_kindname={datakind[3].data_kindname} data={cwData} id_title="ID" />
+        <AccountTab data_kindname={datakind[3].data_kindname} data={cwData} id_title="ID"  editable={props.editable} />
       </TabPanel>
       <TabPanel value={value} index={4}>
-        <AccountTab data_kindname={datakind[4].data_kindname} data={cybouzuData} id_title="ID" />
+        <AccountTab data_kindname={datakind[4].data_kindname} data={cybouzuData} id_title="ID"  editable={props.editable} />
       </TabPanel>
       <TabPanel value={value} index={5}>
-        <AccountTab data_kindname={datakind[5].data_kindname} data={cybouzuData} id_title="ID" />
+        <AccountTab data_kindname={datakind[5].data_kindname} data={cybouzuData} id_title="ID"  editable={props.editable} />
       </TabPanel>
     </div>
 

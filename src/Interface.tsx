@@ -8,6 +8,13 @@ export interface Menu {
   main:() => any;
 };
 
+export type LoginUser = {
+  id: number;
+  mailAddress:string;
+  pw: string;
+  privilegeCode: number;
+};
+
 export type VPCitem = {
   pcItemCode: number;
   assetKindCode: string;

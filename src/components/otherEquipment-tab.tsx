@@ -20,6 +20,7 @@ const useStyle = makeStyles((theme: Theme) =>
 
 type Props = {
   data:any;
+  editable:boolean;
 };
 
 interface EquipmentItem {
@@ -38,7 +39,7 @@ interface AutoCompleteData {
   assetNo:string;
 }
 
-const OtherEquipment:FC<Props> = ({data}:Props) => {
+const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
   const classes = useStyle();
 
   const [isLoading,setLoading] = useState<boolean>(false);
@@ -86,8 +87,6 @@ const OtherEquipment:FC<Props> = ({data}:Props) => {
   const PostItem = (postitem:EquipmentItem) => {
     const updateData = {...data,...postitem};
     
-    console.log(updateData);
-
     setLoading(true);
     axios.post(PRPOS.BASE_URL + '/api/itmanagement/PostVPCItems',updateData)
     .then((result) =>{
@@ -181,7 +180,7 @@ const OtherEquipment:FC<Props> = ({data}:Props) => {
         data={[...pcInfo]}
         icons={tableIcons}
         editable={{
-          onRowUpdate:(newData:any,oldData:any) => 
+          onRowUpdate: editable ? (newData:any,oldData:any) => 
             new Promise((resolve:any,reject:any) => {
               const dataUpdate = [...pcInfo];
               const index = oldData.tableData.id;
@@ -189,7 +188,7 @@ const OtherEquipment:FC<Props> = ({data}:Props) => {
               setPcInfo([...dataUpdate]);
               PostItem(newData);
               resolve();
-            })
+            }) : undefined
         }}
         localization={{
           header:{

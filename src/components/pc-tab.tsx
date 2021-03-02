@@ -4,7 +4,6 @@ import {tableIcons} from './tableIcons';
 import Moment from 'react-moment';
 import ja from 'date-fns/locale/ja';
 
-
 interface PCItem {
   makerName:string;
   pcTypeNumber:string;
@@ -15,7 +14,7 @@ interface PCItem {
   pcMemo:string;
 }
 
-const PCTab:FC<{data:any}> = (props:{data:any}) => {
+const PCTab:FC<{data:any,editable:boolean}> = (props:{data:any,editable:boolean}) => {
 
   const columns:any = [
     {
@@ -69,14 +68,14 @@ const PCTab:FC<{data:any}> = (props:{data:any}) => {
       data={[...pcInfo]}
       icons={tableIcons}
       editable={{
-        onRowUpdate:(newData:any,oldData:any) => 
+        onRowUpdate: props.editable ? (newData:any,oldData:any) => 
           new Promise((resolve:any,reject:any) => {
             const dataUpdate = [...pcInfo];
             const index = oldData.tableData.id;
             dataUpdate[index] = newData;
             setPcInfo([...dataUpdate]);
             resolve();
-          })
+          }) : undefined
       }}
       options={{
         filtering:false,

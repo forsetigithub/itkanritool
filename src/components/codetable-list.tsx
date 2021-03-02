@@ -10,7 +10,7 @@ export type CodeItem = {
 };
 
 
-const CodeTableList:FC<any> = () => {
+const CodeTableList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const columns:any = [
     {
       title: 'コード種別',field: 'codeKindID',
@@ -57,7 +57,8 @@ const CodeTableList:FC<any> = () => {
   };
 
   return(
-    <MaterialTableCustom<CodeItem> columns={columns} getParam="GetMstCodeTable" 
+    <MaterialTableCustom<CodeItem> columns={columns} getParam="GetMstCodeTable"
+      editable_mode={props.editable} 
       updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler}  />
   );
 }
