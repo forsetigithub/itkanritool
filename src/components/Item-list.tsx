@@ -15,7 +15,6 @@ import ItemTab from './item-tab';
 import * as PROPS from '../App.properties';
 import { VPCitem } from '../Interface';
 
-import { CheckShowEditable } from '../api';
 
 const useStyle = makeStyles((theme: Theme) =>
   createStyles({
