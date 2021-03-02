@@ -18,8 +18,6 @@ import axios from 'axios';
 
 import * as PROPS from '../App.properties';
 
-// import PropTypes from 'prop-types';
-
 type Credentials = {
   mailAddress?:string;
   pw?:string;
@@ -173,7 +171,3 @@ const SignIn:FC<any> = ({setToken}:any) => {
 }
 
 export default SignIn;
-
-// SignIn.protoTypes = {
-//   setToken: PropTypes.func.isRequired
-// }
