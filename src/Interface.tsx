@@ -1,6 +1,6 @@
 
 
-export interface Menu {
+export interface IMenu {
   key:string;
   title:string;
   icon:any;

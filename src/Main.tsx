@@ -1,8 +1,8 @@
 import React,{FC} from 'react';
 
 import {
-  BrowserRouter as Router,
-  // HashRouter as Router,
+  // BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route,
   Redirect,
@@ -16,7 +16,7 @@ import KeyboardIcon from '@material-ui/icons/Keyboard';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import StorageIcon from '@material-ui/icons/Storage';
 
-import {Menu} from './Interface';
+import {IMenu} from './Interface';
 import ItemList from './components/Item-list';
 import PCAssetList from './components/pcasset-list';
 import OtherAssetList from './components/otherasset-list';
@@ -25,6 +25,11 @@ import CodeTableList from './components/codetable-list';
 
 import SideNav from './components/sidenav';
 import { AppBar,Toolbar, Typography } from '@material-ui/core';
+
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -62,7 +67,37 @@ const useStyles = makeStyles((theme: Theme) =>
 const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const classes = useStyles();
 
-  const MenuItems:Menu[] = [
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const options = [
+    'None',
+    'Atria',
+    'Callisto',
+    'Dione',
+    'Ganymede',
+    'Hangouts Call',
+    'Luna',
+    'Oberon',
+    'Phobos',
+    'Pyxis',
+    'Sedna',
+    'Titania',
+    'Triton',
+    'Umbriel',
+  ];
+
+  const ITEM_HEIGHT = 48;
+
+  const MenuItems:IMenu[] = [
     {
       key:'home',title:'Home',icon:<HomeIcon />,path:"/home",main:() => (<ItemList editable={props.editable} />)
     },
@@ -80,17 +115,48 @@ const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     }
   ];
 
-
-
   return (
     <React.Fragment>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar variant="regular">
+          <Typography variant="h6" className={classes.title}>IT資産管理台帳</Typography>
+
+          <IconButton
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: ITEM_HEIGHT * 4.5,
+                width: '20ch',
+              },
+            }}
+          >
+            {options.map((option) => (
+              <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
+                {option}
+              </MenuItem>
+            ))}
+          </Menu>
+        </Toolbar>
+      </AppBar>      
       <Router>
         <div className={classes.root}>
           <SideNav menu={MenuItems}  />
           <main className={classes.main}>
             <div>
-              <Switch>
-                <Route 
+              {/* <Switch> */}
+                {/* <Route 
                   exact
                   path="/"
                   render={()=> {
@@ -98,26 +164,20 @@ const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
                       <Redirect to="/home" />
                     )
                   }}
-                />
+                /> */}
                 {MenuItems.map((route,index) => (            
                   <Route 
-                    exact
+                    // exact
                     key={index}
                     path={route.path}
                     children={<route.main />}
                   />
                 ))}
-              </Switch>
+              {/* </Switch> */}
             </div>
           </main>
         </div>  
       </Router>
-
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar variant="regular">
-          <Typography variant="h6" className={classes.title}>IT資産管理台帳</Typography>
-        </Toolbar>
-      </AppBar>
     </React.Fragment>
 
   );
