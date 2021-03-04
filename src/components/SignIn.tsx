@@ -81,14 +81,16 @@ const SignIn:FC<any> = ({setToken}:any) => {
       credentials.mailAddress + '/' + credentials.pw)
       .then((result) => {
         sessionStorage.setItem(PROPS.LOGIN_TOKEN, JSON.stringify(result.data as LoginUser));
+        setLoading(false);
         setToken(result.data);               
       })
       .catch((error) => {
         if(error.response) {
+          setLoading(false);
           setErrorMsg('メールアドレスまたはパスワードが違います')
         }
       }).finally(() => {
-        setLoading(false);
+        
       });
     
   };

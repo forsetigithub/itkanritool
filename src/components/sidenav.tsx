@@ -67,14 +67,18 @@ const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
   );
 }
 
-const SideNav:FC<{menu:Menu[]}> = (props:{menu:Menu[]}) => {
+const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>}> =
+  (props:{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>}) => {
+
   const classes = useStyles();
 
   const [selectedIndex,setSelectedIndex] = useState(0);
+
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement,MouseEvent>,
     index: number) => {
       setSelectedIndex(index);
+      props.setSelectedIndex(index);
     };
 
   const list = (anchor: Anchor) => (
