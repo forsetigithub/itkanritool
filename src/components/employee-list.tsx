@@ -108,9 +108,9 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
                     firstNameKana:'',lastNameKana:'',pCLoginPW:'',emailAddress:'',
                     joinedDate:undefined,retiermentDate:undefined,existsFlag:true };
 
-    axios.post(PROPS.BASE_URL +'/api/itmanagement/PostEmployee',postData)
+    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostEmployee`,postData)
       .then((result) => {
-        axios.get(PROPS.BASE_URL + '/api/itmanagement/GetEmployees');
+        axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetEmployees`);
       });
     
   }

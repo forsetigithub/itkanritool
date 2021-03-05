@@ -9,7 +9,7 @@ import PCTab from './pc-tab';
 import OtherEquipment from './otherEquipment-tab';
 import AccountTab from './account-tab'; 
 
-import { VPCitem } from '../Interface';
+import { VPCitem,AccountItem } from '../Interface';
 
 interface TabPanelProps {
   children?: ReactNode;
@@ -61,9 +61,15 @@ const ItemTab:FC<{data:VPCitem, editable:boolean}> =(props:{data:VPCitem, editab
 
   const [value, setValue] = useState(0);
 
-  const mailData = {employeecode:props.data.temporaryEmployeeCode,id:props.data.mailAddress,pw:props.data.mailPassword};
-  const cwData = {employeecode:props.data.temporaryEmployeeCode,id:props.data.chatwork_ID,pw:props.data.chatwork_PW};
-  const cybouzuData = {employeecode:props.data.temporaryEmployeeCode,id:props.data.cybouzu_ID,pw:props.data.cybouzu_PW};
+  const mailData:AccountItem = {companycode:props.data.companyCode, employeecode:props.data.temporaryEmployeeCode,
+                                seqno:1,
+                                id:props.data.mailAddress,pw:props.data.mailPassword};
+  const cwData:AccountItem  = {companycode:props.data.companyCode,employeecode:props.data.temporaryEmployeeCode,
+                              seqno:1,
+                              id:props.data.chatwork_ID,pw:props.data.chatwork_PW};
+  const cybouzuData:AccountItem  = {companycode:props.data.companyCode,employeecode:props.data.temporaryEmployeeCode,
+                              seqno:1,
+                              id:props.data.cybouzu_ID,pw:props.data.cybouzu_PW};
   // const [nasData,setNasData] = useState<AccountItem>({employeecode:props.data.temporaryEmployeeCode,id:props.data});
 
   // const mailData:AccountItem = {employeecode:props.data.temporaryEmployeeCode,id:props.data.mailAddress,pw:props.data.mailPassword};
@@ -117,9 +123,9 @@ const ItemTab:FC<{data:VPCitem, editable:boolean}> =(props:{data:VPCitem, editab
       <TabPanel value={value} index={4}>
         <AccountTab data_kindname={datakind[4].data_kindname} data={cybouzuData} id_title="ID"  editable={props.editable} />
       </TabPanel>
-      <TabPanel value={value} index={5}>
+      {/* <TabPanel value={value} index={5}>
         <AccountTab data_kindname={datakind[5].data_kindname} data={cybouzuData} id_title="ID"  editable={props.editable} />
-      </TabPanel>
+      </TabPanel> */}
     </div>
 
   );

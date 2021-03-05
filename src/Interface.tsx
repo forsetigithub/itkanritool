@@ -60,3 +60,20 @@ export type PCItem = {
   pcMemo:string;
 };
 
+export type AccountInfo = {
+  companyCode:number;
+  temporaryEmployeeCode:number;
+  systemCode:number;
+  seqNo:number;
+  iDNumber:string;
+  passWord:string;
+};
+
+export type AccountItem = {
+  companycode: number;
+  employeecode:number;
+  seqno:number;
+  id:string;
+  pw:string;
+};
+
