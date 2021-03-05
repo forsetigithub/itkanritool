@@ -45,8 +45,7 @@ console.log(props.selectedIndex);
           case 0: //Home
             GetItemListCSV('item-list.csv','GetVPCitemsCSV');
             break;
-        }
-       
+        }     
     }
   };
 

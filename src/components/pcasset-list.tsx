@@ -1,6 +1,9 @@
 import React, {FC} from 'react';
 // import Moment from 'react-moment';
 import MaterialTableCustom from './materialtable-custom';
+import axios from 'axios';
+import * as PROPS from '../App.properties';
+
 
 const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const columns:any = [
@@ -60,7 +63,7 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     }];
 
   const updateDataHandler = (item: any) => {
-
+    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostPCItems`,item);
   };
 
   const deleteDataHandler = (item: any) => {

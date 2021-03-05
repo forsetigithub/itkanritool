@@ -1,6 +1,7 @@
 import React,{FC} from 'react';
 //import Moment from 'react-moment';
 import MaterialTableCustom from './materialtable-custom';
+import axios from 'axios';
 
 const OtherAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const columns:any = [
@@ -46,7 +47,7 @@ const OtherAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 ];
 
   const updateDataHandler = (item: any) => {
-
+    
   };
 
   const deleteDataHandler = (item :any) => {

@@ -3,18 +3,14 @@ import MaterialTable from 'material-table';
 import {tableIcons} from './tableIcons';
 import Moment from 'react-moment';
 import ja from 'date-fns/locale/ja';
+import axios from 'axios';
 
-interface PCItem {
-  makerName:string;
-  pcTypeNumber:string;
-  pcServiceTag:string;
-  assetKind:string;
-  warrantyPeriod:string;
-  warranty:string;
-  pcMemo:string;
-}
+import * as PROPS from '../App.properties';
+import {PCItem, VPCitem} from '../Interface';
 
-const PCTab:FC<{data:any,editable:boolean}> = (props:{data:any,editable:boolean}) => {
+
+
+const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:boolean}) => {
 
   const columns:any = [
     {
@@ -35,7 +31,7 @@ const PCTab:FC<{data:any,editable:boolean}> = (props:{data:any,editable:boolean}
         render: (rowData:any) => (<Moment format="YYYY-MM-DD">{rowData.warrantyPeriod}</Moment> )
     },
     {
-      title: '保証', field:'warranty'
+      title: '保証', field:'warranty',editable: 'never'
     },
     { 
       title: '備考', field:'pcMemo'
@@ -45,13 +41,21 @@ const PCTab:FC<{data:any,editable:boolean}> = (props:{data:any,editable:boolean}
   const [pcInfo,setPcInfo] = useState<PCItem[]>([]);
   
   useEffect(() => {
-    const newPcInfo = [{makerName: props.data.makerName,
+    setPcInfo([{makerName: props.data.makerName,
       pcTypeNumber: props.data.pcTypeNumber,pcServiceTag: props.data.pcServiceTag,
       assetKind:props.data.assetKind,warrantyPeriod: props.data.warrantyPeriod,
       warranty:props.data.warranty,pcMemo:props.data.pcMemo
-    }];
-    setPcInfo(newPcInfo);
+    }]);
   },[props]);
+
+  const PostPCitem = (item:PCItem) => {
+    const uploadData:PCItem = {...props.data,...item};
+
+    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostPCItems`,uploadData)
+      .then((result) => {
+
+      });
+  }
 
   return(
     <MaterialTable 
@@ -68,12 +72,13 @@ const PCTab:FC<{data:any,editable:boolean}> = (props:{data:any,editable:boolean}
       data={[...pcInfo]}
       icons={tableIcons}
       editable={{
-        onRowUpdate: props.editable ? (newData:any,oldData:any) => 
+        onRowUpdate: props.editable ? (newData:PCItem,oldData:any) => 
           new Promise((resolve:any,reject:any) => {
             const dataUpdate = [...pcInfo];
             const index = oldData.tableData.id;
             dataUpdate[index] = newData;
             setPcInfo([...dataUpdate]);
+            PostPCitem(newData);
             resolve();
           }) : undefined
       }}

@@ -9,6 +9,8 @@ import PCTab from './pc-tab';
 import OtherEquipment from './otherEquipment-tab';
 import AccountTab from './account-tab'; 
 
+import { VPCitem } from '../Interface';
+
 interface TabPanelProps {
   children?: ReactNode;
   index: any;
@@ -54,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 
-const ItemTab:FC<any> =(props:{data:any, editable:boolean}) =>{
+const ItemTab:FC<{data:VPCitem, editable:boolean}> =(props:{data:VPCitem, editable:boolean}) =>{
   const classes = useStyles();
 
   const [value, setValue] = useState(0);

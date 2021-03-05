@@ -50,3 +50,13 @@ export type VPCitem = {
   pcLoginPW: string;
 }
 
+export type PCItem = {
+  makerName:string;
+  pcTypeNumber:string;
+  pcServiceTag:string;
+  assetKind:string;
+  warrantyPeriod:Date;
+  warranty:string;
+  pcMemo:string;
+};
+
