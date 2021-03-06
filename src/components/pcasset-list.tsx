@@ -37,6 +37,9 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       title: 'サービスタグ', field:'pcServiceTag'
     },
     { 
+      title: 'シリアル番号', field:'serialNo'
+    },
+    { 
       title: '種別', field:'pcKindCode',lookup: {1:'デスクトップ',2:'ノート'},
       headerStyle:{
         width:120,
@@ -67,40 +70,18 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
   const updateDataHandler = (item: PCItem) => {
     console.log('PCAssetList:');
-
-    // let uploadData:PCItem = {
-    //   pCItemCode:-1,
-    //   itemNumber:item.itemNumber,
-    //   makerCode:item.makerCode,
-    //   pCTypeNumber:item.pCTypeNumber,
-    //   pCKindCode:item.pCKindCode,
-    //   pCServiceTag:item.pCServiceTag,
-    //   pCMemo:item.pCMemo,
-    //   monitorNumber1:item.monitorNumber1,
-    //   monitorNumber2:item.monitorNumber2,
-    //   monitorNumber3:item.monitorNumber3,
-    //   monitorMemo:item.monitorMemo,
-    //   mouseNumber:item.mouseNumber,
-    //   mouseMemo:item.mouseMemo,
-    //   keyboardNumber:item.keyboardNumber,
-    //   keyboardMemo:item.keyboardMemo,
-    //   warrantyPeriod:item.warrantyPeriod,
-    //   vPNSettingFlag:item.vPNSettingFlag,
-    //   currentOwnerCompanyCode:item.currentOwnerCompanyCode,
-    //   currentOwnerEmployeeCode:item.currentOwnerEmployeeCode,
-    //   assetKindCode:item.assetKindCode
-    // };
     
-    let uploadData:PCItem = item;
-    if(uploadData.pCItemCode === undefined) {
-      uploadData.pCItemCode = -1;
+    if(item.pcItemCode === undefined){
+      item.pcItemCode = -1;
     }
+
+    let uploadData:PCItem = item;
 
     if(uploadData.makerCode !== undefined) {
       uploadData.makerCode = parseInt(uploadData.makerCode.toString()); 
     }
-    if(uploadData.pCKindCode !== undefined) {
-      uploadData.pCKindCode = parseInt(uploadData.pCKindCode.toString());
+    if(uploadData.pcKindCode !== undefined) {
+      uploadData.pcKindCode = parseInt(uploadData.pcKindCode.toString());
     }
       
     console.log(uploadData);

@@ -29,16 +29,22 @@ export type VPCitem = {
   makerName: string;
   pcTypeNumber: string;
   pcServiceTag: string;
+  serialNo?:string;
   pcKindCode?: number;
   pcKindName: string;
   pcMemo: string; 
-  monitorNumber1: string;
-  monitorNumber2: string; 
-  monitorNumber3: string;
+  monitorNumber1: number;
+  monitorNumber1Name: string;
+  monitorNumber2: number; 
+  monitorNumber2Name: string; 
+  monitorNumber3: number;
+  monitorNumber3Name: string;
   monitorMemo: string;
   mouseNumber: string;
+  mouseNumberName: string;
   mouseMemo: string;
   keyboardNumber: string;
+  keyboardNumberName: string
   keyboardMemo: string;
   warrantyPeriod: Date;
   warranty: string;
@@ -54,13 +60,14 @@ export type VPCitem = {
 }
 
 export type PCItem = {
-  pCItemCode:number;
+  pcItemCode:number;
   itemNumber:string;
   makerCode?:number;
-  pCTypeNumber:string;
-  pCKindCode?:number;
-  pCServiceTag:string;
-  pCMemo:string;
+  pcTypeNumber:string;
+  pcKindCode?:number;
+  pcServiceTag:string;
+  serialNo?:string;
+  pcMemo:string;
   monitorNumber1:number;
   monitorNumber2:number;
   monitorNumber3:number;
@@ -70,7 +77,7 @@ export type PCItem = {
   keyboardNumber:string;
   keyboardMemo:string;
   warrantyPeriod:Date;
-  vPNSettingFlag:boolean;
+  vpnSettingFlag:boolean;
   currentOwnerCompanyCode:number;
   currentOwnerEmployeeCode:number;
   assetKindCode?:number;

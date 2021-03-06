@@ -82,7 +82,7 @@ const ItemTab:FC<{data:VPCitem, editable:boolean}> =(props:{data:VPCitem, editab
     {data_kindname:'mail',title:'メール'},
     {data_kindname:'chatwork',title:'チャットワーク'},
     {data_kindname:'cybouzu',title:'サイボウズ'},
-    {data_kindname:'nas',title:'ファイルサーバ'}
+    // {data_kindname:'nas',title:'ファイルサーバ'}
   ];
   
   useEffect(() => {
