@@ -2,6 +2,7 @@ import React,{FC} from 'react';
 //import Moment from 'react-moment';
 import MaterialTableCustom from './materialtable-custom';
 import axios from 'axios';
+import * as PROPS from '../App.properties';
 
 const OtherAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const columns:any = [
@@ -43,11 +44,15 @@ const OtherAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     {
       title:'S/N',field:'serialNumber'
     },
-
 ];
 
   const updateDataHandler = (item: any) => {
-    
+
+    let uploadData:any = {...item};
+    uploadData.makerCode = parseInt(uploadData.makerCode); 
+    uploadData.itemKindNo = parseInt(uploadData.itemKindNo);
+
+    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostOtherAssetItem`,uploadData);   
   };
 
   const deleteDataHandler = (item :any) => {

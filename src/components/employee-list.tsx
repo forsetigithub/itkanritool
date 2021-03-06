@@ -12,8 +12,8 @@ export type EmployeeItem = {
   firstName:string;
   lastNameKana:string;
   firstNameKana:string;
-  employmentCode:number;
-  departmentCode:number;
+  employmentCode?:number;
+  departmentCode?:number;
   pCLoginPW:string;
   emailAddress:string;
   joinedDate?:Date;
@@ -102,11 +102,31 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 ];
 
   const PostItem = (item: EmployeeItem) => {
+    console.log('employee-list:post');
+
+    if(item.companyCode === undefined) {
+      item.companyCode = 1;
+    }
+
+    if(item.temporaryEmployeeCode === undefined) {
+      item.temporaryEmployeeCode = -1;
+    }
+
+    if(item.employmentCode === undefined) {
+      item.employmentCode = 0;
+    }
+
+    if(item.departmentCode === undefined) {
+      item.departmentCode = 0;
+    }
+
     const postData = {companyCode:item.companyCode,temporaryEmployeeCode: item.temporaryEmployeeCode,
                     formalEmployeeCode:item.formalEmployeeCode,lastName:item.lastName,firstName:item.firstName,
                     employmentCode: parseInt(item.employmentCode.toString()),departmentCode: parseInt(item.departmentCode.toString()),
                     firstNameKana:'',lastNameKana:'',pCLoginPW:'',emailAddress:'',
                     joinedDate:undefined,retiermentDate:undefined,existsFlag:true };
+
+    // console.log(postData);                
 
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostEmployee`,postData)
       .then((result) => {

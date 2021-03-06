@@ -17,17 +17,20 @@ export type LoginUser = {
 
 export type VPCitem = {
   pcItemCode: number;
-  assetKindCode: string;
+  assetKindCode?: number;
+  assetKindName: string;
   itemNumber: string;
   companyCode: number;
   temporaryEmployeeCode: number;
   formalEmployeeCode: string;
   employeeName: string;
   departmentName: string;
+  makerCode?:number;
   makerName: string;
   pcTypeNumber: string;
   pcServiceTag: string;
-  assetKind: string;
+  pcKindCode?: number;
+  pcKindName: string;
   pcMemo: string; 
   monitorNumber1: string;
   monitorNumber2: string; 
@@ -51,13 +54,26 @@ export type VPCitem = {
 }
 
 export type PCItem = {
-  makerName:string;
-  pcTypeNumber:string;
-  pcServiceTag:string;
-  assetKind:string;
+  pCItemCode:number;
+  itemNumber:string;
+  makerCode?:number;
+  pCTypeNumber:string;
+  pCKindCode?:number;
+  pCServiceTag:string;
+  pCMemo:string;
+  monitorNumber1:number;
+  monitorNumber2:number;
+  monitorNumber3:number;
+  monitorMemo:string;
+  mouseNumber:string;
+  mouseMemo:string;
+  keyboardNumber:string;
+  keyboardMemo:string;
   warrantyPeriod:Date;
-  warranty:string;
-  pcMemo:string;
+  vPNSettingFlag:boolean;
+  currentOwnerCompanyCode:number;
+  currentOwnerEmployeeCode:number;
+  assetKindCode?:number;
 };
 
 export type AccountInfo = {

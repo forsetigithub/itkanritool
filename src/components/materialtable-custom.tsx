@@ -106,6 +106,7 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_
             filtering:true,
             pageSize:10,
             showTitle:false,
+            
           }}
         />
       </div>

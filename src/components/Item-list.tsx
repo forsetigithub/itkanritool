@@ -80,7 +80,7 @@ const ItemList: FC<{editable:boolean}> = (props:{editable:boolean}) => {
         mixWidth:30
       }  
     }, 
-    { field:"assetKindCode", title:"資産種別",editable:'never' },
+    { field:"assetKindName", title:"資産種別",editable:'never' },
     { field:"itemNumber", title:"備品番号",editable:'never',
       cellStyle:{
       maxWidth:20

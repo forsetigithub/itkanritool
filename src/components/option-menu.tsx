@@ -43,7 +43,7 @@ console.log(props.selectedIndex);
       case 'CSV出力':
         switch(props.selectedIndex) {
           case 0: //Home
-            GetItemListCSV('item-list.csv','GetVPCitemsCSV');
+            GetItemListCSV(`IT資産データ.csv`,'GetVPCitemsCSV');
             break;
         }     
     }
