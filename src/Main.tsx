@@ -25,7 +25,7 @@ import EmployeeList from './components/employee-list';
 import CodeTableList from './components/codetable-list';
 import SideNav from './components/sidenav';
 import OptionMenu from './components/option-menu';
-
+import * as PROPS from './App.properties';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -66,19 +66,19 @@ const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
   const MenuItems:IMenu[] = [
     {
-      key:'home',title:'Home',icon:<HomeIcon />,path:"/home",main:() => (<ItemList editable={props.editable} />)
+      key:'home',title:'Home',icon:<HomeIcon />,path:`${PROPS.BASE_PATH}/home`,main:() => (<ItemList editable={props.editable} />)
     },
     {
-      key:'assets',title:'機器一覧(PC)',icon:<DesktopWindowsIcon />,path:"/assets",main:()=> (<PCAssetList editable={props.editable}  />)
+      key:'assets',title:'機器一覧(PC)',icon:<DesktopWindowsIcon />,path:`${PROPS.BASE_PATH}/assets`,main:()=> (<PCAssetList editable={props.editable}  />)
     },
     {
-      key:'otherassets',title:'機器一覧(PC以外)',icon:<KeyboardIcon />,path:"/otherassets",main:()=> (<OtherAssetList editable={props.editable} />)
+      key:'otherassets',title:'機器一覧(PC以外)',icon:<KeyboardIcon />,path:`${PROPS.BASE_PATH}/otherassets`,main:()=> (<OtherAssetList editable={props.editable} />)
     },
     {
-      key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:"/employee",main:()=> (<EmployeeList editable={props.editable} />)
+      key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:`${PROPS.BASE_PATH}/employee`,main:()=> (<EmployeeList editable={props.editable} />)
     },
     {
-      key:'master',title:'マスタ管理',icon:<StorageIcon />,path:"/master",main:()=> (<CodeTableList  editable={props.editable} />)
+      key:'master',title:'マスタ管理',icon:<StorageIcon />,path:`${PROPS.BASE_PATH}/master`,main:()=> (<CodeTableList  editable={props.editable} />)
     }
   ];
 
@@ -98,10 +98,10 @@ const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
               <Switch>
                 <Route 
                   exact
-                  path="/"
+                  path={`${PROPS.BASE_PATH}/signin`}
                   render={()=> {
                     return(
-                      <Redirect to="/home" />
+                      <Redirect to={`${PROPS.BASE_PATH}/home`} />
                     )
                   }}
                 />

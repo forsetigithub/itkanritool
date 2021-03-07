@@ -21,21 +21,30 @@ import axios from 'axios';
 import * as PROPS from '../App.properties';
 import { LoginUser } from '../Interface';
 
+
 type Credentials = {
   mailAddress?:string;
   pw?:string;
 };
 
 function Copyright() {
+  const p = require('../../package.json');
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="#">
-        KIZUNA.inc
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      <div>
+        {'Copyright © '}
+        <Link color="inherit" href="#">
+          KIZUNA.inc
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </div>
+      <div>
+        {'Ver.'}
+        {p.version}
+      </div>
     </Typography>
+    
   );
 }
 

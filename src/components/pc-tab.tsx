@@ -33,7 +33,8 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
         render: (rowData:any) => (<Moment format="YYYY-MM-DD">{rowData.warrantyPeriod}</Moment> )
     },
     {
-      title: '保証', field:'warranty',editable: 'never'
+      title: '保証', field:'warranty',editable: 'never',
+      render: (rowData:any) => (Date.parse( rowData.warrantyPeriod) >= Date.now() ? <p>有効</p> : <p>無効</p>)
     },
     { 
       title: '備考', field:'pcMemo'

@@ -24,13 +24,13 @@ type Props = {
 };
 
 interface EquipmentItem {
-  monitorNumber1:string;
-  monitorNumber2:string;
-  monitorNumber3:string;
+  monitorNumber1Name:string;
+  monitorNumber2Name:string;
+  monitorNumber3Name:string;
   monitorMemo:string;
-  mouseNumber:string;
+  mouseNumberName:string;
   mouseMemo:string;
-  keyboardNumber:string;
+  keyboardNumberName:string;
   keyboardMemo:string;
 }
 
@@ -59,17 +59,18 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
 
   useEffect(() => {
     const otherAssetInfo = [
-      {monitorNumber1: data.monitorNumber1,
-       monitorNumber2: data.monitorNumber2,
-       monitorNumber3: data.monitorNumber3,
+      {monitorNumber1Name: data.monitorNumber1Name,
+       monitorNumber2Name: data.monitorNumber2Name,
+       monitorNumber3Name: data.monitorNumber3Name,
        monitorMemo: data.monitorMemo,
-       mouseNumber: data.mouseNumber,
+       mouseNumberName: data.mouseNumberName,
        mouseMemo: data.mouseMemo,
-       keyboardNumber: data.keyboardNumber,
+       keyboardNumberName: data.keyboardNumberName,
        keyboardMemo: data.keyboardMemo,
       }];
 
     setPcInfo(otherAssetInfo);
+
   },[data]);
 
   useEffect(() => {
@@ -86,7 +87,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
 
   const PostItem = (postitem:EquipmentItem) => {
     const updateData = {...data,...postitem};
-    
+  
     setLoading(true);
     axios.post(PRPOS.BASE_URL + '/api/itmanagement/PostVPCItems',updateData)
     .then((result) =>{
@@ -96,7 +97,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
 
   const columns:any = [
     { 
-      title: 'モニター1', field:'monitorNumber1',
+      title: 'モニター1', field:'monitorNumber1Name',
         editComponent:(props:any) => (
           <Autocomplete
             {...defaultProps}
@@ -108,7 +109,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
         )
     },
     { 
-      title: 'モニター2', field:'monitorNumber2',
+      title: 'モニター2', field:'monitorNumber2Name',
         editComponent:(props:any) => (
           <Autocomplete 
             {...defaultProps}
@@ -121,7 +122,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
         )
     },
     { 
-      title: 'モニター3', field:'monitorNumber3',
+      title: 'モニター3', field:'monitorNumber3Name',
       editComponent:(props:any) => (
         <Autocomplete 
           {...defaultProps}        
@@ -137,7 +138,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
       title: 'モニター備考', field:'monitorMemo'
     },
     { 
-      title: 'マウス番号', field:'mouseNumber',
+      title: 'マウス番号', field:'mouseNumberName',
       editComponent:(props:any) => (
         <Autocomplete
           {...defaultProps} 
@@ -153,7 +154,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
       title: 'マウス備考', field:'mouseMemo'
     },
     { 
-      title: 'キーボード番号', field:'keyboardNumber',
+      title: 'キーボード番号', field:'keyboardNumberName',
       editComponent:(props:any) => (
         <Autocomplete
           {...defaultProps}

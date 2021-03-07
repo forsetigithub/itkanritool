@@ -23,11 +23,12 @@ const OptionMenu:FC<{selectedIndex:number}> = (props:{selectedIndex:number}) => 
   const open = Boolean(anchorEl);
 
   const options = [
-    {title:'CSV出力' }
-    // 'CSV出力2',
+    {title:'CSV出力' },
   ];
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    if(props.selectedIndex !== 0) return; //暫定対応
+
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
 
@@ -36,8 +37,6 @@ const OptionMenu:FC<{selectedIndex:number}> = (props:{selectedIndex:number}) => 
   const handleClose = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     setAnchorEl(null);
-
-console.log(props.selectedIndex);
 
     switch(event.currentTarget.innerText) {
       case 'CSV出力':
@@ -66,7 +65,7 @@ console.log(props.selectedIndex);
         id="long-menu"
         anchorEl={anchorEl}
         keepMounted
-        open={open}
+        open={open} 
         onClose={handleClose}
         PaperProps={{
           style: {
