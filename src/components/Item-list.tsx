@@ -39,7 +39,6 @@ const ItemList: FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const [employeelist,setEmployeelist] = useState<any>([]);
 
   const GetVPCitems = async () => {
-    console.log('GetVPCitems');
     setLoading(true);
     await axios.get(`${PROPS.BASE_URL}/api/itmanagement/getvpcitems`)
     .then((result) => {

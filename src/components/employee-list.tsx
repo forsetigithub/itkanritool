@@ -102,7 +102,6 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 ];
 
   const PostItem = (item: EmployeeItem) => {
-    console.log('employee-list:post');
 
     if(item.companyCode === undefined) {
       item.companyCode = 1;

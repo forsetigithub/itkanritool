@@ -86,8 +86,8 @@ const SignIn:FC<any> = ({setToken}:any) => {
 
   const  GetLoginUser = async (credentials:Credentials) => {
     setLoading(true);
-    await axios.get(PROPS.BASE_URL + '/api/itmanagement/GetLoginUser/' + 
-      credentials.mailAddress + '/' + credentials.pw)
+    await axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetLoginUser/ 
+      ${credentials.mailAddress}/${credentials.pw}`)
       .then((result) => {
         sessionStorage.setItem(PROPS.LOGIN_TOKEN, JSON.stringify(result.data as LoginUser));
         setLoading(false);

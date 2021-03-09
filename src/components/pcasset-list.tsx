@@ -61,8 +61,12 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     
     },
     // {
-    //   title: '保証', field:'warranty',editable: 'never'
+    //   title: '保証', field:'warranty',editable: 'never',lookup: {1:'有効',0:'無効'},
+    //   render: (rowData:any) => (Date.parse( rowData.warrantyPeriod) >= Date.now() ? 1 : 0)
     // },
+    {
+      title: '資産種別',field: 'assetKindCode',type:'number',lookup : {1: '本社',2: '久留米'}
+    },
     { 
       title: '備考', field:'pcMemo'
     },  
@@ -80,8 +84,13 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     if(uploadData.makerCode !== undefined) {
       uploadData.makerCode = parseInt(uploadData.makerCode.toString()); 
     }
+
     if(uploadData.pcKindCode !== undefined) {
       uploadData.pcKindCode = parseInt(uploadData.pcKindCode.toString());
+    }
+
+    if(uploadData.assetKindCode !== undefined) {
+      uploadData.assetKindCode = parseInt(uploadData.assetKindCode.toString());
     }
       
     console.log(uploadData);
