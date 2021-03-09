@@ -98,7 +98,7 @@ const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
               <Switch>
                 <Route 
                   exact
-                  path={`${PROPS.BASE_PATH}/signin`}
+                  path={`${PROPS.BASE_PATH}/`}
                   render={()=> {
                     return(
                       <Redirect to={`${PROPS.BASE_PATH}/home`} />
