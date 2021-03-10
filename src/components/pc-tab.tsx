@@ -93,8 +93,7 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
       currentOwnerCompanyCode:props.data.companyCode,
       currentOwnerEmployeeCode:props.data.temporaryEmployeeCode,
       assetKindCode:props.data.assetKindCode};
-
-console.log(uploadData);      
+ 
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostPCItem`,uploadData)
       .then((result) => {
 
