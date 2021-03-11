@@ -23,64 +23,70 @@ backdrop: {
 },
 }));
 
+const systemDic = [
+  {systemCode:1,systemName: 'mail'},
+  {systemCode:2,systemName: 'chatwork'},
+  {systemCode:3,systemName: 'office365'},
+  {systemCode:4,systemName: 'cybouzu'},
+  {systemCode:5,systemName: 'nas'},
+];
+
 const AccountTab: FC<{data_kindname:string,data:AccountItem,
   id_title:string,editable:boolean}> = 
   (props:{data_kindname:string,data:AccountItem,id_title:string,editable:boolean}) => {
 
   const classes = useStyle();
 
-  const [accountInfo, setAccountInfo] = useState<AccountItem[]>([]);
+  const [accountInfo, setAccountInfo] = useState<AccountInfo[]>([]);
   const [isLoading,setIsLoading] = useState(false);
+  const [systemCode,setSystemCode] = useState(0);
 
   const columns:any = [
-    { title: 'companycode', field:'companycode', hidden:true},
-    { title: 'employeecode',  field:'employeecode', hidden: true},
-    { title: 'data_kindname', field:'data_kindname',hidden: true},
-    { title: 'No',field:'seqno',editable: 'never',hidden:true},
+    { title: 'companycode', field:'companyCode', hidden:true},
+    { title: 'temporaryEmployeeCode',  field:'temporaryEmployeeCode', hidden: true},
+    { title: 'systemCode', field:'systemCode',hidden: true},
+    { title: 'No',field:'seqNo',editable: 'never',hidden:true},
     {
-      title: props.id_title,field:'id'
+      title: props.id_title,field:'idNumber'
     },
     { 
-      title: 'パスワード', field:'pw'
+      title: 'パスワード', field:'passWord'
     }
   ];
 
+
+
   useEffect(() => {
-    setAccountInfo([{companycode:props.data.companycode,employeecode:props.data.employeecode,
-      seqno:props.data.seqno,id:props.data.id,pw:props.data.pw}]);
+    if(props.data.employeecode === null) return;
+
+    setIsLoading(true);
+    const systemcode:number | undefined = systemDic.find((value) => value.systemName === props.data_kindname)?.systemCode
+    
+    if(systemcode !== undefined) setSystemCode(parseInt(systemcode.toString()));
+
+    const fetchData = async () => await axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetAccountInfoBySystem/
+      ${props.data.companycode}/${props.data.employeecode}/${systemcode}`)
+      .then((result) => {
+        setAccountInfo(result.data);   
+        setIsLoading(false); 
+      });
+    fetchData();
   },[props]);
 
-  const PostItem = (item:AccountItem) => {
+  const PostItem = (item:AccountInfo) => {
     setIsLoading(true);
 
-    let codeID = -1;
-    switch(props.data_kindname){
-      case 'mail':
-        codeID = 1;
-        break;
-      case 'chatwork':
-        codeID = 2;
-        break;
-      case 'cybouzu':
-        codeID = 4;
-        break;
-    }
-
-    const uploadData:AccountInfo = {companyCode:item.companycode,temporaryEmployeeCode:item.employeecode,
-      systemCode:codeID,seqNo:item.seqno,iDNumber:item.id,passWord:item.pw};
+    const uploadData:AccountInfo = {companyCode:item.companyCode,
+      temporaryEmployeeCode:item.temporaryEmployeeCode,
+      systemCode:systemCode,seqNo:item.seqNo,idNumber:item.idNumber,passWord:item.passWord};
 
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostAccountInfo`,uploadData)
       .then((result) => {
-        axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetAccountInfoBySytem/
-          ${item.companycode}/${item.employeecode}/${codeID}`)
+        axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetAccountInfoBySystem/
+          ${item.companyCode}/${item.temporaryEmployeeCode}/${systemCode}`)
           .then((result) => {
-            // console.log(result.data[0]);
-            // const resultdata = result.data[0] as AccountInfo;
-            // setAccountInfo([{companycode:props.data.companycode,employeecode:props.data.employeecode,
-            //   seqno:props.data.seqno,id:resultdata.iDNumber,pw:resultdata.passWord}]);
             setIsLoading(false);
           });
-
       });
   };
 
@@ -99,7 +105,7 @@ const AccountTab: FC<{data_kindname:string,data:AccountItem,
         data={[...accountInfo]}
         icons={tableIcons}
         editable={{
-          onRowUpdate: props.editable ? (newData:AccountItem,oldData:any) => 
+          onRowUpdate: props.editable ? (newData:AccountInfo,oldData:any) => 
             new Promise((resolve:any,reject:any) => {
               const dataUpdate = [...accountInfo];
               const index = oldData.tableData.id;

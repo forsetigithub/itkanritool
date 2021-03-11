@@ -88,7 +88,7 @@ export type AccountInfo = {
   temporaryEmployeeCode:number;
   systemCode:number;
   seqNo:number;
-  iDNumber:string;
+  idNumber:string;
   passWord:string;
 };
 
