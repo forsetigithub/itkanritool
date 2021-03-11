@@ -76,14 +76,17 @@ const AccountTab: FC<{data_kindname:string,data:AccountItem,
   const PostItem = (item:AccountInfo) => {
     setIsLoading(true);
 
-    const uploadData:AccountInfo = {companyCode:item.companyCode,
-      temporaryEmployeeCode:item.temporaryEmployeeCode,
-      systemCode:systemCode,seqNo:item.seqNo,idNumber:item.idNumber,passWord:item.passWord};
+    const uploadData:AccountInfo = {companyCode:props.data.companycode,
+      temporaryEmployeeCode:props.data.employeecode,
+      systemCode:systemCode,seqNo:item.seqNo === undefined ? 1 : item.seqNo,
+      idNumber:item.idNumber,passWord:item.passWord};
 
+    console.log(uploadData);
+      
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostAccountInfo`,uploadData)
       .then((result) => {
         axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetAccountInfoBySystem/
-          ${item.companyCode}/${item.temporaryEmployeeCode}/${systemCode}`)
+          ${uploadData.companyCode}/${uploadData.temporaryEmployeeCode}/${systemCode}`)
           .then((result) => {
             setIsLoading(false);
           });
@@ -113,7 +116,13 @@ const AccountTab: FC<{data_kindname:string,data:AccountItem,
               setAccountInfo([...dataUpdate]);
               PostItem(newData);
               resolve();
-            }) : undefined
+            }) : undefined,
+            onRowAdd: props.editable ? (newData: AccountInfo) => 
+            new Promise((resolve:any,reject:any) => {
+              setAccountInfo([newData, ...accountInfo]);
+              PostItem(newData);
+              resolve();
+            }) : undefined,
         }}
         options={{
           filtering:false,
