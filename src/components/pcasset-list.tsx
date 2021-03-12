@@ -65,7 +65,7 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     //   render: (rowData:any) => (Date.parse( rowData.warrantyPeriod) >= Date.now() ? 1 : 0)
     // },
     {
-      title: '資産種別',field: 'assetKindCode',type:'number',lookup : {1: '本社',2: '久留米'}
+      title: '資産種別',field: 'assetKindCode',type:'number',lookup : {1: '本社',2: '久留米',3:'リース'}
     },
     { 
       title: '備考', field:'pcMemo'
