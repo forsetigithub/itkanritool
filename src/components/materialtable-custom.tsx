@@ -25,7 +25,7 @@ const useStyle = makeStyles((theme: Theme) =>
   root : {
     //svgタグ以外を反映
     '& *:not(svg)': {
-       "font-size": 'calc(8px + 1vmin)'
+       "font-size": 'calc(6px + 1vmin)'
     },
   },
   backdrop: {
