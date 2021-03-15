@@ -40,7 +40,7 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       title: 'シリアル番号', field:'serialNo'
     },
     { 
-      title: '種別', field:'pcKindCode',lookup: {1:'デスクトップ',2:'ノート'},
+      title: '種別', field:'pcKindCode',lookup: {1:'デスクトップ',2:'ノート',999:'未指定'},
       headerStyle:{
         width:120,
       },
@@ -65,7 +65,7 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     //   render: (rowData:any) => (Date.parse( rowData.warrantyPeriod) >= Date.now() ? 1 : 0)
     // },
     {
-      title: '資産種別',field: 'assetKindCode',type:'number',lookup : {1: '本社',2: '久留米',3:'リース'}
+      title: '資産種別',field: 'assetKindCode',type:'number',lookup : {1: '本社',2: '久留米',3:'リース',999:'未指定'}
     },
     { 
       title: '備考', field:'pcMemo'
@@ -74,7 +74,8 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
   const updateDataHandler = (item: PCItem) => {
     console.log('PCAssetList:');
-    
+
+
     if(item.pcItemCode === undefined){
       item.pcItemCode = -1;
     }
