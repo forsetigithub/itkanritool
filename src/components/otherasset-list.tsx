@@ -44,6 +44,9 @@ const OtherAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     {
       title:'S/N',field:'serialNumber'
     },
+    {
+      title:'備考',field:'memo'
+    }
 ];
 
   const updateDataHandler = (item: any) => {
