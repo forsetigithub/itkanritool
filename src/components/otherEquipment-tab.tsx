@@ -58,18 +58,21 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
   }
 
   useEffect(() => {
-    const otherAssetInfo = [
-      {monitorNumber1Name: data.monitorNumber1Name,
-       monitorNumber2Name: data.monitorNumber2Name,
-       monitorNumber3Name: data.monitorNumber3Name,
-       monitorMemo: data.monitorMemo,
-       mouseNumberName: data.mouseNumberName,
-       mouseMemo: data.mouseMemo,
-       keyboardNumberName: data.keyboardNumberName,
-       keyboardMemo: data.keyboardMemo,
-      }];
-
-    setPcInfo(otherAssetInfo);
+    const fetchData = async () => await axios.get(`${PRPOS.BASE_URL}/api/itmanagement/GetVPCItemById/${data.pcItemCode}`)
+      .then((result) => {
+        const otherAssetInfo = [
+          {monitorNumber1Name: result.data.monitorNumber1Name,
+           monitorNumber2Name: result.data.monitorNumber2Name,
+           monitorNumber3Name: result.data.monitorNumber3Name,
+           monitorMemo: result.data.monitorMemo,
+           mouseNumberName: result.data.mouseNumberName,
+           mouseMemo: result.data.mouseMemo,
+           keyboardNumberName: result.data.keyboardNumberName,
+           keyboardMemo: result.data.keyboardMemo,
+          }];
+          setPcInfo(otherAssetInfo);
+      });
+    fetchData();
 
   },[data]);
 
