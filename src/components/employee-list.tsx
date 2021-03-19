@@ -52,7 +52,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       title: '名', field:'firstName'
     },
     { 
-      title: '雇用区分', field:'employmentCode',type:'numeric',lookup: {1:'直雇用',2:'派遣'},
+      title: '雇用区分', field:'employmentCode',type:'numeric',lookup: {1:'直雇用',2:'派遣',3:'業務委託'},
       headerStyle:{
         width:120,
       },
