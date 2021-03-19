@@ -2,6 +2,7 @@ import React,{FC} from 'react';
 //import Moment from 'react-moment';
 import axios from 'axios';
 import MaterialTableCustom from './materialtable-custom';
+import AcountItemTabs from './account-item-tabs';
 import * as PROPS from '../App.properties';
 
 export type EmployeeItem = {
@@ -149,7 +150,13 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   return(
     <MaterialTableCustom<EmployeeItem>  columns={columns} getParam="GetEmployees" 
       editable_mode={props.editable}
-      updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler}  />
+      updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} 
+      detailPanel={(rowData:EmployeeItem) => {
+        return(
+          <AcountItemTabs<EmployeeItem> data={rowData}  editable={props.editable} />
+        )
+      }}
+      />
   );
 }
 

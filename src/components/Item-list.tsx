@@ -11,7 +11,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import axios from 'axios';
 
-import ItemTab from './item-tab';
+import AcountItemTabs from './account-item-tabs';
 import * as PROPS from '../App.properties';
 import { VPCitem } from '../Interface';
 
@@ -147,7 +147,7 @@ const ItemList: FC<{editable:boolean}> = (props:{editable:boolean}) => {
           }}
           detailPanel={(rowData:VPCitem) => {
             return(
-              <ItemTab data={rowData} editable={props.editable} />
+              <AcountItemTabs<VPCitem> data={rowData} editable={props.editable} />
             )
           }}
         />

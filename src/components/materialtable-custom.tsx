@@ -17,6 +17,7 @@ type Props<T> = {
   editable_mode:boolean;
   updateDataHandler: (item: T) => void;
   deleteDataHandler: (item: T) => void;
+  detailPanel?:any;
 
 }
 
@@ -33,7 +34,7 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
-const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_mode,updateDataHandler,deleteDataHandler}:Props<T>) => {
+const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_mode,updateDataHandler,deleteDataHandler,detailPanel}:Props<T>) => {
 
   const classes = useStyle();
   
@@ -109,6 +110,7 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_
             addRowPosition:'first'
             
           }}
+          detailPanel={detailPanel}
         />
       </div>
     </React.Fragment>
