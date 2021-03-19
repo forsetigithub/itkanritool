@@ -90,6 +90,7 @@ export type AccountInfo = {
   seqNo:number;
   idNumber:string;
   passWord:string;
+  memo:string;
 };
 
 export type AccountItem = {
@@ -98,5 +99,6 @@ export type AccountItem = {
   seqno:number;
   id:string;
   pw:string;
+  memo:string;
 };
 

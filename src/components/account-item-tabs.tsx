@@ -72,7 +72,7 @@ const AccountItemTabs = <T2 extends object>({data, editable}:Props<T2>) =>{
   const convertdata = data as VPCitem | EmployeeItem;
 
   const targetEmployeeData:AccountItem = {companycode:convertdata.companyCode, 
-    employeecode:convertdata.temporaryEmployeeCode,seqno:1,id:'',pw:''};
+    employeecode:convertdata.temporaryEmployeeCode,seqno:1,id:'',pw:'',memo:''};
 
   const datakind = [
     pcviewflag ? {data_kindname:'pc',title:'PC本体'} : {data_kindname:'',title:''},

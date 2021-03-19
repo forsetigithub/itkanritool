@@ -51,9 +51,11 @@ const AccountTab: FC<{data_kindname:string,data:AccountItem,
     },
     { 
       title: 'パスワード', field:'passWord'
+    },
+    {
+      title: '備考',field: 'memo'
     }
   ];
-
 
 
   useEffect(() => {
@@ -79,7 +81,7 @@ const AccountTab: FC<{data_kindname:string,data:AccountItem,
     const uploadData:AccountInfo = {companyCode:props.data.companycode,
       temporaryEmployeeCode:props.data.employeecode,
       systemCode:systemCode,seqNo:item.seqNo === undefined ? 1 : item.seqNo,
-      idNumber:item.idNumber,passWord:item.passWord};
+      idNumber:item.idNumber,passWord:item.passWord,memo:item.memo};
 
     console.log(uploadData);
       
