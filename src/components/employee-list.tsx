@@ -109,7 +109,12 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     }
 
     if(item.temporaryEmployeeCode === undefined) {
-      item.temporaryEmployeeCode = -1;
+
+      //最新のシステム社員番号を取得
+      axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetLastTemporaryEmployeeCode/${item.companyCode}`)
+        .then((result) => {
+          item.temporaryEmployeeCode = result.data;
+        });
     }
 
     if(item.employmentCode === undefined) {
@@ -130,7 +135,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostEmployee`,postData)
       .then((result) => {
-        axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetEmployees`);
+       
       });
     
   }
@@ -140,9 +145,9 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   };
 
   const deleteDataHandler = (item: EmployeeItem) => {
-    axios.post(PROPS.BASE_URL + '/api/itmanagement/DeleteEmployee' ,item)
+    axios.post(`${PROPS.BASE_URL}/api/itmanagement/DeleteEmployee` ,item)
       .then((result) => {
-        axios.get(PROPS.BASE_URL + '/api/itmanagement/GetEmployees')
+        // axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetEmployees`)
       })
   }
 
