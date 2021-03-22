@@ -11,17 +11,17 @@ import {AccountInfo,AccountItem} from '../Interface';
 import axios from 'axios';
 
 const useStyle = makeStyles((theme: Theme) =>
-createStyles({
-root : {
-  //svgタグ以外を反映
-  '& *:not(svg)': {
-     "font-size": 'calc(8px + 1vmin)'
-  },
-},
-backdrop: {
-  zIndex: theme.zIndex.drawer + 1, 
-},
-}));
+  createStyles({
+    root : {
+      //svgタグ以外を反映
+      '& *:not(svg)': {
+        "font-size": 'calc(8px + 1vmin)'
+      },
+    },
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1, 
+    },
+  }));
 
 const systemDic = [
   {systemCode:1,systemName: 'mail'},

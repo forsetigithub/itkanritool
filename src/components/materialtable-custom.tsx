@@ -4,7 +4,7 @@ import MaterialTable from 'material-table';
 import {tableIcons} from './tableIcons';
 import ja from 'date-fns/locale/ja';
 
-import { createStyles, makeStyles,Theme } from '@material-ui/core';
+import { createMuiTheme, createStyles, makeStyles,MuiThemeProvider,Theme } from '@material-ui/core';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -34,6 +34,14 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
+const theme = createMuiTheme({
+  palette: {
+    secondary: {
+      main: '#220066',
+    }
+  }
+});
+
 const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_mode,updateDataHandler,deleteDataHandler,detailPanel}:Props<T>) => {
 
   const classes = useStyle();
@@ -55,11 +63,14 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_
 
   return(
     <React.Fragment>
+
       <Backdrop className={classes.backdrop} open={isLoading}>
         <CircularProgress color="primary" size={80} />
       </Backdrop>
 
       <div className={classes.root}>
+
+      <MuiThemeProvider theme={theme} >
         <MaterialTable         
           title={title === undefined ? '' : title}
           columns={columns}
@@ -112,6 +123,7 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_
           }}
           detailPanel={detailPanel}
         />
+        </MuiThemeProvider>
       </div>
     </React.Fragment>
 

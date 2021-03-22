@@ -19,7 +19,7 @@ export type EmployeeItem = {
   emailAddress:string;
   joinedDate?:Date;
   retiermentDate?:Date;
-  existsFlag:boolean;
+  existsFlag?:boolean;
 };
 
 const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
@@ -88,7 +88,8 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       title: 'retiermentDate', field: 'retiermentDate', type:'date', hidden: true
     },
     {
-      title: 'existsFlag', field: 'existsFlag',hidden: true
+      title: '在籍', field: 'existsFlag',type:'boolean',defaultFilter: 'checked'
+      // ,hidden: true
     },
     {
       title: 'lastNameKana', field: 'lastNameKana',hidden: true
@@ -129,7 +130,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
                     formalEmployeeCode:item.formalEmployeeCode,lastName:item.lastName,firstName:item.firstName,
                     employmentCode: parseInt(item.employmentCode.toString()),departmentCode: parseInt(item.departmentCode.toString()),
                     firstNameKana:'',lastNameKana:'',pCLoginPW:'',emailAddress:'',
-                    joinedDate:undefined,retiermentDate:undefined,existsFlag:true };
+                    joinedDate:undefined,retiermentDate:undefined,existsFlag:item.existsFlag };
 
     // console.log(postData);                
 
