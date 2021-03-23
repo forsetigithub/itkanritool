@@ -126,6 +126,10 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       item.departmentCode = 0;
     }
 
+    if(item.existsFlag === undefined) {
+      item.existsFlag = true;
+    }
+
     const postData = {companyCode:item.companyCode,temporaryEmployeeCode: item.temporaryEmployeeCode,
                     formalEmployeeCode:item.formalEmployeeCode,lastName:item.lastName,firstName:item.firstName,
                     employmentCode: parseInt(item.employmentCode.toString()),departmentCode: parseInt(item.departmentCode.toString()),
