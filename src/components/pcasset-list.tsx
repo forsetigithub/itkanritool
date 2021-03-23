@@ -99,8 +99,8 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostPCItem`,uploadData);
   };
 
-  const deleteDataHandler = (item: any) => {
-
+  const deleteDataHandler = (item: PCItem) => {
+    axios.post(`${PROPS.BASE_URL}/api/itmanagement/DeletePCItem`,item);
   };
   
   return(

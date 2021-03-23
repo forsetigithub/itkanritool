@@ -59,7 +59,7 @@ const OtherAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   };
 
   const deleteDataHandler = (item :any) => {
-
+    axios.post(`${PROPS.BASE_URL}/api/itmanagement/DeleteOtherAssetItem`,item);
   };
 
   return(
