@@ -25,8 +25,8 @@ export type EmployeeItem = {
 const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const columns:any = [
     {
-      title: 'companyCode',field: 'companyCode', type:'numeric',
-      hidden:true, 
+      title: '会社名',field: 'companyCode', type:'numeric',
+      lookup: {1:'KIZUNA',2:'DreamBox',3:'マキコミ',4:'プランツ',5:'KIZUNA大分'},
     },
     {
       title: 'temporaryEmployeeCode',field: 'temporaryEmployeeCode',type:'numeric',
@@ -64,7 +64,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       title: '所属部署', field:'departmentCode',type:'numeric',
       lookup: {1:'Dreambox', 2:'MO大橋',3:'アライアンス',
                4:'コール大橋',5:'プランツ',6:'プランニング',
-               7:'マキコミ',8:'メディア支援 ',9:'わくわく',
+               8:'メディア支援 ',9:'わくわく',
               10:'経理財務室',11:'広告PR ',12:'事業推進',
               13:'社長室',14:'情報システム管理室',15:'制作',
               16:'コール久留米',17:'マキコミ',18:'KIZUNA大分'},
@@ -130,7 +130,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       item.existsFlag = true;
     }
 
-    const postData = {companyCode:item.companyCode,temporaryEmployeeCode: item.temporaryEmployeeCode,
+    const postData = {companyCode:parseInt(item.companyCode.toString()),temporaryEmployeeCode: item.temporaryEmployeeCode,
                     formalEmployeeCode:item.formalEmployeeCode,lastName:item.lastName,firstName:item.firstName,
                     employmentCode: parseInt(item.employmentCode.toString()),departmentCode: parseInt(item.departmentCode.toString()),
                     firstNameKana:'',lastNameKana:'',pCLoginPW:'',emailAddress:'',
