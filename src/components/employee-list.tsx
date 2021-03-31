@@ -63,11 +63,11 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     { 
       title: '所属部署', field:'departmentCode',type:'numeric',
       lookup: {1:'Dreambox', 2:'MO大橋',3:'アライアンス',
-               4:'コール大橋',5:'プランツ',6:'プランニング',
+               4:'カスタマー大橋',5:'プランツ',6:'プランニング',
                8:'メディア支援 ',9:'わくわく',
               10:'経理財務室',11:'広告PR ',12:'事業推進',
               13:'社長室',14:'情報システム管理室',15:'制作',
-              16:'コール久留米',17:'マキコミ',18:'KIZUNA大分'},
+              16:'カスタマー久留米',17:'マキコミ',18:'KIZUNA大分'},
       headerStyle:{
         width:120,
       },
