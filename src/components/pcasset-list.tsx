@@ -22,7 +22,7 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     },
     {
       title: 'メーカー',field:'makerCode',lookup: 
-      {1:'DELL',2:'HP',3:'Apple',4:'Microsoft',5:'acer'},
+      {1:'DELL',2:'HP',3:'Apple',4:'Microsoft',5:'acer',19:'富士通'},
       headerStyle:{
         width:120,
       },

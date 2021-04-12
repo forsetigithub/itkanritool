@@ -14,7 +14,7 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
   const columns:any = [
     {
       title: 'メーカー',field:'makerCode',lookup: 
-      {1:'DELL',2:'HP',3:'Apple',4:'Microsoft',5:'acer'}
+      {1:'DELL',2:'HP',3:'Apple',4:'Microsoft',5:'acer',19:'富士通'}
     },
     { 
       title: '型番', field:'pcTypeNumber'
