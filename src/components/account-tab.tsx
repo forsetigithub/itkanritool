@@ -78,12 +78,10 @@ const AccountTab: FC<{data_kindname:string,data:AccountItem,
   const PostItem = (item:AccountInfo) => {
     setIsLoading(true);
 
-    const uploadData:AccountInfo = {companyCode:props.data.companycode,
-      temporaryEmployeeCode:props.data.employeecode,
+    const uploadData:AccountInfo = {companyCode:parseInt(props.data.companycode.toString()),
+      temporaryEmployeeCode:parseInt(props.data.employeecode.toString()),
       systemCode:systemCode,seqNo:item.seqNo === undefined ? -1 : item.seqNo,
       idNumber:item.idNumber,passWord:item.passWord,memo:item.memo};
-
-    console.log(uploadData);
       
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostAccountInfo`,uploadData)
       .then((result) => {

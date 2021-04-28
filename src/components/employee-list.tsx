@@ -89,7 +89,6 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     },
     {
       title: '在籍', field: 'existsFlag',type:'boolean',defaultFilter: 'checked'
-      // ,hidden: true
     },
     {
       title: 'lastNameKana', field: 'lastNameKana',hidden: true
@@ -140,7 +139,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostEmployee`,postData)
       .then((result) => {
-       
+ 
       });
     
   }
