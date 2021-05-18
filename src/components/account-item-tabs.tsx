@@ -68,6 +68,7 @@ const AccountItemTabs = <T2 extends object>({data, editable}:Props<T2>) =>{
   const [value, setValue] = useState(0);
   
   const [pcviewflag,setPcViewFlag] = useState(true);
+  const [employee_editable,setEmployeeEditable] = useState(editable);
 
   const convertdata = data as VPCitem | EmployeeItem;
 
@@ -84,8 +85,16 @@ const AccountItemTabs = <T2 extends object>({data, editable}:Props<T2>) =>{
   ];
   
   useEffect(() => {
-    if((data as VPCitem).pcItemCode === undefined) {
-      setPcViewFlag(false);
+    const vpcitem_data = data as VPCitem;
+    if(vpcitem_data !== undefined) {
+
+      if(vpcitem_data.pcItemCode === undefined) {
+        setPcViewFlag(false);
+      }
+
+      if(vpcitem_data.employeeName === undefined || ((vpcitem_data.employeeName) as String).length === 0) {
+        setEmployeeEditable(false);
+      }
     }
   },[data]);
 
@@ -113,31 +122,31 @@ const AccountItemTabs = <T2 extends object>({data, editable}:Props<T2>) =>{
               <OtherEquipment data={data} editable={editable} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-              <AccountTab data_kindname={datakind[2].data_kindname} data={targetEmployeeData} id_title="メールアドレス"  editable={editable}  />
+              <AccountTab data_kindname={datakind[2].data_kindname} data={targetEmployeeData} id_title="メールアドレス"  editable={employee_editable}  />
             </TabPanel>
             <TabPanel value={value} index={3}>
-              <AccountTab data_kindname={datakind[3].data_kindname} data={targetEmployeeData} id_title="ID"  editable={editable} />
+              <AccountTab data_kindname={datakind[3].data_kindname} data={targetEmployeeData} id_title="ID"  editable={employee_editable} />
             </TabPanel>
             <TabPanel value={value} index={4}>
-              <AccountTab data_kindname={datakind[4].data_kindname} data={targetEmployeeData} id_title="ID"  editable={editable} />
+              <AccountTab data_kindname={datakind[4].data_kindname} data={targetEmployeeData} id_title="ID"  editable={employee_editable} />
             </TabPanel>
             <TabPanel value={value} index={5}>
-              <AccountTab data_kindname={datakind[5].data_kindname} data={targetEmployeeData} id_title="ID"  editable={editable} />
+              <AccountTab data_kindname={datakind[5].data_kindname} data={targetEmployeeData} id_title="ID"  editable={employee_editable} />
             </TabPanel>  
           </React.Fragment>
         ) : (
           <React.Fragment>
             <TabPanel value={value} index={0}>
-              <AccountTab data_kindname={datakind[2].data_kindname} data={targetEmployeeData} id_title="メールアドレス"  editable={editable}  />
+              <AccountTab data_kindname={datakind[2].data_kindname} data={targetEmployeeData} id_title="メールアドレス"  editable={employee_editable}  />
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <AccountTab data_kindname={datakind[3].data_kindname} data={targetEmployeeData} id_title="ID"  editable={editable} />
+              <AccountTab data_kindname={datakind[3].data_kindname} data={targetEmployeeData} id_title="ID"  editable={employee_editable} />
             </TabPanel>
             <TabPanel value={value} index={2}>
-              <AccountTab data_kindname={datakind[4].data_kindname} data={targetEmployeeData} id_title="ID"  editable={editable} />
+              <AccountTab data_kindname={datakind[4].data_kindname} data={targetEmployeeData} id_title="ID"  editable={employee_editable} />
             </TabPanel>
             <TabPanel value={value} index={3}>
-              <AccountTab data_kindname={datakind[5].data_kindname} data={targetEmployeeData} id_title="ID"  editable={editable} />
+              <AccountTab data_kindname={datakind[5].data_kindname} data={targetEmployeeData} id_title="ID"  editable={employee_editable} />
             </TabPanel>  
           </React.Fragment>   
         )
