@@ -57,6 +57,7 @@ export type VPCitem = {
   cybouzu_ID: string;
   cybouzu_PW: string;
   pcLoginPW: string;
+  computerName: string;
 }
 
 export type PCItem = {
@@ -81,6 +82,8 @@ export type PCItem = {
   currentOwnerCompanyCode:number;
   currentOwnerEmployeeCode:number;
   assetKindCode?:number;
+  pcLoginPW: string;
+  computerName: string;
 };
 
 export type AccountInfo = {

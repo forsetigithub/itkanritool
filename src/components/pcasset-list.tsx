@@ -67,6 +67,10 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     {
       title: '資産種別',field: 'assetKindCode',type:'number',lookup : {1: '本社',2: '久留米',3:'リース',999:'未指定'}
     },
+    {
+      title: 'PC名', field:'computerName'
+    },
+
     { 
       title: '備考', field:'pcMemo'
     },  

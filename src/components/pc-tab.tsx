@@ -34,7 +34,10 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
     },
     {
       title: '保証', field:'warranty',editable: 'never',
-      render: (rowData:any) => (Date.parse( rowData.warrantyPeriod) >= Date.now() ? <p>有効</p> : <p>無効</p>)
+      render: (rowData:any) => (Date.parse(rowData.warrantyPeriod) >= Date.now() ? <p>有効</p> : <p>無効</p>)
+    },
+    {
+      title: 'PC名', field:'computerName'
     },
     { 
       title: '備考', field:'pcMemo'
@@ -61,7 +64,9 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
       keyboardMemo:props.data.keyboardMemo,
       vpnSettingFlag:false,
       currentOwnerCompanyCode:props.data.companyCode,
-      currentOwnerEmployeeCode:props.data.temporaryEmployeeCode}]);
+      currentOwnerEmployeeCode:props.data.temporaryEmployeeCode,
+      pcLoginPW:props.data.pcLoginPW,
+      computerName:props.data.computerName}]);
   },[props]);
 
 
@@ -92,11 +97,16 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
       vpnSettingFlag:false,
       currentOwnerCompanyCode:props.data.companyCode,
       currentOwnerEmployeeCode:props.data.temporaryEmployeeCode,
-      assetKindCode:props.data.assetKindCode};
- 
+      assetKindCode:props.data.assetKindCode,
+      pcLoginPW:props.data.pcLoginPW,
+      computerName:item.computerName};
+
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostPCItem`,uploadData)
       .then((result) => {
+        axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetVPCItemById/${item.pcItemCode}`)
+        .then((result) => {
 
+        })
       });
   }
 

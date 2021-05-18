@@ -61,6 +61,8 @@ const ItemList: FC<{editable:boolean}> = (props:{editable:boolean}) => {
   },[]);
 
   const PostItems = (postitem:VPCitem) => {
+    console.log('PostItems:');
+    console.log(postitem);
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostVPCItems`,postitem)
     .then((result) =>{
       GetVPCitems();
