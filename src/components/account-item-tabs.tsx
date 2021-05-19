@@ -92,7 +92,7 @@ const AccountItemTabs = <T2 extends object>({data, editable}:Props<T2>) =>{
         setPcViewFlag(false);
       }
 
-      if(vpcitem_data.employeeName === undefined || ((vpcitem_data.employeeName) as String).length === 0) {
+      if(vpcitem_data.employeeName !== undefined && ((vpcitem_data.employeeName) as String).length === 0) {
         setEmployeeEditable(false);
       }
     }
