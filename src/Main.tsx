@@ -71,7 +71,7 @@ const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       key:'assets',title:'機器一覧(PC)',icon:<DesktopWindowsIcon />,path:`${PROPS.BASE_PATH}/assets`,main:()=> (<PCAssetList editable={props.editable}  />)
     },
     {
-      key:'otherassets',title:'機器一覧(PC以外)',icon:<KeyboardIcon />,path:`${PROPS.BASE_PATH}/otherassets`,main:()=> (<OtherAssetList editable={props.editable} />)
+      key:'otherassets',title:'モニター・キーボード・マウス',icon:<KeyboardIcon />,path:`${PROPS.BASE_PATH}/otherassets`,main:()=> (<OtherAssetList editable={props.editable} />)
     },
     {
       key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:`${PROPS.BASE_PATH}/employee`,main:()=> (<EmployeeList editable={props.editable} />)
