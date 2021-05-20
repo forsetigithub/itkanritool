@@ -1,4 +1,4 @@
-import React,{FC, useState} from 'react';
+import React,{FC, useState,useEffect} from 'react';
 import {
   Link as RouterLink, LinkProps as RouterLinkProps
 } from "react-router-dom";
@@ -9,6 +9,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { blue,red } from '@material-ui/core/colors';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import StarBorder from '@material-ui/icons/StarBorder';
+import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
@@ -18,6 +22,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icon :{
       color:'#757ce8',
+    },
+    nested: {
+      paddingLeft: theme.spacing(4),
     }
 }));
 
@@ -41,10 +48,11 @@ interface ListItemLinkProps {
   selected:boolean;
   style?:React.CSSProperties;
   onClick:(event:any) => any;
+  className?:any;
 }
 
 const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
-  const { icon,iconColor, primary, to, selected,style, onClick} = props;
+  const { icon,iconColor, primary, to, selected,style, onClick,className} = props;
 
   const renderLink = React.useMemo(
     () =>
@@ -59,6 +67,7 @@ const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
       <ListItem button component={renderLink} 
         selected={selected} 
         onClick={onClick}
+        className={className}
         style={style}>
         {icon ? <ListItemIcon style={iconColor} >{icon}</ListItemIcon> : null}
         <ListItemText primary={primary} />
@@ -73,6 +82,17 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
   const classes = useStyles();
 
   const [selectedIndex,setSelectedIndex] = useState(0);
+  const [open,setOpen] = useState(false);
+
+  useEffect(() =>{
+    const index = Number( localStorage.getItem("selectedindex") || 0);
+    setSelectedIndex(index);
+  },[]);
+
+  useEffect(() => {
+    console.log(selectedIndex);
+    localStorage.setItem("selectedindex",String(selectedIndex));
+  },[selectedIndex]);
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement,MouseEvent>,
@@ -81,27 +101,71 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
       props.setSelectedIndex(index);
     };
 
-  const list = (anchor: Anchor) => (
-    <div
-      className={classes.list}
-      // className={clsx(classes.list, {
-      //   [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-      // })}
-    >
-      <List>
-        {props.menu.map((item, index) => (
-          <ListItemLink 
-            key={index}
-            icon={item.icon}
-            iconColor={selectedIndex === index ? {color: red[500]} : undefined}
-            primary={item.title}
-            to={item.path}
-            selected={selectedIndex === index}
-            style={selectedIndex === index ? {backgroundColor: blue[50],color: blue[900]} : undefined}
-            onClick={(event) => handleListItemClick(event,index)}
+    const handleClick = () => {
+      setOpen(!open);
+    };
 
-          />
+  const list = (anchor: Anchor) => (
+    <div className={classes.list}>
+      <List>
+        {props.menu.filter(f => f.key === 'home' || 
+                                f.key === 'assets').map((item, index) => (
+            <ListItemLink 
+              key={index}
+              icon={item.icon}
+              iconColor={selectedIndex === index ? {color: red[500]} : undefined}
+              primary={item.title}
+              to={item.path}
+              selected={selectedIndex === index}
+              style={selectedIndex === index ? {backgroundColor: blue[50],color: blue[900]} : undefined}
+              onClick={(event) => handleListItemClick(event,index)}
+            />            
         ))}
+        
+        <ListItem button onClick={handleClick}>
+          <ListItemIcon>
+            <StarBorder />
+          </ListItemIcon>
+          <ListItemText primary="PC以外" />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List disablePadding>
+            {props.menu.filter(f => f.key === 'monitors'  ||
+                                    f.key === 'keyboards' ||
+                                    f.key === 'mouses'    ||
+                                    f.key === 'cables'
+                                    ).map((item, index) => (
+              
+              <ListItemLink
+                key={index}
+                icon={item.icon}
+                iconColor={selectedIndex === (index + 2) ? {color: red[500]} : undefined}
+                primary={item.title}
+                to={item.path}
+                selected={selectedIndex === (index + 2)}
+                style={selectedIndex === (index + 2) ? {backgroundColor: blue[50],color: blue[900]} : undefined}
+                onClick={(event) => handleListItemClick(event,index + 2)}
+                className={classes.nested}
+              />            
+            ))}
+          </List>
+
+        </Collapse>
+          {props.menu.filter(f => f.key === 'employee' || 
+                                  f.key === 'master').map((item, index) => (
+              <ListItemLink 
+                key={index}
+                icon={item.icon}
+                iconColor={selectedIndex === (index + 6) ? {color: red[500]} : undefined}
+                primary={item.title}
+                to={item.path}
+                selected={selectedIndex === (index + 6)}
+                style={selectedIndex === (index + 6) ? {backgroundColor: blue[50],color: blue[900]} : undefined}
+                onClick={(event) => handleListItemClick(event,(index + 6))}
+              />            
+          ))}
+
       </List>
     </div>
   );

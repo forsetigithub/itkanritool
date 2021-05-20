@@ -1,4 +1,4 @@
-import React,{FC, useState} from 'react';
+import React,{FC, useEffect, useState} from 'react';
 
 import {
   BrowserRouter as Router,
@@ -12,7 +12,10 @@ import {makeStyles, createStyles, Theme}  from '@material-ui/core/styles';
 
 import HomeIcon from '@material-ui/icons/Home';
 import DesktopWindowsIcon from '@material-ui/icons/DesktopWindows';
+import LaptopMacIcon from '@material-ui/icons/LaptopMac';
 import KeyboardIcon from '@material-ui/icons/Keyboard';
+import MouseIcon from '@material-ui/icons/Mouse';
+import UsbIcon from '@material-ui/icons/Usb';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import StorageIcon from '@material-ui/icons/Storage';
 import { AppBar,Toolbar, Typography } from '@material-ui/core';
@@ -68,10 +71,19 @@ const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       key:'home',title:'Home',icon:<HomeIcon />,path:`${PROPS.BASE_PATH}/home`,main:() => (<ItemList editable={props.editable} />)
     },
     {
-      key:'assets',title:'機器一覧(PC)',icon:<DesktopWindowsIcon />,path:`${PROPS.BASE_PATH}/assets`,main:()=> (<PCAssetList editable={props.editable}  />)
+      key:'assets',title:'PC',icon:<LaptopMacIcon />,path:`${PROPS.BASE_PATH}/assets`,main:()=> (<PCAssetList editable={props.editable}  />)
     },
     {
-      key:'otherassets',title:'機器一覧(PC以外)',icon:<KeyboardIcon />,path:`${PROPS.BASE_PATH}/otherassets`,main:()=> (<OtherAssetList editable={props.editable} />)
+      key:'monitors',title:'モニター',icon:<DesktopWindowsIcon />,path:`${PROPS.BASE_PATH}/monitors`,main:()=> (<OtherAssetList editable={props.editable} itemKindNo={1} lookup={{1:'モニター'}} />)
+    },
+    {
+      key:'keyboards',title:'キーボード',icon:<KeyboardIcon />,path:`${PROPS.BASE_PATH}/keyboards`,main:()=> (<OtherAssetList editable={props.editable} itemKindNo={2} lookup={{2:'キーボード'}} />)
+    },
+    {
+      key:'mouses',title:'マウス',icon:<MouseIcon />,path:`${PROPS.BASE_PATH}/mouses`,main:()=> (<OtherAssetList editable={props.editable} itemKindNo={3} lookup={{3:'マウス'}}  />)
+    },
+    {
+      key:'cables',title:'ケーブル',icon:<UsbIcon />,path:`${PROPS.BASE_PATH}/cables`,main:()=> (<OtherAssetList editable={props.editable} itemKindNo={4} lookup={{4:'ケーブル'}}  />)
     },
     {
       key:'employee',title:'従業員一覧',icon:<AccountCircleIcon />,path:`${PROPS.BASE_PATH}/employee`,main:()=> (<EmployeeList editable={props.editable} />)
