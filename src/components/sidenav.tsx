@@ -1,4 +1,4 @@
-import React,{FC, useState} from 'react';
+import React,{FC, useState,useEffect} from 'react';
 import {
   Link as RouterLink, LinkProps as RouterLinkProps
 } from "react-router-dom";
@@ -84,6 +84,16 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
   const [selectedIndex,setSelectedIndex] = useState(0);
   const [open,setOpen] = useState(false);
 
+  useEffect(() =>{
+    const index = Number( localStorage.getItem("selectedindex") || 0);
+    setSelectedIndex(index);
+  },[]);
+
+  useEffect(() => {
+    console.log(selectedIndex);
+    localStorage.setItem("selectedindex",String(selectedIndex));
+  },[selectedIndex]);
+
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement,MouseEvent>,
     index: number) => {
@@ -121,7 +131,11 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List disablePadding>
-            {props.menu.filter(f => f.key === 'otherassets').map((item, index) => (
+            {props.menu.filter(f => f.key === 'monitors'  ||
+                                    f.key === 'keyboards' ||
+                                    f.key === 'mouses'    ||
+                                    f.key === 'cables'
+                                    ).map((item, index) => (
               
               <ListItemLink
                 key={index}
@@ -143,12 +157,12 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
               <ListItemLink 
                 key={index}
                 icon={item.icon}
-                iconColor={selectedIndex === (index + 3) ? {color: red[500]} : undefined}
+                iconColor={selectedIndex === (index + 6) ? {color: red[500]} : undefined}
                 primary={item.title}
                 to={item.path}
-                selected={selectedIndex === (index + 3)}
-                style={selectedIndex === (index + 3) ? {backgroundColor: blue[50],color: blue[900]} : undefined}
-                onClick={(event) => handleListItemClick(event,(index + 3))}
+                selected={selectedIndex === (index + 6)}
+                style={selectedIndex === (index + 6) ? {backgroundColor: blue[50],color: blue[900]} : undefined}
+                onClick={(event) => handleListItemClick(event,(index + 6))}
               />            
           ))}
 

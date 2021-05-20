@@ -4,11 +4,14 @@ import MaterialTableCustom from './materialtable-custom';
 import axios from 'axios';
 import * as PROPS from '../App.properties';
 
-const OtherAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
+const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> = 
+  (props:{editable:boolean,itemKindNo?:number,lookup?:any}) => {
+
   const columns:any = [
 
     { 
-      title: '区分', field:'itemKindNo',lookup: {1:'モニター',2:'キーボード',3:'マウス'},
+      title: '区分', field:'itemKindNo',lookup: props.lookup,
+      // editable: 'never',
       headerStyle:{
         width:120,
       },
@@ -30,6 +33,7 @@ const OtherAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
         9:'BLENCK',10:'BUFFALO',11:'Easterntimes Tech',
         12:'ELECOM',13:'GREEN HOUSE',14:'I・O DATA',
         15:'Logicool',16:'NEC',17:'Qtuo',18:'SANWA',
+        98:'その他',99:'不明'
       },
       headerStyle:{
         width:120,
@@ -63,7 +67,7 @@ const OtherAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   };
 
   return(
-    <MaterialTableCustom<any> columns={columns} getParam="GetOtherAssetItem" 
+    <MaterialTableCustom<any> columns={columns} getParam={`GetOtherAssetItemByItemKindNo/${props.itemKindNo}`} 
       editable_mode={props.editable}
       updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} />
   );
