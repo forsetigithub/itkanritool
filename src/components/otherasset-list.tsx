@@ -1,11 +1,26 @@
-import React,{FC} from 'react';
+import React,{FC,useState,useEffect} from 'react';
 //import Moment from 'react-moment';
 import MaterialTableCustom from './materialtable-custom';
 import axios from 'axios';
 import * as PROPS from '../App.properties';
 
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+
 const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> = 
   (props:{editable:boolean,itemKindNo?:number,lookup?:any}) => {
+
+
+  const [employeelist,setEmployeelist] = useState<any>([]);
+
+  useEffect(() => {
+    // setLoading(true);
+    axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetEmployeeNameList`)
+    .then((result) => {
+      setEmployeelist(result.data);
+      // setLoading(false);
+    });
+  },[]);
 
   const columns:any = [
 
@@ -25,8 +40,22 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
     {
       title:'資産番号',field:'assetNo'
     },
-    {
-      title:'現所有者',field:'currentOwnerName',editable:'never'
+    { title:"貸与者", field:"currentOwnerName", 
+      editComponent:(props:any) => (
+        <Autocomplete 
+          options={employeelist}
+          getOptionLabel={(option:any) => (option.employeeName)}
+          // defaultValue={{employeeName: props.value,pcItemCode:0,
+          //   assetKindCode:'',itemNumber:'',pcLoginPW:'',departmentName:''}}
+          getOptionSelected={(option,value) => option.employeeName === value.employeeName}
+          autoComplete
+          autoSelect
+          autoHighlight
+          
+          renderInput={(params:any) => <TextField {...params} label='従業員名' variant="outlined" margin="normal" />}
+                      onChange={(e:any) => props.onChange(e.target.innerText)}
+        />
+      )
     },
     { 
       title: 'メーカー', field:'makerCode',
@@ -59,9 +88,10 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
   const updateDataHandler = (item: any) => {
 
     let uploadData:any = {...item};
+console.log(uploadData);    
     uploadData.makerCode = parseInt(uploadData.makerCode); 
     uploadData.itemKindNo = parseInt(uploadData.itemKindNo);
-console.log(uploadData);
+
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostOtherAssetItem`,uploadData);   
   };
 
