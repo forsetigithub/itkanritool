@@ -11,7 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { blue,red } from '@material-ui/core/colors';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
+import ClassIcon from '@material-ui/icons/Class';
 import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -124,7 +124,7 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
         
         <ListItem button onClick={handleClick}>
           <ListItemIcon>
-            <StarBorder />
+            <ClassIcon />
           </ListItemIcon>
           <ListItemText primary="PC以外" />
           {open ? <ExpandLess /> : <ExpandMore />}

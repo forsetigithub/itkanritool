@@ -25,6 +25,9 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
     {
       title:'資産番号',field:'assetNo'
     },
+    {
+      title:'現所有者',field:'currentOwnerName',editable:'never'
+    },
     { 
       title: 'メーカー', field:'makerCode',
       lookup: {
@@ -58,7 +61,7 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
     let uploadData:any = {...item};
     uploadData.makerCode = parseInt(uploadData.makerCode); 
     uploadData.itemKindNo = parseInt(uploadData.itemKindNo);
-
+console.log(uploadData);
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostOtherAssetItem`,uploadData);   
   };
 
