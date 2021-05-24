@@ -1,9 +1,9 @@
-import React,{FC,useState} from 'react';
+import React,{FC,useEffect,useState} from 'react';
 
 import {
   BrowserRouter as Router,
   // HashRouter as Router,
-  Switch,
+  Switch as RouterSwitch,
   Route,
   Redirect,
 } from "react-router-dom";
@@ -18,7 +18,7 @@ import MouseIcon from '@material-ui/icons/Mouse';
 import UsbIcon from '@material-ui/icons/Usb';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import StorageIcon from '@material-ui/icons/Storage';
-import { AppBar,Toolbar, Typography } from '@material-ui/core';
+import { AppBar,Toolbar, Typography,Switch } from '@material-ui/core';
 
 import {IMenu} from './Interface';
 import ItemList from './components/Item-list';
@@ -34,37 +34,43 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
     //svgタグ以外を反映
-        '& *:not(svg)': {
-      "font-size": 'calc(6px + 1vmin)'
-  
+      '& *:not(svg)': {
+        "font-size": 'calc(6px + 1vmin)'
       },
-      display:'flex',
-      marginTop:theme.spacing(4),
     },
     appBar: {
       zIndex:theme.zIndex.drawer + 1,
-      marginBottom:theme.spacing(4),
     },
     main: {
-      marginTop:theme.spacing(4),
+      paddingTop:theme.spacing(3),
+      paddingLeft:theme.spacing(30)
     },
     title: {
       flexGrow:1,
     },
     list: {
       width: 240,
-     
     },
-    content: {
-      padding: theme.spacing(1)
-    }
   }) 
 );
 
 
-const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
+const Main:FC<{editable:boolean,themetype?:string}> = (props:{editable:boolean,themetype?:string}) => {
   const classes = useStyles();
   const [selectedIndex,setSelectedIndex] = useState(0);
+  const [checkTheme,setCheckTheme] = useState(false);
+
+  useEffect(() => {
+    const theme_string = String(localStorage.getItem("selectedtheme"));
+    theme_string === 'dark' ? setCheckTheme(true) : setCheckTheme(false);
+
+  },[setCheckTheme]);
+
+  const handlecheckTheme = (event:any) => {
+    localStorage.setItem("selectedtheme",event.target.checked ? 'dark' : 'light');
+    window.location.reload();
+    
+  };
 
   const MenuItems:IMenu[] = [
     {
@@ -99,14 +105,16 @@ const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
         <Toolbar variant="regular">
           <Typography variant="h6" className={classes.title}>IT資産管理台帳</Typography>
           <OptionMenu selectedIndex={selectedIndex} />
+          <Switch checked={checkTheme} name="checkTheme" onChange={handlecheckTheme} color="default" />
         </Toolbar>
       </AppBar>      
       <Router>
         <div className={classes.root}>
-          <SideNav menu={MenuItems} setSelectedIndex={setSelectedIndex} />
+          <SideNav menu={MenuItems} setSelectedIndex={setSelectedIndex} 
+            themetype={String(sessionStorage.getItem('selectedtheme'))} />
           <main className={classes.main}>
             <div>
-              <Switch>
+              <RouterSwitch>
                 <Route 
                   exact
                   path={`${PROPS.BASE_PATH}/`}
@@ -124,7 +132,7 @@ const Main:FC<{editable:boolean}> = (props:{editable:boolean}) => {
                     children={<route.main />}
                   />
                 ))}
-              </Switch>
+              </RouterSwitch>
             </div>
           </main>
         </div>  
