@@ -76,17 +76,24 @@ const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
   );
 }
 
-const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>}> =
-  (props:{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>}) => {
+const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,themetype?:string}> =
+  (props:{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,themetype?:string}) => {
 
   const classes = useStyles();
 
   const [selectedIndex,setSelectedIndex] = useState(0);
   const [open,setOpen] = useState(false);
+  const [selectedTheme,setSelectedTheme] = useState('');
+
+  const selectedStyle = {
+    backgroundColor: selectedTheme === 'light' ? blue[50] : 'WhiteSmoke',
+    color: selectedTheme === 'light' ? blue[900] : 'Black'
+  }
 
   useEffect(() =>{
     const index = Number( localStorage.getItem("selectedindex") || 0);
     setSelectedIndex(index);
+    setSelectedTheme(String(localStorage.getItem('selectedtheme')));
   },[]);
 
   useEffect(() => {
@@ -117,7 +124,7 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
               primary={item.title}
               to={item.path}
               selected={selectedIndex === index}
-              style={selectedIndex === index ? {backgroundColor: blue[50],color: blue[900]} : undefined}
+              style={selectedIndex === index ? selectedStyle : undefined}
               onClick={(event) => handleListItemClick(event,index)}
             />            
         ))}
@@ -144,7 +151,7 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
                 primary={item.title}
                 to={item.path}
                 selected={selectedIndex === (index + 2)}
-                style={selectedIndex === (index + 2) ? {backgroundColor: blue[50],color: blue[900]} : undefined}
+                style={selectedIndex === (index + 2) ? selectedStyle : undefined}
                 onClick={(event) => handleListItemClick(event,index + 2)}
                 className={classes.nested}
               />            
@@ -161,7 +168,7 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
                 primary={item.title}
                 to={item.path}
                 selected={selectedIndex === (index + 6)}
-                style={selectedIndex === (index + 6) ? {backgroundColor: blue[50],color: blue[900]} : undefined}
+                style={selectedIndex === (index + 6) ? selectedStyle : undefined}
                 onClick={(event) => handleListItemClick(event,(index + 6))}
               />            
           ))}
