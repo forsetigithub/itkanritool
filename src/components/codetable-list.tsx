@@ -23,6 +23,7 @@ const CodeTableList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     {codeKindID:4, codeKindName:'ハードウェア種別'},
     {codeKindID:5, codeKindName:'システム名'},
     {codeKindID:6, codeKindName:'資産種別'},
+    {codeKindID:7, codeKindName:'使用状況'},
   ];
   
   const columns:any = [

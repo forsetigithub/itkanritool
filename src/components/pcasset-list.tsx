@@ -70,7 +70,9 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     {
       title: 'PC名', field:'computerName'
     },
-
+    {
+      title: '状況',field:'useStatus',type:'number',lookup: {1: '使用中',2: '予備',3:'修理中',4:'故障'}
+    },
     { 
       title: '備考', field:'pcMemo'
     },  
@@ -96,6 +98,10 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
     if(uploadData.assetKindCode !== undefined) {
       uploadData.assetKindCode = parseInt(uploadData.assetKindCode.toString());
+    }
+
+    if(uploadData.useStatus !== undefined) {
+      uploadData.useStatus = parseInt(uploadData.useStatus.toString());
     }
       
     console.log(uploadData);

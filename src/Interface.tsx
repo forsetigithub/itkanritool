@@ -84,6 +84,7 @@ export type PCItem = {
   assetKindCode?:number;
   pcLoginPW: string;
   computerName: string;
+  useStatus?: number;
 };
 
 export type AccountInfo = {
