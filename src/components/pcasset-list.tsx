@@ -22,7 +22,7 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     },
     {
       title: 'メーカー',field:'makerCode',lookup: 
-      {1:'DELL',2:'HP',3:'Apple',4:'Microsoft',5:'acer',19:'富士通'},
+      {1:'DELL',2:'HP',3:'Apple',4:'Microsoft',5:'acer',19:'富士通',99:'その他'},
       headerStyle:{
         width:120,
       },
@@ -71,7 +71,7 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       title: 'PC名', field:'computerName'
     },
     {
-      title: '状況',field:'useStatus',type:'number',lookup: {1: '使用中',2: '予備',3:'修理中',4:'故障'}
+      title: '状況',field:'useStatus',type:'number',lookup: {1: '使用中',2: '予備',3:'修理中',4:'故障',5:'破棄・返却'}
     },
     { 
       title: '備考', field:'pcMemo'
@@ -100,12 +100,10 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       uploadData.assetKindCode = parseInt(uploadData.assetKindCode.toString());
     }
 
-    if(uploadData.useStatus !== undefined) {
+    if(uploadData.useStatus !== undefined && uploadData.useStatus !== null) {
       uploadData.useStatus = parseInt(uploadData.useStatus.toString());
     }
       
-    console.log(uploadData);
-
     axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostPCItem`,uploadData);
   };
 
