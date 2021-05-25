@@ -8,7 +8,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { blue,red } from '@material-ui/core/colors';
+import { blue,teal,red } from '@material-ui/core/colors';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ClassIcon from '@material-ui/icons/Class';
@@ -87,25 +87,20 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
 
   const selectedStyle = {
     backgroundColor: selectedTheme === 'light' ? blue[50] : 'WhiteSmoke',
-    color: selectedTheme === 'light' ? blue[900] : 'Black'
+    color: selectedTheme === 'light' ? red[700] : 'Black',
   }
 
   useEffect(() =>{
-    const index = Number( localStorage.getItem("selectedindex") || 0);
+    const index = Number(sessionStorage.getItem("selectedindex") || 0);
     setSelectedIndex(index);
     setSelectedTheme(String(localStorage.getItem('selectedtheme')));
-  },[]);
-
-  useEffect(() => {
-    console.log(selectedIndex);
-    localStorage.setItem("selectedindex",String(selectedIndex));
-  },[selectedIndex]);
+  },[setSelectedIndex,setSelectedTheme]);
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement,MouseEvent>,
     index: number) => {
       setSelectedIndex(index);
-      props.setSelectedIndex(index);
+      sessionStorage.setItem("selectedindex",String(index));
     };
 
     const handleClick = () => {

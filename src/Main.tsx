@@ -55,7 +55,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const Main:FC<{editable:boolean,themetype?:string}> = (props:{editable:boolean,themetype?:string}) => {
+const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> = 
+ (props:{editable:boolean,themetype?:string,selectedIndex:number}) => {
+
   const classes = useStyles();
   const [selectedIndex,setSelectedIndex] = useState(0);
   const [checkTheme,setCheckTheme] = useState(false);
@@ -63,8 +65,10 @@ const Main:FC<{editable:boolean,themetype?:string}> = (props:{editable:boolean,t
   useEffect(() => {
     const theme_string = String(localStorage.getItem("selectedtheme"));
     theme_string === 'dark' ? setCheckTheme(true) : setCheckTheme(false);
+    setSelectedIndex(props.selectedIndex);
 
-  },[setCheckTheme]);
+  },[setCheckTheme,props.selectedIndex]);
+
 
   const handlecheckTheme = (event:any) => {
     localStorage.setItem("selectedtheme",event.target.checked ? 'dark' : 'light');
@@ -111,7 +115,7 @@ const Main:FC<{editable:boolean,themetype?:string}> = (props:{editable:boolean,t
       <Router>
         <div className={classes.root}>
           <SideNav menu={MenuItems} setSelectedIndex={setSelectedIndex} 
-            themetype={String(sessionStorage.getItem('selectedtheme'))} />
+            themetype={String(localStorage.getItem('selectedtheme'))} />
           <main className={classes.main}>
             <div>
               <RouterSwitch>
