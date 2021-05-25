@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex:theme.zIndex.drawer + 1,
     },
     main: {
-      paddingTop:theme.spacing(3),
+      paddingTop:theme.spacing(4),
       paddingLeft:theme.spacing(30)
     },
     title: {
