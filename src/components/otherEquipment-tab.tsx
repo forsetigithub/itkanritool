@@ -8,7 +8,7 @@ import { createStyles, makeStyles,Theme } from '@material-ui/core';
 import {tableIcons} from './tableIcons';
 import axios from 'axios';
 
-import * as PRPOS from '../App.properties';
+import * as PROPS from '../App.properties';
 
 
 const useStyle = makeStyles((theme: Theme) =>
@@ -58,7 +58,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
   }
 
   useEffect(() => {
-    const fetchData = async () => await axios.get(`${PRPOS.BASE_URL}/api/itmanagement/GetVPCItemById/${data.pcItemCode}`)
+    const fetchData = async () => await axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetVPCItemById/${data.pcItemCode}`)
       .then((result) => {
         const otherAssetInfo = [
           {monitorNumber1Name: result.data.monitorNumber1Name,
@@ -77,7 +77,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
   },[data]);
 
   useEffect(() => {
-    axios.get(PRPOS.BASE_URL + '/api/itmanagement/GetOtherAssetAutoCompleteList')
+    axios.get(PROPS.BASE_URL + '/api/itmanagement/GetOtherAssetAutoCompleteList')
       .then((result) => {
         const autocomplatedata = result.data as AutoCompleteData[];
         
@@ -92,7 +92,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
     const updateData = {...data,...postitem};
   
     setLoading(true);
-    axios.post(PRPOS.BASE_URL + '/api/itmanagement/PostVPCItems',updateData)
+    axios.post(PROPS.BASE_URL + '/api/itmanagement/PostVPCItems',updateData)
     .then((result) =>{
       setLoading(false);
     })

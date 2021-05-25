@@ -4,12 +4,24 @@ import {tableIcons} from './tableIcons';
 import Moment from 'react-moment';
 import ja from 'date-fns/locale/ja';
 import axios from 'axios';
-
+import { createStyles, makeStyles,Theme } from '@material-ui/core';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import * as PROPS from '../App.properties';
 import {PCItem, VPCitem} from '../Interface';
 
 
+const useStyle = makeStyles((theme: Theme) =>
+  createStyles({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1, 
+  },
+}));
+
 const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:boolean}) => {
+  const classes = useStyle();
+  
+  const [isLoading,setLoading] = useState<boolean>(false);
 
   const columns:any = [
     {
@@ -47,30 +59,35 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
   const [pcInfo,setPcInfo] = useState<PCItem[]>([]);
   
   useEffect(() => {
-   
-    setPcInfo([{makerCode: props.data.makerCode,
-      pcTypeNumber: props.data.pcTypeNumber,pcServiceTag: props.data.pcServiceTag,
-      assetKindCode:props.data.assetKindCode,warrantyPeriod: props.data.warrantyPeriod,
-      pcMemo:props.data.pcMemo,pcItemCode:props.data.pcItemCode,
-      itemNumber:props.data.itemNumber,
-      pcKindCode:props.data.pcKindCode,
-      monitorNumber1:0,
-      monitorNumber2:0,
-      monitorNumber3:0,
-      monitorMemo:props.data.pcMemo,
-      mouseNumber:props.data.mouseNumber,
-      mouseMemo:props.data.mouseMemo,
-      keyboardNumber:props.data.keyboardNumber,
-      keyboardMemo:props.data.keyboardMemo,
-      vpnSettingFlag:false,
-      currentOwnerCompanyCode:props.data.companyCode,
-      currentOwnerEmployeeCode:props.data.temporaryEmployeeCode,
-      pcLoginPW:props.data.pcLoginPW,
-      computerName:props.data.computerName}]);
-  },[props]);
-
+    const fetchData = async () => await axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetVPCItemById/${props.data.pcItemCode}`)
+      .then((result) => {
+        setPcInfo([{makerCode: result.data.makerCode,
+          pcTypeNumber: result.data.pcTypeNumber,pcServiceTag: result.data.pcServiceTag,
+          assetKindCode:result.data.assetKindCode,warrantyPeriod: result.data.warrantyPeriod,
+          pcMemo:result.data.pcMemo,pcItemCode:result.data.pcItemCode,
+          itemNumber:result.data.itemNumber,
+          pcKindCode:result.data.pcKindCode,
+          monitorNumber1:0,
+          monitorNumber2:0,
+          monitorNumber3:0,
+          monitorMemo:result.data.pcMemo,
+          mouseNumber:result.data.mouseNumber,
+          mouseMemo:result.data.mouseMemo,
+          keyboardNumber:result.data.keyboardNumber,
+          keyboardMemo:result.data.keyboardMemo,
+          vpnSettingFlag:false,
+          currentOwnerCompanyCode:result.data.companyCode,
+          currentOwnerEmployeeCode:result.data.temporaryEmployeeCode,
+          pcLoginPW:result.data.pcLoginPW,
+          computerName:result.data.computerName}]);
+      });
+    fetchData();
+  },[props.data]);
 
   const PostPCitem = (item:PCItem) => {
+
+    setLoading(true);
+
     if(item.makerCode !== undefined) {
       item.makerCode = parseInt(item.makerCode?.toString());
     }  
@@ -105,13 +122,17 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
       .then((result) => {
         axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetVPCItemById/${item.pcItemCode}`)
         .then((result) => {
-
+          setLoading(false);
         })
       });
   }
 
   return(
-    <MaterialTable 
+    <React.Fragment>
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <CircularProgress color="primary" size={80} />
+      </Backdrop>
+      <MaterialTable 
       title={'備品番号:' + props.data.itemNumber}
       localization={{
         header:{
@@ -124,7 +145,6 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
       columns={columns}
       data={[...pcInfo]}
       icons={tableIcons}
-      // フェーズ２で対応
       editable={{
         onRowUpdate: props.editable ? (newData:PCItem,oldData:any) => 
           new Promise((resolve:any,reject:any) => {
@@ -142,6 +162,8 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
       }}
     
     /> 
+    </React.Fragment>
+
   );
 }
 
