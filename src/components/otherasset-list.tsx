@@ -26,7 +26,6 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
 
     { 
       title: '区分', field:'itemKindNo',lookup: props.lookup,
-      // editable: 'never',
       headerStyle:{
         width:120,
       },
@@ -45,8 +44,7 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
         <Autocomplete 
           options={employeelist}
           getOptionLabel={(option:any) => (option.employeeName)}
-          // defaultValue={{employeeName: props.value,pcItemCode:0,
-          //   assetKindCode:'',itemNumber:'',pcLoginPW:'',departmentName:''}}
+          defaultValue={{employeeName: props.value}}  
           getOptionSelected={(option,value) => option.employeeName === value.employeeName}
           autoComplete
           autoSelect
