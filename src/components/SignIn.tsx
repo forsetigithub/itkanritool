@@ -100,11 +100,10 @@ const SignIn:FC<any> = ({setToken}:any) => {
       })
       .catch((error) => {
         if(error.response) {
-          setLoading(false);
           setErrorMsg('メールアドレスまたはパスワードが違います')
         }
       }).finally(() => {
-        
+        setLoading(false);
       });
     
   };
