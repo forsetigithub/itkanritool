@@ -9,6 +9,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as PROPS from '../App.properties';
 import {PCItem, VPCitem} from '../Interface';
+import {GetPCMakerCodeItems} from '../api';
 
 
 const useStyle = makeStyles((theme: Theme) =>
@@ -22,11 +23,19 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
   const classes = useStyle();
   
   const [isLoading,setLoading] = useState<boolean>(false);
+  const [makerListItems,setMakerlistitems] = useState<{}>({});
+
+  useEffect(() =>{
+    const fetchData = GetPCMakerCodeItems();
+    fetchData.then((result) => {
+      setMakerlistitems(result);
+    });
+  },[]);
 
   const columns:any = [
     {
       title: 'メーカー',field:'makerCode',lookup: 
-      {1:'DELL',2:'HP',3:'Apple',4:'Microsoft',5:'acer',19:'富士通'}
+      makerListItems
     },
     { 
       title: '型番', field:'pcTypeNumber'

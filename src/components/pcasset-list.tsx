@@ -1,12 +1,22 @@
-import React, {FC} from 'react';
+import React, {FC,useState,useEffect} from 'react';
 // import Moment from 'react-moment';
 import MaterialTableCustom from './materialtable-custom';
 import axios from 'axios';
 import * as PROPS from '../App.properties';
 import {PCItem} from '../Interface';
+import {GetPCMakerCodeItems } from '../api';
 
 
 const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
+  const [makerListItems,setMakerlistitems] = useState<{}>({});
+
+  useEffect(() =>{
+    const fetchData = GetPCMakerCodeItems();
+    fetchData.then((result) => {
+      setMakerlistitems(result);
+    });
+  },[]);
+
   const columns:any = [
     {
       title: 'No',field: 'pcItemCode',
@@ -21,8 +31,7 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       }
     },
     {
-      title: 'メーカー',field:'makerCode',lookup: 
-      {1:'DELL',2:'HP',3:'Apple',4:'Microsoft',5:'acer',19:'富士通',99:'その他'},
+      title: 'メーカー',field:'makerCode',lookup: makerListItems,
       headerStyle:{
         width:120,
       },
@@ -79,8 +88,6 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   ];
 
   const updateDataHandler = (item: PCItem) => {
-    console.log('PCAssetList:');
-
 
     if(item.pcItemCode === undefined){
       item.pcItemCode = -1;

@@ -40,11 +40,10 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
   
         await axios.get(`${PROPS.BASE_API_PATH}/GetCodeList/3`)
           .then((result) => {
-   
-            const listitems:CodeItem[] = result.data as CodeItem[];
+
             const obj_array:any[] = [];
   
-            listitems.forEach((value,index) => {
+            (result.data as CodeItem[]).forEach((value,index) => {
               const obj = {
                 id:value.codeID,
                 name:value.codeName
@@ -60,8 +59,9 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
   
             setMakerlistitems(makerListItems);
           });
-      }catch{
-  
+      }catch(error){
+        console.log(error);
+        
       }finally{
         setLoading(false);
       }
