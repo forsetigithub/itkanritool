@@ -104,11 +104,11 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       uploadData.useStatus = parseInt(uploadData.useStatus.toString());
     }
       
-    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostPCItem`,uploadData);
+    axios.post(`${PROPS.BASE_API_PATH}/PostPCItem`,uploadData);
   };
 
   const deleteDataHandler = (item: PCItem) => {
-    axios.post(`${PROPS.BASE_URL}/api/itmanagement/DeletePCItem`,item);
+    axios.post(`${PROPS.BASE_API_PATH}/DeletePCItem`,item);
   };
   
   return(

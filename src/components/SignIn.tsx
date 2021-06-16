@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -94,7 +92,7 @@ const SignIn:FC<any> = ({setToken}:any) => {
       credentials.pw = '';
 
     const loginUser:LoginUser = {id:0,mailAddress:credentials.mailAddress,pw:credentials.pw,privilegeCode:0};
-    await axios.post(`${PROPS.BASE_URL}/api/itmanagement/GetLoginUser`,loginUser)
+    await axios.post(`${PROPS.BASE_API_PATH}/GetLoginUser`,loginUser)
       .then((result) => {
         sessionStorage.setItem(PROPS.LOGIN_TOKEN, JSON.stringify(result.data as LoginUser));
         setLoading(false);
@@ -165,10 +163,6 @@ const SignIn:FC<any> = ({setToken}:any) => {
               autoComplete="current-password"
               onChange={(e:any) => setPassword(e.target.value)}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth

@@ -118,9 +118,9 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
       pcLoginPW:props.data.pcLoginPW,
       computerName:item.computerName};
 
-    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostPCItem`,uploadData)
+    axios.post(`${PROPS.BASE_API_PATH}/PostPCItem`,uploadData)
       .then((result) => {
-        axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetVPCItemById/${item.pcItemCode}`)
+        axios.get(`${PROPS.BASE_API_PATH}/GetVPCItemById/${item.pcItemCode}`)
         .then((result) => {
           setLoading(false);
         })

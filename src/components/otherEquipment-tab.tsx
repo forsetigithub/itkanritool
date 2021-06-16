@@ -58,7 +58,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
   }
 
   useEffect(() => {
-    const fetchData = async () => await axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetVPCItemById/${data.pcItemCode}`)
+    const fetchData = async () => await axios.get(`${PROPS.BASE_API_PATH}/GetVPCItemById/${data.pcItemCode}`)
       .then((result) => {
         const otherAssetInfo = [
           {monitorNumber1Name: result.data.monitorNumber1Name,
@@ -77,7 +77,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
   },[data]);
 
   useEffect(() => {
-    axios.get(PROPS.BASE_URL + '/api/itmanagement/GetOtherAssetAutoCompleteList')
+    axios.get(`${PROPS.BASE_API_PATH}/GetOtherAssetAutoCompleteList`)
       .then((result) => {
         const autocomplatedata = result.data as AutoCompleteData[];
         
@@ -92,7 +92,7 @@ const OtherEquipment:FC<Props> = ({data,editable}:Props) => {
     const updateData = {...data,...postitem};
   
     setLoading(true);
-    axios.post(PROPS.BASE_URL + '/api/itmanagement/PostVPCItems',updateData)
+    axios.post(`${PROPS.BASE_API_PATH}/PostVPCItems`,updateData)
     .then((result) =>{
       setLoading(false);
     })

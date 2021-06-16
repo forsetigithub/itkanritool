@@ -44,7 +44,7 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_
   useEffect(()=> {
     setLoading(true);
 
-    axios.get(`${PROPS.BASE_URL}/api/itmanagement/${getParam}`)
+    axios.get(`${PROPS.BASE_API_PATH}/${getParam}`)
     .then((result) => {
       setData(result.data);
       setLoading(false);
