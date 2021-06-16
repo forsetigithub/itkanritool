@@ -18,7 +18,7 @@ import MouseIcon from '@material-ui/icons/Mouse';
 import UsbIcon from '@material-ui/icons/Usb';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import StorageIcon from '@material-ui/icons/Storage';
-import { AppBar,Toolbar, Typography,Switch } from '@material-ui/core';
+import { AppBar,Toolbar, Typography,Switch, Container } from '@material-ui/core';
 
 import {IMenu} from './Interface';
 import ItemList from './components/Item-list';
@@ -117,7 +117,7 @@ const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> =
           <SideNav menu={MenuItems} setSelectedIndex={setSelectedIndex} 
             themetype={String(localStorage.getItem('selectedtheme'))} />
           <main className={classes.main}>
-            <div>
+            <Container maxWidth={false}>
               <RouterSwitch>
                 <Route 
                   exact
@@ -137,7 +137,7 @@ const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> =
                   />
                 ))}
               </RouterSwitch>
-            </div>
+            </Container>
           </main>
         </div>  
       </Router>
