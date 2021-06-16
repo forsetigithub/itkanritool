@@ -106,3 +106,11 @@ export type AccountItem = {
   memo:string;
 };
 
+export type CodeItem = {
+  codeID: number;
+  codeKindID: number;
+  codeKindName: string;
+  codeName: string;
+  orderNumber?: number;
+};
+

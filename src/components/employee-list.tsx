@@ -111,7 +111,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     if(item.temporaryEmployeeCode === undefined) {
 
       //最新のシステム社員番号を取得
-      axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetLastTemporaryEmployeeCode/${item.companyCode}`)
+      axios.get(`${PROPS.BASE_API_PATH}/GetLastTemporaryEmployeeCode/${item.companyCode}`)
         .then((result) => {
           item.temporaryEmployeeCode = result.data;
         });
@@ -137,7 +137,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
     // console.log(postData);                
 
-    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostEmployee`,postData)
+    axios.post(`${PROPS.BASE_API_PATH}/PostEmployee`,postData)
       .then((result) => {
  
       });
@@ -149,7 +149,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   };
 
   const deleteDataHandler = (item: EmployeeItem) => {
-    axios.post(`${PROPS.BASE_URL}/api/itmanagement/DeleteEmployee` ,item)
+    axios.post(`${PROPS.BASE_API_PATH}/DeleteEmployee` ,item)
       .then((result) => {
         // axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetEmployees`)
       })

@@ -67,7 +67,7 @@ const CodeTableList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     const postData: CodeItem = {codeKindID: parseInt(item.codeKindID.toString()),codeKindName:item.codeKindName,
       codeID: parseInt(item.codeID.toString()),codeName:item.codeName,orderNumber:item.orderNumber};            
 
-    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostMstCodeTable`,postData)
+    axios.post(`${PROPS.BASE_API_PATH}/PostMstCodeTable`,postData)
       .then((result) => {
         // axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetEmployees`)
         //   .then((result) => {

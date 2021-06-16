@@ -66,7 +66,7 @@ const AccountTab: FC<{data_kindname:string,data:AccountItem,
     
     if(systemcode !== undefined) setSystemCode(parseInt(systemcode.toString()));
 
-    const fetchData = async () => await axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetAccountInfoBySystem/
+    const fetchData = async () => await axios.get(`${PROPS.BASE_API_PATH}/GetAccountInfoBySystem/
       ${props.data.companycode}/${props.data.employeecode}/${systemcode}`)
       .then((result) => {
         setAccountInfo(result.data);   
@@ -83,9 +83,9 @@ const AccountTab: FC<{data_kindname:string,data:AccountItem,
       systemCode:systemCode,seqNo:item.seqNo === undefined ? -1 : item.seqNo,
       idNumber:item.idNumber,passWord:item.passWord,memo:item.memo};
       
-    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostAccountInfo`,uploadData)
+    axios.post(`${PROPS.BASE_API_PATH}/PostAccountInfo`,uploadData)
       .then((result) => {
-        axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetAccountInfoBySystem/
+        axios.get(`${PROPS.BASE_API_PATH}/GetAccountInfoBySystem/
           ${uploadData.companyCode}/${uploadData.temporaryEmployeeCode}/${systemCode}`)
           .then((result) => {
             setIsLoading(false);

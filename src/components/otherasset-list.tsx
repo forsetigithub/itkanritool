@@ -3,27 +3,73 @@ import React,{FC,useState,useEffect} from 'react';
 import MaterialTableCustom from './materialtable-custom';
 import axios from 'axios';
 import * as PROPS from '../App.properties';
+import { CodeItem } from '../Interface';
 
+import { createStyles, makeStyles,Theme } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
+
+const useStyle = makeStyles((theme: Theme) =>
+  createStyles({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1, 
+    },
+}));
+
+
 
 const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> = 
   (props:{editable:boolean,itemKindNo?:number,lookup?:any}) => {
 
+  const classes = useStyle();
 
+  const [isLoading,setLoading] = useState<boolean>(false);
   const [employeelist,setEmployeelist] = useState<any>([]);
+  const [makerListItems,setMakerlistitems] = useState<{}>({});
 
   useEffect(() => {
-    // setLoading(true);
-    axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetEmployeeNameList`)
-    .then((result) => {
-      setEmployeelist(result.data);
-      // setLoading(false);
-    });
+    const loadData = async () => {
+      try{
+        setLoading(true);
+        await axios.get(`${PROPS.BASE_API_PATH}/GetEmployeeNameList`)
+          .then((result) => {
+            setEmployeelist(result.data);
+        });
+  
+        await axios.get(`${PROPS.BASE_API_PATH}/GetCodeList/3`)
+          .then((result) => {
+   
+            const listitems:CodeItem[] = result.data as CodeItem[];
+            const obj_array:any[] = [];
+  
+            listitems.forEach((value,index) => {
+              const obj = {
+                id:value.codeID,
+                name:value.codeName
+              };
+
+              obj_array.push(obj);
+
+            });
+            var makerListItems = obj_array.reduce((acc:any,cur:any) => {
+              acc[cur.id] = cur.name;
+              return acc;
+            },{});
+  
+            setMakerlistitems(makerListItems);
+          });
+      }catch{
+  
+      }finally{
+        setLoading(false);
+      }
+    };
+    loadData();
   },[]);
 
   const columns:any = [
-
     { 
       title: '区分', field:'itemKindNo',lookup: props.lookup,
       headerStyle:{
@@ -57,14 +103,7 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
     },
     { 
       title: 'メーカー', field:'makerCode',
-      lookup: {
-        1:'DELL',2:'HP',3:'Apple',4:'Microsoft',
-        5:'acer',6:'AOC',7:'ASUS',8:'BENQ',
-        9:'BLENCK',10:'BUFFALO',11:'Easterntimes Tech',
-        12:'ELECOM',13:'GREEN HOUSE',14:'I・O DATA',
-        15:'Logicool',16:'NEC',17:'Qtuo',18:'SANWA',
-        98:'その他',99:'不明'
-      },
+      lookup:makerListItems,
       headerStyle:{
         width:120,
       },
@@ -86,21 +125,27 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
   const updateDataHandler = (item: any) => {
 
     let uploadData:any = {...item};
-console.log(uploadData);    
+   
     uploadData.makerCode = parseInt(uploadData.makerCode); 
     uploadData.itemKindNo = parseInt(uploadData.itemKindNo);
 
-    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostOtherAssetItem`,uploadData);   
+    axios.post(`${PROPS.BASE_API_PATH}/PostOtherAssetItem`,uploadData);   
   };
 
   const deleteDataHandler = (item :any) => {
-    axios.post(`${PROPS.BASE_URL}/api/itmanagement/DeleteOtherAssetItem`,item);
+    axios.post(`${PROPS.BASE_API_PATH}/DeleteOtherAssetItem`,item);
   };
 
   return(
-    <MaterialTableCustom<any> columns={columns} getParam={`GetOtherAssetItemByItemKindNo/${props.itemKindNo}`} 
-      editable_mode={props.editable}
-      updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} />
+    <React.Fragment>
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <CircularProgress color="primary" size={80} />
+      </Backdrop>
+      <MaterialTableCustom<any> columns={columns} getParam={`GetOtherAssetItemByItemKindNo/${props.itemKindNo}`} 
+        editable_mode={props.editable}
+        updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} />
+    </React.Fragment>
+
   );
 }
 

@@ -21,8 +21,6 @@ const useStyle = makeStyles((theme: Theme) =>
   root : {
     //svgタグ以外を反映
     '& *:not(svg)': {
-      // "background": '#252525',
-      // "color": 'whitesmoke',
        "font-size": 'calc(9px + 1vmin)'
     },
   },
@@ -40,7 +38,7 @@ const ItemList: FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
   const GetVPCitems = async () => {
     setLoading(true);
-    await axios.get(`${PROPS.BASE_URL}/api/itmanagement/getvpcitems`)
+    await axios.get(`${PROPS.BASE_API_PATH}/getvpcitems`)
     .then((result) => {
       setData(result.data);
       setLoading(false);
@@ -53,7 +51,7 @@ const ItemList: FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetEmployeeNameList`)
+    axios.get(`${PROPS.BASE_API_PATH}/GetEmployeeNameList`)
     .then((result) => {
       setEmployeelist(result.data);
       setLoading(false);
@@ -63,7 +61,7 @@ const ItemList: FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const PostItems = (postitem:VPCitem) => {
     console.log('PostItems:');
     console.log(postitem);
-    axios.post(`${PROPS.BASE_URL}/api/itmanagement/PostVPCItems`,postitem)
+    axios.post(`${PROPS.BASE_API_PATH}/PostVPCItems`,postitem)
     .then((result) =>{
       GetVPCitems();
     });
