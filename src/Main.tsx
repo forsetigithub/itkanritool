@@ -30,12 +30,13 @@ import SideNav from './components/sidenav';
 import OptionMenu from './components/option-menu';
 import * as PROPS from './App.properties';
 
+
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
     root: {
     //svgタグ以外を反映
       '& *:not(svg)': {
-        "font-size": 'calc(6px + 1vmin)'
+        "font-size": 'calc(0.3rem + 1vmin)'
       },
     },
     appBar: {
