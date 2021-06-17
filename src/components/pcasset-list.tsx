@@ -4,18 +4,43 @@ import MaterialTableCustom from './materialtable-custom';
 import axios from 'axios';
 import * as PROPS from '../App.properties';
 import {PCItem} from '../Interface';
-import {GetPCMakerCodeItems } from '../api';
-
+import {GetCodeListItems, GetPCMakerCodeItems } from '../api';
 
 const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
-  const [makerListItems,setMakerlistitems] = useState<{}>({});
+  const [makerListItems,setMakerlistItems] = useState<{}>({});
+  const [pcKindListItems,setPcKindListItems] = useState<{}>({});
+  const [assetKindListeItems,setAssetKindListeItems] = useState<{}>({});
+  const [useStatusListItems,setUseStatusListItems] = useState<{}>({});
 
-  useEffect(() =>{
-    const fetchData = GetPCMakerCodeItems();
-    fetchData.then((result) => {
-      setMakerlistitems(result);
-    });
-  },[]);
+  useEffect(() => {
+    try{
+      GetPCMakerCodeItems()
+        .then((result) => {
+          setMakerlistItems(result);
+      });
+
+      GetCodeListItems(4)
+        .then((result) => {
+          setPcKindListItems(result);
+        });
+
+      GetCodeListItems(6)
+        .then((result) => {
+          setAssetKindListeItems(result);
+        });
+
+      GetCodeListItems(7)
+        .then((result) => {
+          setUseStatusListItems(result);
+        });
+
+    }catch(error){
+
+    }finally{
+
+    }
+
+  },[setMakerlistItems,setPcKindListItems,setAssetKindListeItems,setUseStatusListItems]);
 
   const columns:any = [
     {
@@ -49,7 +74,7 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       title: 'シリアル番号', field:'serialNo'
     },
     { 
-      title: '種別', field:'pcKindCode',lookup: {1:'デスクトップ',2:'ノート',999:'未指定'},
+      title: '種別', field:'pcKindCode',lookup: pcKindListItems,
       headerStyle:{
         width:120,
       },
@@ -74,13 +99,13 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     //   render: (rowData:any) => (Date.parse( rowData.warrantyPeriod) >= Date.now() ? 1 : 0)
     // },
     {
-      title: '資産種別',field: 'assetKindCode',type:'number',lookup : {1: '本社',2: '久留米',3:'リース',999:'未指定'}
+      title: '資産種別',field: 'assetKindCode',type:'number',lookup : assetKindListeItems
     },
     {
       title: 'PC名', field:'computerName'
     },
     {
-      title: '状況',field:'useStatus',type:'number',lookup: {1: '使用中',2: '予備',3:'修理中',4:'故障',5:'破棄・返却'}
+      title: '状況',field:'useStatus',type:'number',lookup:useStatusListItems
     },
     { 
       title: '備考', field:'pcMemo'
