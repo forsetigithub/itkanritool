@@ -68,7 +68,7 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
   const [pcInfo,setPcInfo] = useState<PCItem[]>([]);
   
   useEffect(() => {
-    const fetchData = async () => await axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetVPCItemById/${props.data.pcItemCode}`)
+    const fetchData = async () => await axios.get(`${PROPS.BASE_API_PATH}/GetVPCItemById/${props.data.pcItemCode}`)
       .then((result) => {
         setPcInfo([{makerCode: result.data.makerCode,
           pcTypeNumber: result.data.pcTypeNumber,pcServiceTag: result.data.pcServiceTag,

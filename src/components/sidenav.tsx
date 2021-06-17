@@ -51,6 +51,12 @@ interface ListItemLinkProps {
   className?:any;
 }
 
+type typeSelectedStyle = {
+  backgroundColor:string;
+  color: string;
+};
+
+
 const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
   const { icon,iconColor, primary, to, selected,style, onClick,className} = props;
 
@@ -84,17 +90,21 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
   const [selectedIndex,setSelectedIndex] = useState(0);
   const [open,setOpen] = useState(false);
   const [selectedTheme,setSelectedTheme] = useState('');
+  const [selectedStyle,setSelectedStyle] = useState<typeSelectedStyle>();
 
-  const selectedStyle = {
-    backgroundColor: selectedTheme === 'light' ? blue[50] : 'WhiteSmoke',
-    color: selectedTheme === 'light' ? red[700] : 'Black',
-  }
-
-  useEffect(() =>{
+  useEffect(() => {
     const index = Number(sessionStorage.getItem("selectedindex") || 0);
     setSelectedIndex(index);
-    setSelectedTheme(String(localStorage.getItem('selectedtheme')));
-  },[setSelectedIndex,setSelectedTheme]);
+
+    setSelectedTheme(String(localStorage.getItem('selectedtheme') || 'light'));
+    
+    const style:typeSelectedStyle = {
+      backgroundColor: selectedTheme === 'light' ? blue[50] : 'WhiteSmoke',
+      color: selectedTheme === 'light' ? red[700] : 'Black',
+    }
+    setSelectedStyle(style);
+
+  },[setSelectedIndex, setSelectedTheme, setSelectedStyle, selectedTheme]);
 
   const handleListItemClick = (
     event: React.MouseEvent<HTMLDivElement,MouseEvent>,
