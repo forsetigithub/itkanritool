@@ -9,7 +9,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import * as PROPS from '../App.properties';
 import {PCItem, VPCitem} from '../Interface';
-import {GetPCMakerCodeItems} from '../api';
+import {GetPCMakerCodeItems,GetCodeListItems} from '../api';
 
 
 const useStyle = makeStyles((theme: Theme) =>
@@ -24,13 +24,20 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
   
   const [isLoading,setLoading] = useState<boolean>(false);
   const [makerListItems,setMakerlistitems] = useState<{}>({});
+  const [pcKindListItems,setPcKindListItems] = useState<{}>({});
 
   useEffect(() =>{
     const fetchData = GetPCMakerCodeItems();
     fetchData.then((result) => {
       setMakerlistitems(result);
     });
-  },[]);
+
+    GetCodeListItems(4)
+      .then((result) => {
+        setPcKindListItems(result);
+    });
+
+  },[setMakerlistitems,setPcKindListItems]);
 
   const columns:any = [
     {
@@ -47,7 +54,7 @@ const PCTab:FC<{data:VPCitem,editable:boolean}> = (props:{data:VPCitem,editable:
       title: 'サービスタグ', field:'pcServiceTag'
     },
     {
-      title: '種別', field:'pcKindCode',lookup: {1:'デスクトップ',2:'ノート'}
+      title: '種別', field:'pcKindCode',lookup: pcKindListItems
     },
     {
       title: '保証期間', field:'warrantyPeriod',type:'date',

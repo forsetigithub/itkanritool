@@ -1,9 +1,13 @@
-import React,{FC} from 'react';
+import React,{FC, useEffect, useState} from 'react';
 //import Moment from 'react-moment';
 import axios from 'axios';
+import { createStyles, makeStyles,Theme } from '@material-ui/core';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import MaterialTableCustom from './materialtable-custom';
 import AcountItemTabs from './account-item-tabs';
 import * as PROPS from '../App.properties';
+import {GetCodeListItems } from '../api';
 
 export type EmployeeItem = {
   companyCode:number;
@@ -22,11 +26,54 @@ export type EmployeeItem = {
   existsFlag?:boolean;
 };
 
+const useStyle = makeStyles((theme: Theme) =>
+  createStyles({
+    backdrop: {
+      zIndex: theme.zIndex.drawer + 1, 
+    },
+}));
+
+
 const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
+  const classes = useStyle();
+  const [isLoading,setLoading] = useState<boolean>(false);
+
+  const [companyListItems,setCompanyListItems] = useState<{}>({});
+  const [departmentListItems,setDepartmentListItems] = useState<{}>({});
+  const [employmentListItems,setEmploymentListItems] = useState<{}>({});
+
+
+  useEffect(() => {
+    try{
+      GetCodeListItems(0)
+      .then((result) => {
+        setCompanyListItems(result);
+      });
+
+      GetCodeListItems(1)
+      .then((result) => {
+        setDepartmentListItems(result);
+      });
+
+      GetCodeListItems(2)
+      .then((result) => {
+        setEmploymentListItems(result);
+      });
+
+    }catch(error){
+
+    }finally{
+
+    }
+
+
+  },[setCompanyListItems,setEmploymentListItems]);
+
+
   const columns:any = [
     {
       title: '会社名',field: 'companyCode', type:'numeric',
-      lookup: {1:'KIZUNA',2:'DreamBox',3:'マキコミ',4:'プランツ',5:'KIZUNA大分'},
+      lookup: companyListItems,
     },
     {
       title: 'temporaryEmployeeCode',field: 'temporaryEmployeeCode',type:'numeric',
@@ -52,7 +99,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       title: '名', field:'firstName'
     },
     { 
-      title: '雇用区分', field:'employmentCode',type:'numeric',lookup: {1:'直雇用',2:'派遣',3:'業務委託'},
+      title: '雇用区分', field:'employmentCode',type:'numeric',lookup: employmentListItems,
       headerStyle:{
         width:120,
       },
@@ -62,12 +109,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     },
     { 
       title: '所属部署', field:'departmentCode',type:'numeric',
-      lookup: {1:'Dreambox', 2:'MO大橋',3:'アライアンス',
-               4:'カスタマー大橋',5:'プランツ',6:'プランニング',
-               8:'メディア支援 ',9:'わくわく',
-              10:'経理財務室',11:'広告PR ',12:'事業推進',
-              13:'社長室',14:'情報システム管理室',15:'制作',
-              16:'カスタマー久留米',17:'マキコミ',18:'KIZUNA大分'},
+      lookup: departmentListItems,
       headerStyle:{
         width:120,
       },
@@ -103,45 +145,52 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 ];
 
   const PostItem = (item: EmployeeItem) => {
+    try{
+      setLoading(true);
 
-    if(item.companyCode === undefined) {
-      item.companyCode = 1;
-    }
-
-    if(item.temporaryEmployeeCode === undefined) {
-
-      //最新のシステム社員番号を取得
-      axios.get(`${PROPS.BASE_API_PATH}/GetLastTemporaryEmployeeCode/${item.companyCode}`)
+      if(item.companyCode === undefined) {
+        item.companyCode = 1;
+      }
+  
+      if(item.temporaryEmployeeCode === undefined) {
+  
+        //最新のシステム社員番号を取得
+        axios.get(`${PROPS.BASE_API_PATH}/GetLastTemporaryEmployeeCode/${item.companyCode}`)
+          .then((result) => {
+            item.temporaryEmployeeCode = result.data;
+          });
+      }
+  
+      if(item.employmentCode === undefined) {
+        item.employmentCode = 0;
+      }
+  
+      if(item.departmentCode === undefined) {
+        item.departmentCode = 0;
+      }
+  
+      if(item.existsFlag === undefined) {
+        item.existsFlag = true;
+      }
+  
+      const postData = {companyCode:parseInt(item.companyCode.toString()),temporaryEmployeeCode: item.temporaryEmployeeCode,
+                      formalEmployeeCode:item.formalEmployeeCode,lastName:item.lastName,firstName:item.firstName,
+                      employmentCode: parseInt(item.employmentCode.toString()),departmentCode: parseInt(item.departmentCode.toString()),
+                      firstNameKana:'',lastNameKana:'',pCLoginPW:'',emailAddress:'',
+                      joinedDate:undefined,retiermentDate:undefined,existsFlag:item.existsFlag };
+  
+      // console.log(postData);                
+  
+      axios.post(`${PROPS.BASE_API_PATH}/PostEmployee`,postData)
         .then((result) => {
-          item.temporaryEmployeeCode = result.data;
+   
         });
+    }catch(error){
+
+    }finally{
+      setLoading(false);
     }
 
-    if(item.employmentCode === undefined) {
-      item.employmentCode = 0;
-    }
-
-    if(item.departmentCode === undefined) {
-      item.departmentCode = 0;
-    }
-
-    if(item.existsFlag === undefined) {
-      item.existsFlag = true;
-    }
-
-    const postData = {companyCode:parseInt(item.companyCode.toString()),temporaryEmployeeCode: item.temporaryEmployeeCode,
-                    formalEmployeeCode:item.formalEmployeeCode,lastName:item.lastName,firstName:item.firstName,
-                    employmentCode: parseInt(item.employmentCode.toString()),departmentCode: parseInt(item.departmentCode.toString()),
-                    firstNameKana:'',lastNameKana:'',pCLoginPW:'',emailAddress:'',
-                    joinedDate:undefined,retiermentDate:undefined,existsFlag:item.existsFlag };
-
-    // console.log(postData);                
-
-    axios.post(`${PROPS.BASE_API_PATH}/PostEmployee`,postData)
-      .then((result) => {
- 
-      });
-    
   }
 
   const updateDataHandler = (item: EmployeeItem) => {
@@ -149,23 +198,33 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   };
 
   const deleteDataHandler = (item: EmployeeItem) => {
+    setLoading(true);
+
     axios.post(`${PROPS.BASE_API_PATH}/DeleteEmployee` ,item)
       .then((result) => {
         // axios.get(`${PROPS.BASE_URL}/api/itmanagement/GetEmployees`)
+        setLoading(false);
       })
   }
 
 
   return(
-    <MaterialTableCustom<EmployeeItem>  columns={columns} getParam="GetEmployees" 
-      editable_mode={props.editable}
-      updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} 
-      detailPanel={(rowData:EmployeeItem) => {
-        return(
-          <AcountItemTabs<EmployeeItem> data={rowData}  editable={props.editable} />
-        )
-      }}
+    <React.Fragment>
+      <Backdrop className={classes.backdrop} open={isLoading}>
+        <CircularProgress color="primary" size={80} />
+      </Backdrop>
+
+      <MaterialTableCustom<EmployeeItem>  columns={columns} getParam="GetEmployees" 
+        editable_mode={props.editable}
+        updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} 
+        detailPanel={(rowData:EmployeeItem) => {
+          return(
+            <AcountItemTabs<EmployeeItem> data={rowData}  editable={props.editable} />
+          )
+        }}
       />
+    </React.Fragment>
+
   );
 }
 
