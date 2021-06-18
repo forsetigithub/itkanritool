@@ -6,6 +6,7 @@ import { CheckShowEditable } from './api';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import * as colors from '@material-ui/core/colors';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { LoginUser } from './Interface';
 
 function App() {
   const theme = createMuiTheme({
@@ -21,7 +22,7 @@ function App() {
   });
 
 
-  const [token,setToken] = useState();
+  const [token,setToken] = useState<LoginUser>();
 
   if(!token && !sessionStorage.getItem(PROPS.LOGIN_TOKEN)) {
     
@@ -36,7 +37,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Main editable={CheckShowEditable()} selectedIndex={Number(sessionStorage.getItem("selectedindex") || 0)}  />
+      <Main editable={CheckShowEditable()} 
+        selectedIndex={Number(sessionStorage.getItem("selectedindex") || 0)} 
+        accessLevelCode={token !== undefined ? token?.privilegeCode : 0} />
     </ThemeProvider>
 
   );
