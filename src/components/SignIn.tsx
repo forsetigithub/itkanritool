@@ -87,9 +87,9 @@ const SignIn:FC<any> = ({setToken}:any) => {
 
     const loginUser:LoginUser = {id:0,mailAddress:credentials.mailAddress || '',pw:credentials.pw || '',privilegeCode:0};
     
-    await axios.post(`${PROPS.BASE_API_PATH}/GetLoginUser`,loginUser)
+    await axios.post<LoginUser>(`${PROPS.BASE_API_PATH}/GetLoginUser`,loginUser)
       .then((result) => {
-        sessionStorage.setItem(PROPS.LOGIN_TOKEN, JSON.stringify(result.data as LoginUser));
+        sessionStorage.setItem(PROPS.LOGIN_TOKEN, JSON.stringify(result.data));
         setLoading(false);
         setToken(result.data);               
       })
