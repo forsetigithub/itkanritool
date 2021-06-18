@@ -34,7 +34,8 @@ const useStyle = makeStyles((theme: Theme) =>
   },
 }));
 
-const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_mode,updateDataHandler,deleteDataHandler,detailPanel}:Props<T>) => {
+const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_mode,
+  updateDataHandler,deleteDataHandler,detailPanel}:Props<T>) => {
 
   const classes = useStyle();
   
@@ -42,15 +43,25 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_
   const [data,setData] = useState<any>([]);
 
   useEffect(()=> {
-    setLoading(true);
+    try{
+      setLoading(true);
 
-    axios.get(`${PROPS.BASE_API_PATH}/${getParam}`)
-    .then((result) => {
-      setData(result.data);
+      const fetch_data = async() => {
+        await axios.get(`${PROPS.BASE_API_PATH}/${getParam}`)
+        .then((result) => {
+          setData(result.data); 
+          console.log('getParam:' + getParam);
+          console.log(result.data); 
+        });
+      };
+      fetch_data();
+
+    }catch(error) {
+      console.log(error);
+    }finally{
       setLoading(false);
-    });
-
-  },[getParam]);
+    }
+  },[setData,getParam]);
 
 
   return(

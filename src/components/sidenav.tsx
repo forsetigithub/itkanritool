@@ -14,6 +14,9 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import ClassIcon from '@material-ui/icons/Class';
 import Collapse from '@material-ui/core/Collapse';
 
+import {LoginUser} from '../Interface';
+import * as PROPS from '../App.properties';
+
 const useStyles = makeStyles((theme: Theme) => 
   createStyles({
     list: {
@@ -83,9 +86,9 @@ const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
 }
 
 const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,
-      themetype?:string,accessLevelCode:number}> =
+      themetype?:string}> =
       (props:{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,
-        themetype?:string,accessLevelCode:number}) => {
+        themetype?:string}) => {
 
   const classes = useStyles();
 
@@ -93,8 +96,11 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
   const [open,setOpen] = useState(false);
   const [selectedTheme,setSelectedTheme] = useState('');
   const [selectedStyle,setSelectedStyle] = useState<typeSelectedStyle>();
+  const [accessLevelCode,setAccessLevelCode] = useState(0);
 
   useEffect(() => {
+    setAccessLevelCode((JSON.parse(sessionStorage.getItem(PROPS.LOGIN_TOKEN) as string) as LoginUser).privilegeCode);
+
     const index = Number(sessionStorage.getItem("selectedindex") || 0);
     setSelectedIndex(index);
 
@@ -213,7 +219,7 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
         classes= {{
           paper:classes.list
         }}>
-        {props.accessLevelCode === 3 ? limitedlist('left') : list('left')}
+        {accessLevelCode === 3 ? limitedlist('left') : list('left')}
       </Drawer>
     </React.Fragment>
   );
