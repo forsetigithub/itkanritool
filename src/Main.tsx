@@ -20,7 +20,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import StorageIcon from '@material-ui/icons/Storage';
 import { AppBar,Toolbar, Typography,Switch, Container } from '@material-ui/core';
 
-import {IMenu} from './Interface';
+import {IMenu, LoginUser} from './Interface';
 import ItemList from './components/Item-list';
 import PCAssetList from './components/pcasset-list';
 import OtherAssetList from './components/otherasset-list';
@@ -67,7 +67,16 @@ const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number,accessLev
     const theme_string = String(localStorage.getItem("selectedtheme"));
     theme_string === 'dark' ? setCheckTheme(true) : setCheckTheme(false);
     setSelectedIndex(props.selectedIndex);
-    sessionStorage.clear();
+
+    const login_token:LoginUser = JSON.parse(sessionStorage.getItem(PROPS.LOGIN_TOKEN) as string);
+
+    const obj_token = {
+      id:login_token.id || 0,
+      privilegeCode:login_token.privilegeCode || 0
+    };
+
+    sessionStorage.removeItem(PROPS.LOGIN_TOKEN);
+    sessionStorage.setItem(PROPS.LOGIN_TOKEN, JSON.stringify(obj_token));
 
   },[setCheckTheme,props.selectedIndex]);
 

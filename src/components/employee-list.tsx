@@ -8,6 +8,7 @@ import MaterialTableCustom from './materialtable-custom';
 import AcountItemTabs from './account-item-tabs';
 import * as PROPS from '../App.properties';
 import {GetCodeListItems } from '../api';
+import { LoginUser } from '../Interface';
 
 export type EmployeeItem = {
   companyCode:number;
@@ -42,6 +43,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const [departmentListItems,setDepartmentListItems] = useState<{}>({});
   const [employmentListItems,setEmploymentListItems] = useState<{}>({});
 
+  const [getParamString,setGetParamString] = useState('GetEmployees');
 
   useEffect(() => {
     try{
@@ -59,6 +61,12 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       .then((result) => {
         setEmploymentListItems(result);
       });
+
+      const login_id:LoginUser = JSON.parse(sessionStorage.getItem(PROPS.LOGIN_TOKEN) as string);
+      
+      if(login_id.privilegeCode === 3) {
+        setGetParamString(`GetAccessAuthorizedEmployees/${login_id.id}`);
+      }
 
     }catch(error){
 
@@ -214,7 +222,8 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
         <CircularProgress color="primary" size={80} />
       </Backdrop>
 
-      <MaterialTableCustom<EmployeeItem>  columns={columns} getParam="GetEmployees" 
+      <MaterialTableCustom<EmployeeItem>  columns={columns} 
+        getParam={getParamString} 
         editable_mode={props.editable}
         updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} 
         detailPanel={(rowData:EmployeeItem) => {
