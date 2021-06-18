@@ -42,11 +42,12 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   const [companyListItems,setCompanyListItems] = useState<{}>({});
   const [departmentListItems,setDepartmentListItems] = useState<{}>({});
   const [employmentListItems,setEmploymentListItems] = useState<{}>({});
-
-  const [getParamString,setGetParamString] = useState('GetEmployees');
+  const logintoken = JSON.parse(sessionStorage.getItem(PROPS.LOGIN_TOKEN) as string) as LoginUser;
 
   useEffect(() => {
     try{
+      setLoading(true);
+
       GetCodeListItems(0)
       .then((result) => {
         setCompanyListItems(result);
@@ -62,20 +63,14 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
         setEmploymentListItems(result);
       });
 
-      const login_id:LoginUser = JSON.parse(sessionStorage.getItem(PROPS.LOGIN_TOKEN) as string);
-      
-      if(login_id.privilegeCode === 3) {
-        setGetParamString(`GetAccessAuthorizedEmployees/${login_id.id}`);
-      }
-
     }catch(error){
-
+      
     }finally{
-
+      setLoading(false);
     }
 
-
-  },[setCompanyListItems,setEmploymentListItems]);
+  },[setCompanyListItems,setEmploymentListItems,
+      setDepartmentListItems]);
 
 
   const columns:any = [
@@ -223,7 +218,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       </Backdrop>
 
       <MaterialTableCustom<EmployeeItem>  columns={columns} 
-        getParam={getParamString} 
+        getParam={logintoken.privilegeCode === 3 ? `GetAccessAuthorizedEmployees/${logintoken.id}` : 'GetEmployees'} 
         editable_mode={props.editable}
         updateDataHandler={updateDataHandler} deleteDataHandler={deleteDataHandler} 
         detailPanel={(rowData:EmployeeItem) => {

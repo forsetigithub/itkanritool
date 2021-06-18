@@ -38,8 +38,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Main editable={CheckShowEditable()} 
-        selectedIndex={Number(sessionStorage.getItem("selectedindex") || 0)} 
-        accessLevelCode={token !== undefined ? token?.privilegeCode : 0} />
+        selectedIndex={Number(sessionStorage.getItem("selectedindex") || 0)}  />
     </ThemeProvider>
 
   );
