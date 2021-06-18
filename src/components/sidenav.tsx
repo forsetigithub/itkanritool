@@ -82,8 +82,10 @@ const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
   );
 }
 
-const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,themetype?:string}> =
-  (props:{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,themetype?:string}) => {
+const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,
+      themetype?:string,accessLevelCode:number}> =
+      (props:{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,
+        themetype?:string,accessLevelCode:number}) => {
 
   const classes = useStyles();
 
@@ -99,23 +101,21 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
     setSelectedTheme(String(localStorage.getItem('selectedtheme') || 'light'));
     
     const style:typeSelectedStyle = {
-      backgroundColor: selectedTheme === 'light' ? blue[50] : 'WhiteSmoke',
+      backgroundColor: selectedTheme === 'light' ? blue[50] : 'White',
       color: selectedTheme === 'light' ? red[700] : 'Black',
     }
     setSelectedStyle(style);
 
-  },[setSelectedIndex, setSelectedTheme, setSelectedStyle, selectedTheme]);
+  },[setSelectedIndex, setSelectedTheme, setSelectedStyle, selectedTheme,props]);
 
-  const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement,MouseEvent>,
-    index: number) => {
-      setSelectedIndex(index);
-      sessionStorage.setItem("selectedindex",String(index));
-    };
+  const handleListItemClick = (event: React.MouseEvent<HTMLDivElement,MouseEvent>,index: number) => {
+    setSelectedIndex(index);
+    sessionStorage.setItem("selectedindex",String(index));
+  };
 
-    const handleClick = () => {
-      setOpen(!open);
-    };
+  const handleClick = () => {
+    setOpen(!open);
+  };
 
   const list = (anchor: Anchor) => (
     <div className={classes.list}>
@@ -133,7 +133,7 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
               onClick={(event) => handleListItemClick(event,index)}
             />            
         ))}
-        
+       
         <ListItem button onClick={handleClick}>
           <ListItemIcon>
             <ClassIcon />
@@ -164,19 +164,40 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
           </List>
 
         </Collapse>
-          {props.menu.filter(f => f.key === 'employee' || 
-                                  f.key === 'master').map((item, index) => (
-              <ListItemLink 
-                key={index}
-                icon={item.icon}
-                iconColor={selectedIndex === (index + 6) ? {color: red[500]} : undefined}
-                primary={item.title}
-                to={item.path}
-                selected={selectedIndex === (index + 6)}
-                style={selectedIndex === (index + 6) ? selectedStyle : undefined}
-                onClick={(event) => handleListItemClick(event,(index + 6))}
-              />            
-          ))}
+
+        {props.menu.filter(f => f.key === 'employee' || 
+                                f.key === 'master').map((item, index) => (
+            <ListItemLink 
+              key={index}
+              icon={item.icon}
+              iconColor={selectedIndex === (index + 6) ? {color: red[500]} : undefined}
+              primary={item.title}
+              to={item.path}
+              selected={selectedIndex === (index + 6)}
+              style={selectedIndex === (index + 6) ? selectedStyle : undefined}
+              onClick={(event) => handleListItemClick(event,(index + 6))}
+            />            
+        ))}
+
+      </List>
+    </div>
+  );
+
+  const limitedlist = (anchor: Anchor) => (
+    <div className={classes.list}>
+      <List>
+        {props.menu.filter(f => f.key === 'employee').map((item, index) => (
+            <ListItemLink 
+              key={index}
+              icon={item.icon}
+              iconColor={selectedIndex === (index) ? {color: red[500]} : undefined}
+              primary={item.title}
+              to={item.path}
+              selected={selectedIndex === (index)}
+              style={selectedIndex === (index) ? selectedStyle : undefined}
+              onClick={(event) => handleListItemClick(event,(index))}
+            />            
+        ))}
 
       </List>
     </div>
@@ -192,7 +213,7 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
         classes= {{
           paper:classes.list
         }}>
-        {list('left')}
+        {props.accessLevelCode === 3 ? limitedlist('left') : list('left')}
       </Drawer>
     </React.Fragment>
   );

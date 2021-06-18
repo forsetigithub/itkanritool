@@ -56,8 +56,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> = 
- (props:{editable:boolean,themetype?:string,selectedIndex:number}) => {
+const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number,accessLevelCode:number}> = 
+ (props:{editable:boolean,themetype?:string,selectedIndex:number,accessLevelCode:number}) => {
 
   const classes = useStyles();
   const [selectedIndex,setSelectedIndex] = useState(0);
@@ -67,6 +67,7 @@ const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> =
     const theme_string = String(localStorage.getItem("selectedtheme"));
     theme_string === 'dark' ? setCheckTheme(true) : setCheckTheme(false);
     setSelectedIndex(props.selectedIndex);
+    sessionStorage.clear();
 
   },[setCheckTheme,props.selectedIndex]);
 
@@ -77,7 +78,7 @@ const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> =
     
   };
 
-  const MenuItems:IMenu[] = [
+  let MenuItems:IMenu[] = [
     {
       key:'home',title:'Home',icon:<HomeIcon />,path:`${PROPS.BASE_PATH}/home`,main:() => (<ItemList editable={props.editable} />)
     },
@@ -104,6 +105,13 @@ const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> =
     }
   ];
 
+  if(props.accessLevelCode === 3) {
+
+    MenuItems = MenuItems.filter((value,index) => {
+      return(value.key === 'employee');
+    });
+  }
+ 
   return (
     <React.Fragment>
       <AppBar position="fixed" className={classes.appBar}>
@@ -116,7 +124,7 @@ const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> =
       <Router>
         <div className={classes.root}>
           <SideNav menu={MenuItems} setSelectedIndex={setSelectedIndex} 
-            themetype={String(localStorage.getItem('selectedtheme'))} />
+            themetype={String(localStorage.getItem('selectedtheme'))} accessLevelCode={props.accessLevelCode} />
           <main className={classes.main}>
             <Container maxWidth={false}>
               <RouterSwitch>
