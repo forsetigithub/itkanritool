@@ -38,7 +38,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Main editable={CheckShowEditable()} 
-        selectedIndex={Number(sessionStorage.getItem("selectedindex") || 0)}  />
+        selectedIndex={Number(sessionStorage.getItem(PROPS.SELECTED_MENU_INDEX) || 0)}  />
     </ThemeProvider>
 
   );

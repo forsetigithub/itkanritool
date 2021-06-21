@@ -85,9 +85,7 @@ const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
   );
 }
 
-const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,
-      themetype?:string}> = (props:{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,
-        themetype?:string}) => {
+const SideNav:FC<{menu:Menu[],themetype?:string}> = (props:{menu:Menu[],themetype?:string}) => {
 
   const classes = useStyles();
 
@@ -100,7 +98,7 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
   useEffect(() => {
     setAccessLevelCode((JSON.parse(sessionStorage.getItem(PROPS.LOGIN_TOKEN) as string) as LoginUser).privilegeCode);
 
-    const index = Number(sessionStorage.getItem("selectedindex") || 0);
+    const index = Number(sessionStorage.getItem(PROPS.SELECTED_MENU_INDEX) || 0);
     setSelectedIndex(index);
 
     setSelectedTheme(String(localStorage.getItem('selectedtheme') || 'light'));
@@ -115,7 +113,7 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
 
   const handleListItemClick = (event: React.MouseEvent<HTMLDivElement,MouseEvent>,index: number) => {
     setSelectedIndex(index);
-    sessionStorage.setItem("selectedindex",String(index));
+    sessionStorage.setItem(PROPS.SELECTED_MENU_INDEX,String(index));
   };
 
   const handleClick = () => {
