@@ -86,8 +86,7 @@ const ListItemLink:FC<ListItemLinkProps> = (props: ListItemLinkProps) => {
 }
 
 const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,
-      themetype?:string}> =
-      (props:{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,
+      themetype?:string}> = (props:{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateAction<number>>,
         themetype?:string}) => {
 
   const classes = useStyles();
@@ -193,16 +192,16 @@ const SideNav:FC<{menu:Menu[],setSelectedIndex:React.Dispatch<React.SetStateActi
     <div className={classes.list}>
       <List>
         {props.menu.filter(f => f.key === 'employee').map((item, index) => (
-            <ListItemLink 
-              key={index}
-              icon={item.icon}
-              iconColor={selectedIndex === (index) ? {color: red[500]} : undefined}
-              primary={item.title}
-              to={item.path}
-              selected={selectedIndex === (index)}
-              style={selectedIndex === (index) ? selectedStyle : undefined}
-              onClick={(event) => handleListItemClick(event,(index))}
-            />            
+          <ListItemLink 
+            key={index}
+            icon={item.icon}
+            iconColor={selectedIndex === (index) ? {color: red[500]} : undefined}
+            primary={item.title}
+            to={item.path}
+            selected={selectedIndex === (index)}
+            style={selectedIndex === (index) ? selectedStyle : undefined}
+            onClick={(event) => handleListItemClick(event,(index))}
+          />            
         ))}
 
       </List>

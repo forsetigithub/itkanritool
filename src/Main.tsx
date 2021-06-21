@@ -127,7 +127,10 @@ const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> =
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar variant="regular">
           <Typography variant="h6" className={classes.title}>IT資産管理台帳</Typography>
-          <OptionMenu selectedIndex={selectedIndex} />
+          <div>
+            { ((JSON.parse(sessionStorage.getItem(PROPS.LOGIN_TOKEN) as string)) as LoginUser).privilegeCode === 3 ? null :
+             <OptionMenu selectedIndex={selectedIndex} /> }
+          </div>
           <Switch checked={checkTheme} name="checkTheme" onChange={handlecheckTheme} color="default" />
         </Toolbar>
       </AppBar>      
