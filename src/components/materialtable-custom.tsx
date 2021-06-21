@@ -50,8 +50,6 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_
         await axios.get(`${PROPS.BASE_API_PATH}/${getParam}`)
         .then((result) => {
           setData(result.data); 
-          console.log('getParam:' + getParam);
-          console.log(result.data); 
         });
       };
       fetch_data();

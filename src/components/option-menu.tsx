@@ -5,6 +5,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import * as PROPS from '../App.properties';
 import {GetItemListCSV} from '../api';
 
 const useStyle = makeStyles((theme:Theme) =>
@@ -16,7 +17,7 @@ const useStyle = makeStyles((theme:Theme) =>
 );
 
 
-const OptionMenu:FC<{selectedIndex:number}> = (props:{selectedIndex:number}) => {
+const OptionMenu:FC = () => {
   const classes = useStyle();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -26,8 +27,8 @@ const OptionMenu:FC<{selectedIndex:number}> = (props:{selectedIndex:number}) => 
     {title:'CSV出力' },
   ];
 
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    if(props.selectedIndex !== 0) return; //暫定対応
 
     event.stopPropagation();
     setAnchorEl(event.currentTarget);
@@ -40,10 +41,12 @@ const OptionMenu:FC<{selectedIndex:number}> = (props:{selectedIndex:number}) => 
 
     switch(event.currentTarget.innerText) {
       case 'CSV出力':
-        switch(props.selectedIndex) {
+        const selectedMenuIndex = Number(sessionStorage.getItem(PROPS.SELECTED_MENU_INDEX) || -1);  
+        switch(selectedMenuIndex) {
           case 0: //Home
             GetItemListCSV(`IT資産データ.csv`,'GetVPCitemsCSV');
             break;
+        
         }     
     }
   };

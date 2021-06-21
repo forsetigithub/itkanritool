@@ -60,14 +60,12 @@ const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> =
  (props:{editable:boolean,themetype?:string,selectedIndex:number}) => {
 
   const classes = useStyles();
-  const [selectedIndex,setSelectedIndex] = useState(0);
   const [checkTheme,setCheckTheme] = useState(false);
   const [MenuItems,setMenuItems] = useState<IMenu[]>([]);
 
   useEffect(() => {
     const theme_string = String(localStorage.getItem("selectedtheme"));
     theme_string === 'dark' ? setCheckTheme(true) : setCheckTheme(false);
-    setSelectedIndex(props.selectedIndex);
 
     const login_token:LoginUser = JSON.parse(sessionStorage.getItem(PROPS.LOGIN_TOKEN) as string);
 
@@ -129,15 +127,14 @@ const Main:FC<{editable:boolean,themetype?:string,selectedIndex:number}> =
           <Typography variant="h6" className={classes.title}>IT資産管理台帳</Typography>
           <div>
             { ((JSON.parse(sessionStorage.getItem(PROPS.LOGIN_TOKEN) as string)) as LoginUser).privilegeCode === 3 ? null :
-             <OptionMenu selectedIndex={selectedIndex} /> }
+             <OptionMenu /> }
           </div>
           <Switch checked={checkTheme} name="checkTheme" onChange={handlecheckTheme} color="default" />
         </Toolbar>
       </AppBar>      
       <Router>
         <div className={classes.root}>
-          <SideNav menu={MenuItems} setSelectedIndex={setSelectedIndex} 
-            themetype={String(localStorage.getItem('selectedtheme'))} />
+          <SideNav menu={MenuItems} themetype={String(localStorage.getItem('selectedtheme'))} />
           <main className={classes.main}>
             <Container maxWidth={false}>
               <RouterSwitch>
