@@ -46,7 +46,23 @@ const OptionMenu:FC = () => {
           case 0: //Home
             GetItemListCSV(`IT資産データ.csv`,'GetVPCitemsCSV');
             break;
-        
+          case 1: //PC
+            GetItemListCSV(`PC一覧.csv`,'GetPCitemsCSV');
+            break; 
+          case 2: //モニター
+            GetItemListCSV(`モニター一覧.csv`,`GetOtherAssetsCSV/${1}`);
+            break; 
+          case 3: //キーボード
+            GetItemListCSV(`キーボード一覧.csv`,`GetOtherAssetsCSV/${2}`);
+            break; 
+          case 4: //マウス
+            GetItemListCSV(`マウス一覧.csv`,`GetOtherAssetsCSV/${3}`);
+            break;
+          case 5: //ケーブル
+            GetItemListCSV(`ケーブル一覧.csv`,`GetOtherAssetsCSV/${4}`);
+            break; 
+          default:
+            break;                
         }     
     }
   };
