@@ -48,7 +48,8 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       hidden:true,
     },
     {
-      title: '備品番号',field: 'itemNumber',
+      title: '備品番号',field: 'itemNumber',validate:(rowData:any) => rowData.itemNumber !== ('' || undefined) && 
+      rowData.itemNumber.length > 0,
       align: 'center',
       headerStyle:{
   
@@ -74,7 +75,7 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
       title: 'シリアル番号', field:'serialNo'
     },
     { 
-      title: '種別', field:'pcKindCode',lookup: pcKindListItems,
+      title: '種別', field:'pcKindCode',lookup: pcKindListItems,validate:(rowData:any) => rowData.pcKindCode !== undefined,
       headerStyle:{
         width:120,
       },
@@ -99,7 +100,8 @@ const PCAssetList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     //   render: (rowData:any) => (Date.parse( rowData.warrantyPeriod) >= Date.now() ? 1 : 0)
     // },
     {
-      title: '資産種別',field: 'assetKindCode',type:'number',lookup : assetKindListeItems
+      title: '資産種別',field: 'assetKindCode',type:'number',lookup : assetKindListeItems,
+      validate:(rowData:any) => rowData.assetKindCode !== undefined,
     },
     {
       title: 'PC名', field:'computerName'

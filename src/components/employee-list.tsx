@@ -75,7 +75,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
   const columns:any = [
     {
-      title: '会社名',field: 'companyCode', type:'numeric',
+      title: '会社名',field: 'companyCode', type:'numeric',validate:(rowData:any) => rowData.companyCode !== undefined,
       lookup: companyListItems,
     },
     {
@@ -96,13 +96,16 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     },
 
     { 
-      title: '姓', field:'lastName'
+      title: '姓', field:'lastName', validate:(rowData:any) => rowData.lastName !== undefined && 
+      rowData.lastName.length > 0
     },
     { 
-      title: '名', field:'firstName'
+      title: '名', field:'firstName', validate:(rowData:any) => rowData.firstName !== undefined && 
+      rowData.firstName.length > 0
     },
     { 
       title: '雇用区分', field:'employmentCode',type:'numeric',lookup: employmentListItems,
+        validate:(rowData:any) => rowData.employmentCode !== undefined,
       headerStyle:{
         width:120,
       },
@@ -112,7 +115,7 @@ const EmployeeList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     },
     { 
       title: '所属部署', field:'departmentCode',type:'numeric',
-      lookup: departmentListItems,
+      lookup: departmentListItems,validate:(rowData:any) => rowData.departmentCode !== undefined,
       headerStyle:{
         width:120,
       },

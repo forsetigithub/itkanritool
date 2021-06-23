@@ -71,7 +71,7 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
 
   const columns:any = [
     { 
-      title: '区分', field:'itemKindNo',lookup: props.lookup,
+      title: '区分', field:'itemKindNo',lookup: props.lookup,validate:(rowData:any) => rowData.itemKindNo !== undefined,
       headerStyle:{
         width:120,
       },
@@ -83,7 +83,8 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
       title:'No',field:'itemNo',hidden:true,
     },    
     {
-      title:'資産番号',field:'assetNo'
+      title:'資産番号',field:'assetNo',validate:(rowData:any) => rowData.assetNo !== undefined &&
+      rowData.assetNo.length > 0
     },
     { title:"貸与者", field:"currentOwnerName", 
       editComponent:(props:any) => (
