@@ -28,7 +28,7 @@ const CodeTableList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
   
   const columns:any = [
     {
-      title: 'コード種別',field: 'codeKindID',
+      title: 'コード種別',field: 'codeKindID',validate:(rowData:any) => rowData.codeKindID !== undefined,
       lookup: codeKindDic.reduce((acc:any,cur,i) => {
         acc[cur.codeKindID] = cur.codeKindName;
         return acc;
@@ -44,10 +44,12 @@ const CodeTableList:FC<{editable:boolean}> = (props:{editable:boolean}) => {
     },
 
     {
-      title: 'コードNo',field: 'codeID',
+      title: 'コードNo',field: 'codeID',validate:(rowData:any) => rowData.codeID !== undefined && 
+        rowData.codeID.length > 0,
     },
     {
-      title: 'コード名称',field: 'codeName',
+      title: 'コード名称',field: 'codeName',validate:(rowData:any) => rowData.codeName !== undefined &&
+        rowData.codeName.length > 0,
       align: 'left',
       headerStyle:{
      
