@@ -51,7 +51,7 @@ const ItemList: FC<{editable:boolean}> = (props:{editable:boolean}) => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${PROPS.BASE_API_PATH}/GetEmployeeNameList`)
+    axios.get(`${PROPS.BASE_API_PATH}/GetEmployeeNameList/1`)
     .then((result) => {
       setEmployeelist(result.data);
       setLoading(false);

@@ -33,7 +33,7 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
     const loadData = async () => {
       try{
         setLoading(true);
-        await axios.get(`${PROPS.BASE_API_PATH}/GetEmployeeNameList`)
+        await axios.get(`${PROPS.BASE_API_PATH}/GetEmployeeNameList/1`)
           .then((result) => {
             setEmployeelist(result.data);
         });
