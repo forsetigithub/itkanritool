@@ -125,12 +125,17 @@ const OtherAssetList:FC<{editable:boolean,itemKindNo?:number,lookup?:any}> =
 
   const updateDataHandler = (item: any) => {
 
+    setLoading(true);
+
     let uploadData:any = {...item};
    
     uploadData.makerCode = parseInt(uploadData.makerCode); 
     uploadData.itemKindNo = parseInt(uploadData.itemKindNo);
 
-    axios.post(`${PROPS.BASE_API_PATH}/PostOtherAssetItem`,uploadData);   
+    axios.post(`${PROPS.BASE_API_PATH}/PostOtherAssetItem`,uploadData)
+      .finally(() =>{
+        setLoading(false);
+      });   
   };
 
   const deleteDataHandler = (item :any) => {

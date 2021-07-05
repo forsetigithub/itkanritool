@@ -99,7 +99,7 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_
               }) : undefined,
             onRowAdd: editable_mode ? (newData: T) => 
               new Promise((resolve:any,reject:any) => {
-                setData([newData, ...data]);
+                setData([...data,newData]);
                 updateDataHandler(newData);
                 resolve();
               }) : undefined,
@@ -117,7 +117,7 @@ const MeterialTableCustom = <T extends object>({title,columns,getParam,editable_
             filtering:true,
             pageSize:10,
             showTitle:false,
-            addRowPosition:'first'
+            addRowPosition:'last'
             
           }}
           detailPanel={detailPanel}
